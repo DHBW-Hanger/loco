@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <p>
-            COnsole zeigt längen und Breitengrad an!
+            Console zeigt längen und Breitengrad an!
           </p>
           <img src={logo} className="App-logo" alt="logo" />
           <p>
