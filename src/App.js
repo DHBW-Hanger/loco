@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { Component } from "react";
+import {Map, GoogleApiWrapper} from 'google-maps-react';
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +22,16 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <Map
+            google={this.props.google}
+            style = {{width: '100%', height: '100%'}}
+            zoom = {10}
+            initialCenter={{
+              lat: -34.397,
+              lng: 150.644,
+            }
+          }
+            ></Map>
           <p>
             Console zeigt längen und Breitengrad an!
           </p>
@@ -42,4 +53,6 @@ class App extends Component {
   }
 }
 
-export default App;
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyBTGsd1PAG2l8u-tePbi_yBbOZcvClsuNY"
+})(App)
