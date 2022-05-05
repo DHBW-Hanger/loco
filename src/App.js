@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Component } from "react";
 import {Map, GoogleApiWrapper} from 'google-maps-react';
@@ -35,7 +34,6 @@ class App extends Component {
           <p>
             Console zeigt längen und Breitengrad an!
           </p>
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Bitte alle einen eigenen Branch erstellen!
           </p>
