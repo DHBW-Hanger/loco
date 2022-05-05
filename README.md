@@ -8,8 +8,6 @@ Link fürs OneNote: https://1drv.ms/u/s!Ai-2aGe7J6VomgO7CQUWVe0Rc9by
 
 Link für Jira: https://projectxtasks.atlassian.net/jira/software/projects/PD/pages
 
-Link zum GitHub: https://github.com/DHBW-Hanger/loco![image](https://user-images.githubusercontent.com/95380067/166942029-02e90fd3-9dd9-4cbb-b06f-cf83711dc79a.png)
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
