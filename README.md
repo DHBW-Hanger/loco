@@ -2,9 +2,11 @@
 
 This project is made for WebEngeneering2 (DHBW), creating an location based PWA.
 
-#Planning board link
+# Links
 
-https://projectstim.youtrack.cloud/agiles/124-4/current
+Link fürs OneNote: https://1drv.ms/u/s!Ai-2aGe7J6VomgO7CQUWVe0Rc9by
+
+Link für Jira: https://projectxtasks.atlassian.net/jira/software/projects/PD/pages
 
 # Getting Started with Create React App
 
