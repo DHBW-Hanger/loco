@@ -1,5 +1,6 @@
 import React from "react";
 import MyMap from "./components/map";
+import "./index.css";
 
 export default class App extends React.Component {
   //statemanagment
