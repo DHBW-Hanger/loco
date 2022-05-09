@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { MapContainer, TileLayer } from "react-leaflet";
 import { useRef } from "react";
+//makes clean rendering of the map possible without lagging
 import "leaflet/dist/leaflet.css";
 
 const MyMap = () => {
