@@ -1,7 +1,6 @@
 // Import React and ReactDOM
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import "./index.css";
 
 // Import Framework7
 import Framework7 from 'framework7/lite-bundle';

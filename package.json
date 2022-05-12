@@ -19,14 +19,18 @@
     "Samsung >= 12"
   ],
   "dependencies": {
+    "bootstrap": "^5.1.3",
     "dom7": "^4.0.4",
     "framework7": "^7.0.2",
     "framework7-icons": "^5.0.5",
     "framework7-react": "^7.0.2",
+    "leaflet": "^1.8.0",
     "material-icons": "^1.10.11",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-leaflet": "^4.0.0",
+    "reactstrap": "^9.0.2",
     "skeleton-elements": "^4.0.0",
     "swiper": "^8.1.4"
   },
