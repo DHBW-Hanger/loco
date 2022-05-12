@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import MyMap from "./map";
+import React, { useState } from 'react';
+import "../css/index.css"
+//import MyMap from './map';
+/*div>
+  <MyMap/>
+</div>*/
 
 import {
   f7,
@@ -15,11 +19,9 @@ import {
   NavRight,
   Link,
   Block,
-  BlockTitle,
   LoginScreen,
   LoginScreenTitle,
   List,
-  ListItem,
   ListInput,
   ListButton,
   BlockFooter
@@ -61,23 +63,27 @@ const MyApp = () => {
     // Call F7 APIs here
   });
 
-  state = {
-    markers: []
-  };
-  //later add markers to the map
-  const { markers } = this.state;
-
   return (
     <App { ...f7params } >
-      
-        <View>
-          <Page>
-            <Navbar title="Right Panel"/>
-            <div>
-              <MyMap/>
-            </div>
-          </Page>
-        </View>
+
+        {/* Left panel with cover effect*/}
+        <Panel left cover dark>
+          <View>
+            <Page>
+              <Navbar title="Left Panel"/>
+            </Page>
+          </View>
+        </Panel>
+
+
+        {/* Right panel with reveal effect*/}
+        <Panel right reveal dark>
+          <View>
+            <Page>
+              <Navbar title="Right Panel"/>
+            </Page>
+          </View>
+        </Panel>
 
 
         {/* Views/Tabs container */}

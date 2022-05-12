@@ -19,6 +19,7 @@
     "Samsung >= 12"
   ],
   "dependencies": {
+    "autoprefixer": "10.4.5",
     "bootstrap": "^5.1.3",
     "dom7": "^4.0.4",
     "framework7": "^7.0.2",
