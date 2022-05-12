@@ -1,42 +1,41 @@
 {
-  "name": "reactjs",
-  "version": "0.1.0",
+  "name": "loco",
   "private": true,
+  "version": "1.0.0",
+  "description": "Loco",
+  "repository": "",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.js",
+    "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/"
+  },
+  "browserslist": [
+    "IOS >= 13",
+    "Safari >= 13",
+    "last 5 Chrome versions",
+    "last 5 Firefox versions",
+    "Samsung >= 12"
+  ],
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^13.5.0",
-    "bootstrap": "^5.1.3",
-    "leaflet": "^1.8.0",
+    "dom7": "^4.0.4",
+    "framework7": "^7.0.2",
+    "framework7-icons": "^5.0.5",
+    "framework7-react": "^7.0.2",
+    "material-icons": "^1.10.11",
+    "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-leaflet": "^4.0.0",
-    "react-scripts": "^5.0.1",
-    "reactstrap": "^9.0.2",
-    "web-vitals": "^2.1.4"
+    "skeleton-elements": "^4.0.0",
+    "swiper": "^8.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@vitejs/plugin-react-refresh": "^1.3.6",
+    "cpy-cli": "^4.1.0",
+    "cross-env": "^7.0.3",
+    "postcss-preset-env": "^7.5.0",
+    "vite": "^2.9.8",
+    "workbox-cli": "^6.5.3"
   }
 }

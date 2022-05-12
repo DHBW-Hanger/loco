@@ -1,0 +1,20 @@
+{
+  "cwd": "/Users/lucakaiser/DH/Loco",
+  "type": [
+    "pwa",
+    "web"
+  ],
+  "name": "Loco",
+  "framework": "react",
+  "template": "tabs",
+  "cssPreProcessor": false,
+  "bundler": "vite",
+  "theming": {
+    "customColor": true,
+    "color": "#7CA982",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}
