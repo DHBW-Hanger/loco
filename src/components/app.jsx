@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MyMap from "./map";
 
 import {
   f7,
@@ -60,6 +61,12 @@ const MyApp = () => {
     // Call F7 APIs here
   });
 
+  state = {
+    markers: []
+  };
+  //later add markers to the map
+  const { markers } = this.state;
+
   return (
     <App { ...f7params } >
 
@@ -79,7 +86,9 @@ const MyApp = () => {
           <View>
             <Page>
               <Navbar title="Right Panel"/>
-              <Block>Right panel content goes here</Block>
+              <div>
+                <MyMap/>
+              </div>
             </Page>
           </View>
         </Panel>
