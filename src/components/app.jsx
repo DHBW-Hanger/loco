@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import "../css/index.css"
-import MyMap from './map';
-/*div>
-  <MyMap/>
-</div>*/
+import "../css/index.css";
 
 import {
   f7,
@@ -40,9 +36,6 @@ const MyApp = () => {
   const f7params = {
     name: 'Loco', // App name
       theme: 'auto', // Automatic theme detection
-
-
-
       // App store
       store: store,
       // App routes
@@ -58,33 +51,11 @@ const MyApp = () => {
     });
   }
   f7ready(() => {
-
-
     // Call F7 APIs here
   });
 
   return (
     <App { ...f7params } >
-
-        {/* Left panel with cover effect*/}
-        <Panel left cover dark>
-          <View>
-            <Page>
-              <Navbar title="Left Panel"/>
-            </Page>
-          </View>
-        </Panel>
-
-
-        {/* Right panel with reveal effect*/}
-        <Panel right reveal dark>
-          <View>
-            <Page>
-              <Navbar title="Right Panel"/>
-            </Page>
-          </View>
-        </Panel>
-
 
         {/* Views/Tabs container */}
         <Views tabs className="safe-areas">

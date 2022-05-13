@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { MapContainer, TileLayer, MapConsumer } from "react-leaflet";
+import { MapContainer, TileLayer,} from "react-leaflet";
 import { useRef } from "react";
 import L from "leaflet"
 //makes clean rendering of the map possible without lagging
