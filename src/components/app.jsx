@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../css/index.css"
-//import MyMap from './map';
+import MyMap from './map';
 /*div>
   <MyMap/>
 </div>*/
