@@ -21,11 +21,13 @@ const MyMap = () => {
   //will prevent the user from moving out of the map bounds
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
 
+  // icon for current position
   const icon = L.icon({
     iconUrl: '/icons/currentLocation.svg',
     iconSize: [20, 20]
   });
 
+  // get current position if functionality is supported
   if (navigator.geolocation) {
     navigator.geolocation.watchPosition((position) => {
       setCurrentPosition([
@@ -33,17 +35,21 @@ const MyMap = () => {
         position.coords.longitude
       ])
     }, () => {
+      // warn if location was not found
       console.warn('Unable to retrieve your location')
     }, {
+      // options for location retrieval
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 0
     })
   } else {
+    // alert if geolocation is not supported
     alert('Geolocation is not supported by your browser!')
   }
 
-  //return the MapContainer
+  // return the MapContainer
+  // add marker if current position is known
   if (currentPosition == null) {
     return (
       <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS}>
