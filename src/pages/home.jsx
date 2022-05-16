@@ -34,7 +34,7 @@ const HomePage = () => (
     </Navbar>
 
     {/* Page content */}
-    <MyMap></MyMap>
+    <MyMap/>
   </Page>
 );
 export default HomePage;
