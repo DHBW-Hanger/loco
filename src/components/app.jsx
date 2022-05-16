@@ -55,15 +55,14 @@ const MyApp = () => {
   });
 
   return (
-    <App { ...f7params } >
-
+    <App { ...f7params }>
         {/* Views/Tabs container */}
-        <Views tabs className="safe-areas">
+        <Views tabs className="safe-areas" color= "pink">
           {/* Tabbar for switching views-tabs */}
           <Toolbar tabbar labels bottom>
-            <Link tabLink="#view-catalog" iconIos="f7:star" iconAurora="f7:star" iconMd="material:star" text="Favoriten" />
-            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house" iconAurora="f7:house" iconMd="material:house" text="Home" />
-            <Link tabLink="#view-settings" iconIos="f7:search" iconAurora="search" iconMd="material:search" text="Suchen" />
+            <Link tabLink="#view-catalog" iconIos="f7:star" color= "pink" iconAurora="f7:star" iconMd="material:star" text="Favoriten" />
+            <Link tabLink="#view-home" tabLinkActive iconIos="f7:house" color= "pink" iconAurora="f7:house" iconMd="material:house" text="Home" />
+            <Link tabLink="#view-settings" iconIos="f7:search" color= "pink" iconAurora="search" iconMd="material:search" text="Suchen" />
           </Toolbar>
 
           {/* Your main view/tab, should have "view-main" class. It also has "tabActive" prop */}

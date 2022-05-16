@@ -4,13 +4,42 @@
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+/* Avatar for Userprofile */
+.avatar {
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logo{
+  vertical-align: middle;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.logotext{
+  margin-left: 5px;
+  color: rgb(32, 32, 32);
+  font-family: 'Helvetica Neue',
+  sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+}
+
 .App {
   text-align: center;
 
 }
 
 .leaflet-container {
-  min-height: 80vh;
+  min-height: 100%;
   width: 100%;
   position: relative;
 }

@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 const MyMap = () => {
   const [center, setCenter] = useState({lat: 47.6618, lng: 9.48});
   const [currentPosition, setCurrentPosition] = useState(null);
-  const ZOOM_LEVEL = 9;
+  const ZOOM_LEVEL = 17;
   const tileSize = '256';
   const [mapStyle, setMapStyle] = useState('streets');
   const scale = '@2x';
@@ -52,7 +52,8 @@ const MyMap = () => {
   // add marker if current position is known
   if (currentPosition == null) {
     return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS}>
+      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
+      ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
         <TileLayer
           url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
           attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
@@ -62,7 +63,8 @@ const MyMap = () => {
     );
   } else {
     return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS}>
+      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
+      ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
         <TileLayer
           url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
           attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
