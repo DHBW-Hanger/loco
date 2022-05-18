@@ -27,7 +27,7 @@ const HomePage = () => (
       <div className="navbar-bg"></div>
       <div className="navbar-inner">
         <img className="logo" src="../img/logo.png" alt="Loco" />
-        <div className="logotext sliding">LOCO</div>
+        <div className="logo-text sliding">LOCO</div>
         <div className="right">
           <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="avatar"></img>
         </div>

@@ -6,12 +6,12 @@
   src:
     local("Material Icons"),
     local("MaterialIcons-Regular"),
-    url(../fonts/material-icons.woff2) format("woff2"),
-    url(../fonts/material-icons.woff) format("woff");
+    url("../fonts/material-icons.woff2") format("woff2"),
+    url("../fonts/material-icons.woff") format("woff");
 }
 
 .material-icons {
-  font-family: "Material Icons";
+  font-family: "Material Icons", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -39,7 +39,7 @@
 }
 
 .f7-icons {
-  font-family: "Framework7 Icons";
+  font-family: "Framework7 Icons", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 28px;
@@ -55,7 +55,5 @@
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "liga";
   font-feature-settings: "liga=1";
-  font-feature-settings: "liga";
-  font-feature-settings: "liga";
   text-align: center;
 }

@@ -21,12 +21,10 @@
   border-radius: 50%;
 }
 
-.logotext {
+.logo-text {
   margin-left: 5px;
   color: rgb(32 32 32);
-  font-family:
-    "Helvetica Neue",
-    sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   font-size: 28px;
   font-weight: bold;
   letter-spacing: -1px;
@@ -34,7 +32,7 @@
   text-align: center;
 }
 
-.App {
+.app {
   text-align: center;
 }
 
@@ -44,8 +42,8 @@
   position: relative;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
+.app-logo {
+  animation: app-logo-spin infinite 20s linear;
   height: 80px;
 }
 
@@ -53,22 +51,22 @@
   position: absolute;
 }
 
-.App-header {
+.app-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: black;
 }
 
-.App-title {
+.app-title {
   font-size: 1.5em;
 }
 
-.App-intro {
+.app-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
   from {
     transform: rotate(0deg);
   }
