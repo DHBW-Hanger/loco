@@ -1,8 +1,8 @@
 import React from 'react';
-import { Page, Navbar, Block, List, ListItem } from 'framework7-react';
+import {Page, Navbar, Block, List, ListItem} from 'framework7-react';
 
 const RequestAndLoad = (props) => {
-  const { user } = props;
+  const {user} = props;
 
   return (
     <Page>
@@ -23,6 +23,6 @@ const RequestAndLoad = (props) => {
       </List>
     </Page>
   );
-}
+};
 
 export default RequestAndLoad;

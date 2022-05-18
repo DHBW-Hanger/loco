@@ -1,6 +1,6 @@
 import React from 'react';
-import { Page, Navbar, List, ListItem, Block, Button, useStore } from 'framework7-react';
-import store from '../js/store'
+import {Page, Navbar, List, ListItem, Block, Button, useStore} from 'framework7-react';
+import store from '../js/store';
 
 const CatalogPage = () => {
   const products = useStore('products');
@@ -9,9 +9,9 @@ const CatalogPage = () => {
     store.dispatch('addProduct', {
       id: '4',
       title: 'Apple iPhone 12',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
     });
-  }
+  };
 
   return (
     <Page name="catalog">
@@ -32,6 +32,6 @@ const CatalogPage = () => {
       )}
     </Page>
   );
-}
+};
 
 export default CatalogPage;

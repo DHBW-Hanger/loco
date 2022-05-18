@@ -1,6 +1,6 @@
 import React from 'react';
 import MyMap from '../components/map';
-import "../css/index.css";
+import '../css/index.css';
 
 import {
   Page,
@@ -17,22 +17,22 @@ import {
   ListItem,
   Row,
   Col,
-  Button
+  Button,
 } from 'framework7-react';
 
 const HomePage = () => (
   <Page name="home">
-  {/* Top Navbar */}
-  <div class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner">
-      <img class="logo" src="../img/logo.png" alt="Loco" />
-      <div class="logotext sliding">LOCO</div>
-      <div class="right">
-        <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" class="avatar"></img>
+    {/* Top Navbar */}
+    <div className="navbar">
+      <div className="navbar-bg"></div>
+      <div className="navbar-inner">
+        <img className="logo" src="../img/logo.png" alt="Loco" />
+        <div className="logotext sliding">LOCO</div>
+        <div className="right">
+          <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="avatar"></img>
+        </div>
       </div>
     </div>
-  </div>
 
     {/* Page content */}
     <MyMap/>
