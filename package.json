@@ -25,6 +25,7 @@
     "framework7": "^7.0.2",
     "framework7-icons": "^5.0.5",
     "framework7-react": "^7.0.2",
+    "htmlhint": "^1.1.4",
     "leaflet": "^1.8.0",
     "material-icons": "^1.10.11",
     "prop-types": "^15.8.1",
