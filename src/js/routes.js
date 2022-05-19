@@ -50,7 +50,7 @@ const routes = [
       app.preloader.show();
 
       // User ID from request
-      const userId = to.params.userId;
+      // const userId = to.params.userId;
 
       // Simulate Ajax Request
       setTimeout(function() {

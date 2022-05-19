@@ -11,4 +11,7 @@ parserOptions:
   sourceType: module
 plugins:
   - react
-rules: {}
+rules: {
+  "max-len": [2, {"code": 120, "tabWidth": 2, "ignoreUrls": true}],
+  "react/prop-types": 0
+}

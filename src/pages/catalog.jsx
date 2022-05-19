@@ -9,13 +9,13 @@ const CatalogPage = () => {
     store.dispatch('addProduct', {
       id: '4',
       title: 'Apple iPhone 12',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis.',
     });
   };
 
   return (
     <Page name="catalog">
-      <Navbar title="Catalog" />
+      <Navbar title="Catalog"/>
       <List>
         {products.map((product) => (
           <ListItem

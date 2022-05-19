@@ -7,11 +7,11 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const MyMap = () => {
-  const [center, setCenter] = useState({lat: 47.6618, lng: 9.48});
+  const [center] = useState({lat: 47.6618, lng: 9.48}); // add setCenter when used
   const [currentPosition, setCurrentPosition] = useState(null);
-  const ZOOM_LEVEL = 17;
+  const ZOOM_LEVEL = 12;
   const tileSize = '256';
-  const [mapStyle, setMapStyle] = useState('streets');
+  const [mapStyle] = useState('streets'); // add setMapStyle when used
   const scale = '@2x';
   const apiKey = 'zuWv6WszYelAVMVuJZe3';
   const mapRef = useRef();
