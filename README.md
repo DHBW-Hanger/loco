@@ -1,5 +1,9 @@
 # Loco
 
+[![ESLint](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml)
+[![StyleLint](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml)
+[![HTMLHint](https://github.com/DHBW-Hanger/loco/actions/workflows/htmlhint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/htmlhint.yml)
+
 This project is made for WebEngineering2 (DHBW).
 The goal is to create a location based PWA.
 
