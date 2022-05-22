@@ -26,6 +26,7 @@ import {
 
 import routes from '../js/routes';
 import store from '../js/store';
+import setup from '../js/wikipediaCall';
 
 const MyApp = () => {
   // Login screen demo data
@@ -53,7 +54,7 @@ const MyApp = () => {
   f7ready(() => {
     // Call F7 APIs here
   });
-
+  setup();
   return (
     <App {...f7params}>
       {/* Views/Tabs container */}
