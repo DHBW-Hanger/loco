@@ -30,7 +30,7 @@ npx stylelint "**/*.{css,scss}"
 
 EsLint for JavaScript
 ```shell
-npx npx eslint . --ext .js,.jsx
+npx eslint . --ext .js,.jsx
 ```
 
 ## Available Scripts
