@@ -3,19 +3,22 @@ const searchUrl = 'https://de.wikipedia.org/w/api.php?action=query&list=search&p
 const contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=';
 const contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*';
 
-
-function wikiCall(longitude = 9.44376, latitude = 47.667223){
+/**
+ *
+ */
+function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   /**
-   *
    * @param longitude
    * @param latitude
    */
   console.log('Test');
   reverseGeocoding(longitude, latitude);
 
+  /**
+   * gibt Adresse auf der Konsole aus
+   */
   async function reverseGeocoding(lon, lat) {
     /**
-     * gibt Adresse auf der Konsole aus
      * @param lon = longitude
      * @param lat = latitude
      */
