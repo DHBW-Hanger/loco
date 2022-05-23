@@ -37,7 +37,7 @@
 }
 
 .leaflet-container {
-  min-height: 93vh;
+  height: 100%;
   width: 100%;
   position: relative;
 }
