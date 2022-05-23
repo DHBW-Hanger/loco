@@ -1,5 +1,7 @@
 import React from 'react';
-import {Page, Navbar, BlockTitle, Block, useStore} from 'framework7-react';
+import {
+  Page, Navbar, BlockTitle, Block, useStore
+} from 'framework7-react';
 
 const ProductPage = (props) => {
   const productId = props.f7route.params.id;
