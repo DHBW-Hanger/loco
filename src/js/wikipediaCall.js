@@ -3,13 +3,11 @@ const searchUrl = 'https://de.wikipedia.org/w/api.php?action=query&list=search&p
 const contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=';
 const contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*';
 
-//Wikipedia API Call
 function setup() {
   userInput = 'Friedrichshafen';
   searchWiki();
   contentWiki();
 
-  //gibt 1. Suchergebnis auf der Konsole aus
   async function searchWiki() {
     const url = searchUrl + userInput;
     console.log(url);
@@ -29,7 +27,6 @@ function setup() {
         });
   }
 
-  // gibt Inhalt auf der Console aus
   async function contentWiki() {
     const url = contentUrl + userInput + contentUrl2;
     console.log(url);
