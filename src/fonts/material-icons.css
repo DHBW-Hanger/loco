@@ -5,6 +5,7 @@
   font-display: block;
   src: url("./material-icons.woff2") format("woff2"), url("./material-icons.woff") format("woff");
 }
+
 .material-icons {
   font-family: "Material Icons";
   font-weight: normal;
@@ -19,7 +20,7 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
 
@@ -30,6 +31,7 @@
   font-display: block;
   src: url("./material-icons-outlined.woff2") format("woff2"), url("./material-icons-outlined.woff") format("woff");
 }
+
 .material-icons-outlined {
   font-family: "Material Icons Outlined";
   font-weight: normal;
@@ -44,7 +46,7 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
 
@@ -55,6 +57,7 @@
   font-display: block;
   src: url("./material-icons-round.woff2") format("woff2"), url("./material-icons-round.woff") format("woff");
 }
+
 .material-icons-round {
   font-family: "Material Icons Round";
   font-weight: normal;
@@ -69,7 +72,7 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
 
@@ -80,6 +83,7 @@
   font-display: block;
   src: url("./material-icons-sharp.woff2") format("woff2"), url("./material-icons-sharp.woff") format("woff");
 }
+
 .material-icons-sharp {
   font-family: "Material Icons Sharp";
   font-weight: normal;
@@ -94,7 +98,7 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
 
@@ -105,6 +109,7 @@
   font-display: block;
   src: url("./material-icons-two-tone.woff2") format("woff2"), url("./material-icons-two-tone.woff") format("woff");
 }
+
 .material-icons-two-tone {
   font-family: "Material Icons Two Tone";
   font-weight: normal;
@@ -119,6 +124,6 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
