@@ -1,10 +1,10 @@
 let userInput;
 const searchUrl = 'https://de.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&formatversion=2&origin=*&srlimit=20&srsearch=';
-let contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=';
-let contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*';
+const contentUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles=';
+const contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*';
 
 
-function setup () {
+function setup() {
   userInput = 'Friedrichshafen';
   searchWiki();
   contentWiki();
@@ -18,7 +18,7 @@ function setup () {
           method: 'GET',
         },
     )
-        .then(response => response.json())
+        .then((response => response.json()))
         .then(json => {
           console.log(json);
           console.log(json['query']['search'][0]);
