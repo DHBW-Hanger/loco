@@ -5,8 +5,9 @@
   font-display: block;
   src: url("./material-icons-two-tone.woff2") format("woff2"), url("./material-icons-two-tone.woff") format("woff");
 }
+
 .material-icons-two-tone {
-  font-family: "Material Icons Two Tone";
+  font-family: "Material Icons Two Tone", sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -19,6 +20,6 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }

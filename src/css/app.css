@@ -1,28 +1,28 @@
 /* Custom color theme properties */
 :root {
-  --f7-theme-color: #7CA982;
+  --f7-theme-color: #7ca982;
   --f7-theme-color-rgb: 124, 169, 130;
   --f7-theme-color-shade: #64986b;
   --f7-theme-color-tint: #95b99a;
 }
 
 /* Your app custom styles here */
-.App {
+.app {
   text-align: center;
 }
 
-.App-logo {
+.app-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .app-logo {
+    animation: app-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
+.app-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -33,14 +33,15 @@
   color: white;
 }
 
-.App-link {
+.app-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

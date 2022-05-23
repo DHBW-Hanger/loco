@@ -1,16 +1,41 @@
-# Projectdescription
+# Loco
 
-This project is made for WebEngeneering2 (DHBW), creating an location based PWA.
+[![ESLint](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml)
+[![StyleLint](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml)
+[![HTMLHint](https://github.com/DHBW-Hanger/loco/actions/workflows/htmlhint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/htmlhint.yml)
 
-# Links
+This project is made for WebEngineering2 (DHBW).
+The goal is to create a location based PWA.
 
-Link fürs OneNote: https://1drv.ms/u/s!Ai-2aGe7J6VomgO7CQUWVe0Rc9by
+## Links
 
-Link für Jira: https://projectxtasks.atlassian.net/jira/software/projects/PD/pages
+[OneNote](https://1drv.ms/u/s!Ai-2aGe7J6VomgO7CQUWVe0Rc9by)
 
-# Getting Started with Create React App
+[Jira](https://projectxtasks.atlassian.net/jira/software/projects/PD/pages)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Install Dependencies
+
+First we need to install dependencies, run in terminal:
+```shell
+npm install
+```
+
+## Use Linters
+
+HTMLHint for HTML:
+```shell
+npx htmlhint "**/*.html"
+```
+
+StyleLint for CSS:
+```shell
+npx stylelint "**/*.{css,scss}"
+```
+
+EsLint for JavaScript
+```shell
+npx eslint . --ext .js,.jsx
+```
 
 ## Available Scripts
 
@@ -45,49 +70,15 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc.) right into your project, so you have full control over them. All the commands except `eject` will still work, but they will point to the copied scripts, so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
-# Loco
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However, we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Framework7 CLI Options
 
 Framework7 app created with following options:
 
-```
+```json
 {
   "cwd": "/Users/lucakaiser/DH/Loco",
   "type": [
@@ -110,13 +101,6 @@ Framework7 app created with following options:
 }
 ```
 
-## Install Dependencies
-
-First of all we need to install dependencies, run in terminal
-```
-npm install
-```
-
 ## NPM Scripts
 
 * 🔥 `start` - run development server
@@ -129,7 +113,7 @@ There is a [Vite](https://vitejs.dev) bundler setup. It compiles and bundles all
 
 ## PWA
 
-This is a PWA. Don't forget to check what is inside of your `service-worker.js`. It is also recommended that you disable service worker (or enable "Update on reload") in browser dev tools during development.
+This is a PWA. Don't forget to check what is inside your `service-worker.js`. It is also recommended that you disable service worker (or enable "Update on reload") in browser dev tools during development.
 ## Assets
 
 Assets (icons, splash screens) source images located in `assets-src` folder. To generate your own icons and splash screen images, you will need to replace all assets in this directory with your own images (pay attention to image size and format), and run the following command in the project directory:
@@ -154,9 +138,3 @@ framework7 assets --ui
 
 * [Framework7 Icons Reference](https://framework7.io/icons/)
 * [Community Forum](https://forum.framework7.io)
-
-## Support Framework7
-
-Love Framework7? Support project by donating or pledging on:
-- Patreon: https://patreon.com/framework7
-- OpenCollective: https://opencollective.com/framework7

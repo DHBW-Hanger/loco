@@ -10,7 +10,7 @@ import {
   Row,
   Button,
   Range,
-  Block
+  Block,
 } from 'framework7-react';
 
 const SettingsPage = () => (
@@ -52,7 +52,7 @@ const SettingsPage = () => (
       <ListInput
         label="Gender"
         type="select"
-        >
+      >
         <option>Male</option>
         <option>Female</option>
       </ListInput>

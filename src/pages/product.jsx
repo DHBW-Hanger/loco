@@ -1,12 +1,12 @@
 import React from 'react';
-import { Page, Navbar, BlockTitle, Block, useStore } from 'framework7-react';
+import {Page, Navbar, BlockTitle, Block, useStore} from 'framework7-react';
 
 const ProductPage = (props) => {
   const productId = props.f7route.params.id;
   const products = useStore('products');
 
-  var currentProduct;
-  products.forEach(function (product) {
+  let currentProduct;
+  products.forEach(function(product) {
     if (product.id === productId) {
       currentProduct = product;
     }
@@ -20,6 +20,6 @@ const ProductPage = (props) => {
       </Block>
     </Page>
   );
-}
+};
 
 export default ProductPage;

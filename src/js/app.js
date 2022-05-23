@@ -1,6 +1,6 @@
 // Import React and ReactDOM
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 
 // Import Framework7
 import Framework7 from 'framework7/lite-bundle';
@@ -19,7 +19,7 @@ import '../css/app.css';
 import App from '../components/app.jsx';
 
 // Init F7 React Plugin
-Framework7.use(Framework7React)
+Framework7.use(Framework7React);
 
 // Mount React App
 const root = createRoot(document.getElementById('app'));
