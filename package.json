@@ -27,6 +27,8 @@
     "framework7-react": "^7.0.2",
     "htmlhint": "^1.1.4",
     "leaflet": "^1.8.0",
+    "leaflet-groupedlayercontrol": "^0.6.1",
+    "leaflet.locatecontrol": "^0.76.1",
     "material-icons": "^1.10.11",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
