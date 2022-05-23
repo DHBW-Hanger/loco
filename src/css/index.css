@@ -13,6 +13,15 @@
   border-radius: 50%;
 }
 
+/* Wikipediapicture */
+.wiki-pic {
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border-radius: 20%;
+}
+
+
 .logo {
   vertical-align: middle;
   margin-left: 10px;
