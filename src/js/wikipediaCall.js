@@ -9,7 +9,7 @@ function setup() {
   searchWiki();
   contentWiki();
 
-  //gibt Suchergebnis auf der Konsole aus
+  //gibt 1. Suchergebnis auf der Konsole aus
   async function searchWiki() {
     const url = searchUrl + userInput;
     console.log(url);
