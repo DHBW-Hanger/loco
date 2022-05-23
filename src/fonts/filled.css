@@ -5,9 +5,8 @@
   font-display: block;
   src: url("./material-icons.woff2") format("woff2"), url("./material-icons.woff") format("woff");
 }
-
 .material-icons {
-  font-family: "Material Icons", sans-serif;
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -20,6 +19,6 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga";
 }

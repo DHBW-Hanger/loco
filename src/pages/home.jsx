@@ -3,8 +3,9 @@ import MyMap from '../components/map';
 import '../css/index.css';
 
 import {
-  Page,
-  // Navbar,
+  Link, Navbar,
+  NavRight,
+  Page, Searchbar, theme,
   // NavLeft,
   // NavTitle,
   // NavTitleLarge,
@@ -23,18 +24,27 @@ import {
 const HomePage = () => (
   <Page name="home">
     {/* Top Navbar */}
-    <div className="navbar">
-      <div className="navbar-bg"></div>
-      <div className="navbar-inner">
-        <img className="logo" src="../img/logo.png" alt="Loco" />
-        <div className="logo-text sliding">LOCO</div>
-        <div className="right">
-          <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="avatar"></img>
-        </div>
-      </div>
-    </div>
+    <Navbar>
+      <img className="logo" src="../img/logo.png" alt="Loco" />
+      <div className="logo-text sliding">LOCO</div>
+        <NavRight>
+            <Link
+              searchbarEnable=".searchbar-demo"
+              iconIos="f7:search"
+              iconAurora="f7:search"
+              iconMd="material:search"
+            ></Link>
+          </NavRight>
+          <Searchbar
+            className="searchbar-demo"
+            expandable
+            searchContainer=".search-list"
+            searchIn=".item-title"
+            disableButton={!theme.aurora}
+          ></Searchbar>
+        </Navbar>
 
-    {/* Page content */}
+      {/* Page content */}
     <MyMap/>
   </Page>
 );

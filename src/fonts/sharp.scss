@@ -1,3 +1,4 @@
-@import "variables";
-@import "mixins";
-@include material-icons-font("Material Icons Sharp");
+@import 'variables';
+@import 'mixins';
+
+@include material-icons-font('Material Icons Sharp');

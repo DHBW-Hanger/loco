@@ -4,15 +4,6 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
-/* Avatar for Userprofile */
-.avatar {
-  vertical-align: middle;
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
 .logo {
   vertical-align: middle;
   margin-left: 10px;
