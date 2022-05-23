@@ -18,12 +18,12 @@ function setup() {
           method: 'GET',
         },
     )
-        .then((response => response.json()))
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           console.log(json);
           console.log(json['query']['search'][0]);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.message);
         });
   }
