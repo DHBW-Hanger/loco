@@ -1,17 +1,25 @@
-import React, {useState} from 'react';
-
-import {MapContainer, Marker, TileLayer} from 'react-leaflet';
+import React, {useEffect, useState} from 'react';
 import {useRef} from 'react';
 import L from 'leaflet';
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 
-const MyMap = () => {
-  const [center] = useState({lat: 47.6618, lng: 9.48}); // add setCenter when used
-  const [currentPosition, setCurrentPosition] = useState(null);
-  const ZOOM_LEVEL = 12;
+// icon for current position
+const icon = L.icon({
+  iconUrl: '/icons/currentLocation.svg',
+  iconSize: [20, 20],
+});
+
+/**
+ *
+ * @return {JSX.Element} - Map Component
+ * @constructor
+ */
+export default function MyMap() {
+  const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
+  const ZOOM_LEVEL = 13;
   const tileSize = '256';
-  const [mapStyle] = useState('streets'); // add setMapStyle when used
   const scale = '@2x';
   const apiKey = 'zuWv6WszYelAVMVuJZe3';
   const mapRef = useRef();
@@ -21,59 +29,56 @@ const MyMap = () => {
   // will prevent the user from moving out of the map bounds
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
 
-  // icon for current position
-  const icon = L.icon({
-    iconUrl: '/icons/currentLocation.svg',
-    iconSize: [20, 20],
-  });
+  useEffect(() => {
+    const mapStyles = {
+      Streets: L.tileLayer(
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+      ),
+      Outdoor: L.tileLayer(
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+      ),
+      OpenStreetMap: L.tileLayer(
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+      ),
+      Satellite: L.tileLayer(
+          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+      ),
+    };
 
-  // get current position if functionality is supported
-  if (navigator.geolocation) {
-    navigator.geolocation.watchPosition((position) => {
-      setCurrentPosition([
-        position.coords.latitude,
-        position.coords.longitude,
-      ]);
-    }, () => {
-      // warn if location was not found
-      console.warn('Unable to retrieve your location');
-    }, {
-      // options for location retrieval
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
+    // document.getElementsByClassName( 'leaflet-control-attribution' )[0].style.display = 'none';
+
+    const map = L.map('map', {
+      center: center,
+      zoom: ZOOM_LEVEL,
+      ref: mapRef,
+      minZoom: MIN_ZOOM,
+      maxBounds: BOUNDS,
+      zoomControl: false,
+      layers: [mapStyles.Streets],
     });
-  } else {
-    // alert if geolocation is not supported
-    alert('Geolocation is not supported by your browser!');
-  }
 
-  // return the MapContainer
-  // add marker if current position is known
-  if (currentPosition == null) {
-    return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
-        ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
-        <TileLayer
-          url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
-          attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
-            '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'}
-        />
-      </MapContainer>
-    );
-  } else {
-    return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
-        ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
-        <TileLayer
-          url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
-          attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
-            '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'}
-        />
-        <Marker position={currentPosition} icon={icon}/>
-      </MapContainer>
-    );
-  }
-};
+    map.locate({watch: true});
 
-export default MyMap;
+    let locationMarker = null;
+
+    /**
+     * Add location marker to map if location found
+     *
+     * @param {Object} e - location Data
+     */
+    function onLocationFound(e) {
+      if (locationMarker == null) {
+        locationMarker = L.marker(e.latlng, {icon});
+        locationMarker.addTo(map);
+      } else {
+        locationMarker.setLatLng(e.latlng);
+      }
+    }
+
+    map.on('locationfound', onLocationFound);
+
+    L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
+  }, []);
+
+  return <div id="map"/>;
+}
