@@ -27,24 +27,24 @@ const HomePage = () => (
     <Navbar>
       <img className="logo" src="../img/logo.png" alt="Loco" />
       <div className="logo-text sliding">LOCO</div>
-        <NavRight>
-            <Link
-              searchbarEnable=".searchbar-demo"
-              iconIos="f7:search"
-              iconAurora="f7:search"
-              iconMd="material:search"
-            ></Link>
-          </NavRight>
-          <Searchbar
-            className="searchbar-demo"
-            expandable
-            searchContainer=".search-list"
-            searchIn=".item-title"
-            disableButton={!theme.aurora}
-          ></Searchbar>
-        </Navbar>
+      <NavRight>
+        <Link
+          searchbarEnable=".searchbar-demo"
+          iconIos="f7:search"
+          iconAurora="f7:search"
+          iconMd="material:search"
+        ></Link>
+      </NavRight>
+      <Searchbar
+        className="searchbar-demo"
+        expandable
+        searchContainer=".search-list"
+        searchIn=".item-title"
+        disableButton={!theme.aurora}
+      ></Searchbar>
+    </Navbar>
 
-      {/* Page content */}
+    {/* Page content */}
     <MyMap/>
   </Page>
 );
