@@ -5,8 +5,10 @@ const contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&
 
 /**
  *
+ * @param longitude
+ * @param latitude
  */
-function wikiCall(longitude=9.44376, latitude=47.667223) {
+function wikiCall(longitude = 9.44376, latitude = 47.667223) {
 
   console.log('Test');
   reverseGeocoding(longitude, latitude);
@@ -17,15 +19,15 @@ function wikiCall(longitude=9.44376, latitude=47.667223) {
    * @param lat = latitude
    */
   async function reverseGeocoding(lon, lat) {
-    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`)
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
     const data = await response.json();
     // display_name ist ein key der json file
     console.log(data.display_name);
   }
 
   userInput = 'Friedrichshafen';
-  //searchWiki();
-  //contentWiki();
+  searchWiki();
+  contentWiki();
   /**
    *
    */
@@ -70,4 +72,5 @@ function wikiCall(longitude=9.44376, latitude=47.667223) {
         });
   }
 }
+
 export default wikiCall();
