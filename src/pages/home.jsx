@@ -1,6 +1,7 @@
 import React from 'react';
 import MyMap from '../components/map';
 import '../css/index.css';
+import '../js/wikipediaCall';
 
 import {
   Page,
@@ -33,7 +34,7 @@ const HomePage = () => (
         </div>
       </div>
     </div>
-
+    wikiCall()
     {/* Page content */}
     <MyMap/>
   </Page>
