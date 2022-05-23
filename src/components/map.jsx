@@ -3,14 +3,19 @@ import {useRef} from 'react';
 import L from 'leaflet';
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
-import "leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js";
+import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 
 // icon for current position
 const icon = L.icon({
   iconUrl: '/icons/currentLocation.svg',
-  iconSize: [20, 20]
+  iconSize: [20, 20],
 });
 
+/**
+ *
+ * @return {JSX.Element} - Map Component
+ * @constructor
+ */
 export default function MyMap() {
   const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
   const ZOOM_LEVEL = 13;
@@ -27,41 +32,46 @@ export default function MyMap() {
   useEffect(() => {
     const mapStyles = {
       Streets: L.tileLayer(
-        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
       ),
       Outdoor: L.tileLayer(
-        `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
       ),
       OpenStreetMap: L.tileLayer(
-        `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
       ),
       Satellite: L.tileLayer(
-        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
-      )
+          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+      ),
     };
 
     // document.getElementsByClassName( 'leaflet-control-attribution' )[0].style.display = 'none';
 
-    const map = L.map("map", {
+    const map = L.map('map', {
       center: center,
       zoom: ZOOM_LEVEL,
       ref: mapRef,
       minZoom: MIN_ZOOM,
       maxBounds: BOUNDS,
       zoomControl: false,
-      layers: [mapStyles.Streets]
+      layers: [mapStyles.Streets],
     });
 
     map.locate({watch: true});
 
-    let locationMarker = null
+    let locationMarker = null;
 
+    /**
+     * Add location marker to map if location found
+     *
+     * @param {Object} e - location Data
+     */
     function onLocationFound(e) {
       if (locationMarker == null) {
-        locationMarker = L.marker(e.latlng, {icon})
+        locationMarker = L.marker(e.latlng, {icon});
         locationMarker.addTo(map);
       } else {
-        locationMarker.setLatLng(e.latlng)
+        locationMarker.setLatLng(e.latlng);
       }
     }
 
