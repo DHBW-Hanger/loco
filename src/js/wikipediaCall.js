@@ -1,10 +1,10 @@
-let userInput = 'Friedrichshafen';
+const userInput = 'Stuttgart';
 
 
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   await reverseGeocoding(longitude, latitude);
-  //searchWiki(userInput);
-  //contentWiki(userInput);
+  // searchWiki(userInput);
+  // contentWiki(userInput);
   await imageWiki(userInput);
 
   /**
@@ -55,7 +55,9 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
 
   async function imageWiki(userInput) {
     const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&origin=*`;
-    let urls, contentImageApi, content = [];
+    let urls;
+    let contentImageApi;
+    let content = [];
     await fetch(
         url,
         {
@@ -65,26 +67,27 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         .then((response) => response.json())
         .then(async (json) => {
           urls = createImageAPIUrls(json);
+          console.log(urls)
           for (let i = 0; i < urls.length; i++) {
             contentImageApi = await getImageUrl(urls[i]);
-
             if ('url' in contentImageApi) {
-              content[i] = contentImageApi.url;
+              content[i] = contentImageApi['url'];
             } else {
-              content[i] = '';
+              content[i] = 0;
             }
           }
           console.log(content);
         })
         .catch((error) => {
+          console.log(content);
           console.log(error.message);
         });
   }
 
   function createImageAPIUrls(data) {
-    let pageId = Object.keys(data.query.pages)[0];
-    let images = data.query.pages[pageId]['images'];
-    let urls = [];
+    const pageId = Object.keys(data.query.pages)[0];
+    const images = data.query.pages[pageId]['images'];
+    const urls = [];
     for (let i = 0; i < images.length; i++) {
       let imagename = images[i]['title'];
       imagename = imagename.replace('Datei', 'File');
@@ -96,9 +99,9 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   async function getImageUrl(urls) {
     let content;
     await fetch(urls)
-        .then(response => response.json())
-        .then(json => content = json['query']['pages'][0]['imageinfo'][0])
-        .catch(response => response.json())
+        .then((response) => response.json())
+        .then((json) => content = json['query']['pages'][0]['imageinfo'][0])
+        .catch((response) => response.json())
     return content;
   }
 }
