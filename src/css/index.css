@@ -78,14 +78,17 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --f7-bars-text-color:white;
+    --f7-bars-text-color: white;
   }
+
   .navbar-bg {
     background-color: #222;
   }
+
   .logo-text {
     color: white;
   }
+
   .toolbar {
     background-color: #222;
     color: white;
@@ -93,5 +96,5 @@
     --f7-navbar-text-color: white;
     --f7-bars-text-color: white;
   }
-  
+
 }
