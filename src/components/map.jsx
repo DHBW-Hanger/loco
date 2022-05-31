@@ -81,5 +81,5 @@ export default function MyMap() {
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
   }, []);
 
-  return <div id="map"/>;
+  return <div id="map" className="map"/>;
 }

@@ -6,4 +6,7 @@
     .map-tiles {
         filter:var(--map-tiles-filter, none);
 	}
+    .map {
+        background-color: #000000;
+    }
 }
