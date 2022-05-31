@@ -8,7 +8,7 @@ const imageUrl2 = '&format=json&prop=images&origin=*';
 /**
  *
  */
-function wikiCall(longitude = 9.44376, latitude = 47.667223) {
+async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   reverseGeocoding(longitude, latitude);
   userInput = 'Friedrichshafen';
   //searchWiki();
@@ -74,6 +74,7 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     // url gets names of images of Wikipedia page
     const url = imageUrl + userInput + imageUrl2;
     let urls;
+    let contentImageApi;
     console.log(url);
     fetch(
         url,
@@ -83,12 +84,32 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     )
         .then((response) => response.json())
         .then((json) => {
-          console.log('function imageWiki');
-          console.log(json);
 
+          console.log('function imageWiki');
           urls = getImageAPIUrls(json);
-          console.log(urls)
-          getImageUrl(urls);
+
+          let content = getImageUrl(urls[1]);
+          console.log(content);
+          console.log(content.keys());
+          /*
+          for (let i = 0; i < urls.length; i++) {
+            contentImageApi = getImageUrl(urls[i]);
+
+            console.log(contentImageApi);
+            console.log(contentImageApi['query']);
+
+
+            if ('url' in contentImageApi) {
+              console.log(contentImageApi);
+            }
+            else {
+              console.log("keine Url vorhanden")
+            }
+
+
+          }
+
+           */
         })
         .catch((error) => {
           console.log(error.message);
@@ -100,7 +121,7 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     let pageId = Object.keys(data.query.pages)[0];
     let images = data.query.pages[pageId]['images'];
     const imageapiurl = 'https://de.wikipedia.org/w/api.php?action=query&titles=';
-    const imageapiurl2 = '&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url';
+    const imageapiurl2 = '&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*';
     let urls = [];
     for (let i = 0; i < images.length; i++) {
       let imagename = images[i]['title'];
@@ -110,24 +131,33 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     return urls;
   }
 
-  function getImageUrl(urls) {
-    for (let i = 0; i < 1; i++) {
-      fetch(
-          urls[i],
-          {
-            mode: 'no-cors',
-            method: 'GET',
-          },
-      )
-          .then((response) => response.json())
-          .then((json) => {
-            console.log(json);
-            console.log(json['query']['pages']);
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-    }
+  async function getImageUrl(urls) {
+    let content;
+    await fetch(urls)
+        .then(response => response.json())
+        .then(json => content = json['query']['pages'][0]['imageinfo'][0])
+        .catch(response => response.json())
+    return content;
+  }
+
+
+  function getImageUrl2(urls) {
+    let content = '';
+    fetch(
+        urls,
+        {
+          method: 'GET',
+        },
+    )
+        .then((response) => response.json())
+        .then((json) => {
+          content = json;
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    console.log(content)
+    return content;
   }
 }
 
