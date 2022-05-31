@@ -5,7 +5,7 @@
 @media (prefers-color-scheme: dark) {
   .map-tiles {
     filter: var(--map-tiles-filter, none);
-    }
+  }
 
   .map {
     background-color: #000;
