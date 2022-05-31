@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useRef} from 'react';
 import L from 'leaflet';
+import Routing from 'leaflet-routing-machine';
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
@@ -71,15 +72,20 @@ export default function MyMap() {
       if (locationMarker == null) {
         locationMarker = L.marker(e.latlng, {icon});
         locationMarker.addTo(map);
+        map.flyTo(e.latlng, 15);
+        L.Routing.control({
+          waypoints: [
+            e.latlng,
+            L.latLng(47.66, 9.49)
+          ]
+        }).addTo(map);
       } else {
         locationMarker.setLatLng(e.latlng);
       }
     }
-
     map.on('locationfound', onLocationFound);
-
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
   }, []);
-
+  
   return <div id="map" className="map"/>;
 }
