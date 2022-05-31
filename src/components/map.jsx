@@ -72,13 +72,15 @@ export default function MyMap() {
       if (locationMarker == null) {
         locationMarker = L.marker(e.latlng, {icon});
         locationMarker.addTo(map);
-        map.flyTo(e.latlng, 15);
+        //map.flyTo(e.latlng, 15);
+
         L.Routing.control({
           waypoints: [
             e.latlng,
             L.latLng(47.66, 9.49)
           ]
         }).addTo(map);
+        
       } else {
         locationMarker.setLatLng(e.latlng);
       }
