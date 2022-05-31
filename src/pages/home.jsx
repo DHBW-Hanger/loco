@@ -23,7 +23,6 @@ import {
 
 export default () => {
   var [sheetOpened, setSheetOpened,] = useState(false);
-  var sheetOpen = false;
   const sheet = useRef(null);
 
   const onPageBeforeOut = () => {
@@ -55,12 +54,10 @@ export default () => {
         swipeToStep
         backdrop
         onSheetStepClose={() => {
-          sheetOpen = false;
-          console.log(sheetOpen);
+          setSheetOpened(false);
         }}
         onSheetStepOpen={() => {
-          sheetOpen = true;
-          console.log(sheetOpen);
+          setSheetOpened(true);
         }}
       >
         <div className="sheet-modal-swipe-step">
@@ -91,7 +88,7 @@ export default () => {
               Route
             </Button>
             <div className="margin-top text-align-center">
-              { sheetOpen == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
+              { sheetOpened == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
             </div>
           </div>
         </div>
