@@ -1,18 +1,11 @@
-let userInput;
-const searchUrl = 'https://de.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&formatversion=2&origin=*&srlimit=20&srsearch=';
-const contentUrl = 'https://de.wikipedia.org/w/api.php?action=query&titles=';
-const contentUrl2 = '&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*';
-const imageUrl = 'https://de.wikipedia.org/w/api.php?action=query&titles=';
-const imageUrl2 = '&format=json&prop=images&origin=*';
+let userInput = 'Friedrichshafen';
 
-/**
- *
- */
+
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
-  reverseGeocoding(longitude, latitude);
-  userInput = 'Friedrichshafen';
-  //searchWiki();
-  //contentWiki();
+  await reverseGeocoding(longitude, latitude);
+  //searchWiki(userInput);
+  //contentWiki(userInput);
+  await imageWiki(userInput);
 
   /**
    * gibt Adresse auf der Konsole aus
@@ -20,16 +13,11 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   async function reverseGeocoding(lon, lat) {
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
     const data = await response.json();
-    // display_name ist ein key der json file
-    console.log(data.display_name);
+    console.log(data['display_name']);
   }
 
-  /**
-   *
-   */
-  function searchWiki() {
-    const url = searchUrl + userInput;
-    console.log(url);
+  function searchWiki(userInput) {
+    const url = `https://de.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&formatversion=2&origin=*&srlimit=20&srsearch=${userInput}`;
     fetch(
         url,
         {
@@ -46,11 +34,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  /**
-   *
-   */
-  function contentWiki() {
-    const url = contentUrl + userInput + contentUrl2;
+  function contentWiki(userInput) {
+    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*`;
     console.log(url);
     fetch(
         url,
@@ -68,15 +53,9 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  await imageWiki(userInput)
-
   async function imageWiki(userInput) {
-    // url gets names of images of Wikipedia page
-    const url = imageUrl + userInput + imageUrl2;
-    let urls;
-    let contentImageApi;
-    let content = [];
-    console.log(url);
+    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&origin=*`;
+    let urls, contentImageApi, content = [];
     await fetch(
         url,
         {
@@ -85,10 +64,7 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     )
         .then((response) => response.json())
         .then(async (json) => {
-
-          console.log('function imageWiki');
-          urls = getImageAPIUrls(json);
-
+          urls = createImageAPIUrls(json);
           for (let i = 0; i < urls.length; i++) {
             contentImageApi = await getImageUrl(urls[i]);
 
@@ -105,17 +81,14 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  // get url for ImageApiCall in wiki
-  function getImageAPIUrls(data) {
+  function createImageAPIUrls(data) {
     let pageId = Object.keys(data.query.pages)[0];
     let images = data.query.pages[pageId]['images'];
-    const imageapiurl = 'https://de.wikipedia.org/w/api.php?action=query&titles=';
-    const imageapiurl2 = '&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*';
     let urls = [];
     for (let i = 0; i < images.length; i++) {
       let imagename = images[i]['title'];
       imagename = imagename.replace('Datei', 'File');
-      urls[i] = imageapiurl + imagename + imageapiurl2;
+      urls[i] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
     }
     return urls;
   }
@@ -128,7 +101,6 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         .catch(response => response.json())
     return content;
   }
-
 }
 
 export default wikiCall();
