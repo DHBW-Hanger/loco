@@ -33,13 +33,13 @@ export default function MyMap() {
   useEffect(() => {
     const mapStyles = {
       Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,{className: 'map-tiles'}
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Outdoor: L.tileLayer(
-          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,{className: 'map-tiles'}
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       OpenStreetMap: L.tileLayer(
-          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,{className: 'map-tiles'}
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Satellite: L.tileLayer(
           `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
