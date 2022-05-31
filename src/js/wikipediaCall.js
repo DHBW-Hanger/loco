@@ -12,7 +12,7 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   reverseGeocoding(longitude, latitude);
   userInput = 'Friedrichshafen';
   //searchWiki();
-  contentWiki();
+  //contentWiki();
 
   /**
    * gibt Adresse auf der Konsole aus
@@ -68,10 +68,12 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  imageWiki()
+  imageWiki(userInput)
 
-  function imageWiki() {
+  function imageWiki(userInput) {
+    // url gets names of images of Wikipedia page
     const url = imageUrl + userInput + imageUrl2;
+    let urls;
     console.log(url);
     fetch(
         url,
@@ -81,30 +83,51 @@ function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     )
         .then((response) => response.json())
         .then((json) => {
+          console.log('function imageWiki');
           console.log(json);
-          getImages(json);
 
+          urls = getImageAPIUrls(json);
+          console.log(urls)
+          getImageUrl(urls);
         })
         .catch((error) => {
           console.log(error.message);
         });
   }
 
-  // get Images in wiki
-  function getImages(data) {
+  // get url for ImageApiCall in wiki
+  function getImageAPIUrls(data) {
     let pageId = Object.keys(data.query.pages)[0];
     let images = data.query.pages[pageId]['images'];
-    console.log(images);
+    const imageapiurl = 'https://de.wikipedia.org/w/api.php?action=query&titles=';
+    const imageapiurl2 = '&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url';
     let urls = [];
-    let imageurlnew = 'https://de.wikipedia.org/wiki/';
     for (let i = 0; i < images.length; i++) {
       let imagename = images[i]['title'];
-      urls[i] = imageurlnew + userInput + '#/media/' + imagename;
-      urls[i] = urls[i].split(' ').join('_');
+      imagename = imagename.replace('Datei', 'File');
+      urls[i] = imageapiurl + imagename + imageapiurl2;
     }
-    urls.forEach(function(element, index){
-      console.log(element, index);
-    });
+    return urls;
+  }
+
+  function getImageUrl(urls) {
+    for (let i = 0; i < 1; i++) {
+      fetch(
+          urls[i],
+          {
+            mode: 'no-cors',
+            method: 'GET',
+          },
+      )
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json);
+            console.log(json['query']['pages']);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+    }
   }
 }
 
