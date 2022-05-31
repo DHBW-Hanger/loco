@@ -22,8 +22,8 @@ import {
 } from 'framework7-react';
 
 export default () => {
-  var [sheetStepProgress] = useState(0);
   var [sheetOpened, setSheetOpened,] = useState(false);
+  var sheetOpen = false;
   const sheet = useRef(null);
 
   const onPageBeforeOut = () => {
@@ -54,6 +54,14 @@ export default () => {
         swipeToClose
         swipeToStep
         backdrop
+        onSheetStepClose={() => {
+          sheetOpen = false;
+          console.log(sheetOpen);
+        }}
+        onSheetStepOpen={() => {
+          sheetOpen = true;
+          console.log(sheetOpen);
+        }}
       >
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-space-between align-items-center">
@@ -83,7 +91,7 @@ export default () => {
               Route
             </Button>
             <div className="margin-top text-align-center">
-              { sheetStepProgress == 1 ? <IoIosArrowDown /> : <IoIosArrowUp />}
+              { sheetOpen == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
             </div>
           </div>
         </div>
