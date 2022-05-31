@@ -68,48 +68,37 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  imageWiki(userInput)
+  await imageWiki(userInput)
 
-  function imageWiki(userInput) {
+  async function imageWiki(userInput) {
     // url gets names of images of Wikipedia page
     const url = imageUrl + userInput + imageUrl2;
     let urls;
     let contentImageApi;
+    let content = [];
     console.log(url);
-    fetch(
+    await fetch(
         url,
         {
           method: 'GET',
         },
     )
         .then((response) => response.json())
-        .then((json) => {
+        .then(async (json) => {
 
           console.log('function imageWiki');
           urls = getImageAPIUrls(json);
 
-          let content = getImageUrl(urls[1]);
-          console.log(content);
-          console.log(content.keys());
-          /*
           for (let i = 0; i < urls.length; i++) {
-            contentImageApi = getImageUrl(urls[i]);
-
-            console.log(contentImageApi);
-            console.log(contentImageApi['query']);
-
+            contentImageApi = await getImageUrl(urls[i]);
 
             if ('url' in contentImageApi) {
-              console.log(contentImageApi);
+              content[i] = contentImageApi.url;
+            } else {
+              content[i] = '';
             }
-            else {
-              console.log("keine Url vorhanden")
-            }
-
-
           }
-
-           */
+          console.log(content);
         })
         .catch((error) => {
           console.log(error.message);
@@ -140,25 +129,6 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     return content;
   }
 
-
-  function getImageUrl2(urls) {
-    let content = '';
-    fetch(
-        urls,
-        {
-          method: 'GET',
-        },
-    )
-        .then((response) => response.json())
-        .then((json) => {
-          content = json;
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    console.log(content)
-    return content;
-  }
 }
 
 export default wikiCall();
