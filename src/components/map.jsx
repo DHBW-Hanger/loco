@@ -3,6 +3,7 @@ import {useRef} from 'react';
 import L from 'leaflet';
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
+import '../css/map.css';
 import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 
 // icon for current position
@@ -32,13 +33,13 @@ export default function MyMap() {
   useEffect(() => {
     const mapStyles = {
       Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Outdoor: L.tileLayer(
-          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`,
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       OpenStreetMap: L.tileLayer(
-          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Satellite: L.tileLayer(
           `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
@@ -80,5 +81,5 @@ export default function MyMap() {
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
   }, []);
 
-  return <div id="map"/>;
+  return <div id="map" className="map"/>;
 }
