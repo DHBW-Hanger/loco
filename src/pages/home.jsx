@@ -7,8 +7,16 @@ import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
 
 import {
+  Link,
   Page,
-  // Navbar,
+  Searchbar,
+  theme,
+  // NavLeft,
+  // NavTitle,
+  // NavTitleLarge,
+  // NavRight,
+  // Link,
+  // Toolbar,
   // Block,
   Button,
   Sheet,
@@ -53,6 +61,19 @@ export default function App() {
           <img className="logo" src="../img/logo.png" alt="Loco" />
           <div className="logo-text sliding">LOCO</div>
           <div className="right">
+            <Link
+              searchbarEnable=".searchbar-demo"
+              iconIos="f7:search"
+              iconAurora="f7:search"
+              iconMd="material:search"
+            ></Link>
+            <Searchbar
+              className="searchbar-demo"
+              expandable
+              searchContainer=".search-list"
+              searchIn=".item-title"
+              disableButton={!theme.aurora}
+            ></Searchbar>
             <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="avatar"></img>
           </div>
         </div>
