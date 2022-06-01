@@ -1,13 +1,78 @@
 :root {
   --map-tiles-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+  --background-color: white;
+  --background-color-map: rgb(234 217 217);
+  --background-color-disabled: rgb(178 178 178);
+  --text-color: black;
+  --text-color-disabled: rgb(73 73 73);
+}
+
+.leaflet-routing-container {
+  display: none;
+  background-color: var(--background-color);
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgb(0 0 0 / 20%);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
+
+.leaflet-control-layers-toggle {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.leaflet-control-layers-expanded {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.leaflet-bar a {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.leaflet-bar a:hover {
+  background-color: rgb(99 99 99);
+}
+
+.leaflet-bar a.leaflet-disabled {
+  background-color: var(--background-color-disabled);
+  color: var(--text-color-disabled);
+}
+
+.leaflet-top {
+  margin-top: 60px;
+}
+
+.map {
+  background-color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: rgb(20 20 20);
+    --background-color-map: rgb(0 0 0);
+    --text-color: white;
+    --text-color-disabled: rgb(154 154 154);
+    --background-color-disabled: rgb(66 66 66);
+  }
+
   .map-tiles {
     filter: var(--map-tiles-filter, none);
   }
 
-  .map {
-    background-color: #000;
+  .leaflet-control-attribution {
+    background-color: rgb(20 20 20 / 40%) !important;
+    color: var(--text-color);
+  }
+
+  .leaflet-control-scale-line {
+    background-color: rgb(20 20 20 / 0%) !important;
+    color: var(--text-color);
+    border-color: rgb(255 255 255 / 80%);
   }
 }
