@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
+import React, {useEffect, useState} from 'react';
+import {useRef} from 'react';
 import L from 'leaflet';
-import Routing from 'leaflet-routing-machine';
+// import Routing from 'leaflet-routing-machine';
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
@@ -24,7 +24,7 @@ const targetIcon = L.icon({
  * @constructor
  */
 export default function MyMap() {
-  const [center] = useState({ lat: 47.67, lng: 9.46 }); // add setCenter when used
+  const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
   const ZOOM_LEVEL = 13;
   const tileSize = '256';
   const scale = '@2x';
@@ -36,19 +36,19 @@ export default function MyMap() {
   // will prevent the user from moving out of the map bounds
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
 
-  useEffect(() => {
+  useEffect((e) => {
     const mapStyles = {
       Streets: L.tileLayer(
-        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Outdoor: L.tileLayer(
-        `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
       ),
       OpenStreetMap: L.tileLayer(
-        `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, {className: 'map-tiles'},
       ),
       Satellite: L.tileLayer(
-        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
       ),
       Satellite2: L.tileLayer(
         `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA`,
@@ -69,14 +69,15 @@ export default function MyMap() {
       layers: [mapStyles.Streets],
     });
 
-    map.locate({ watch: true });
+    map.locate({watch: true});
 
     let locationMarker = null;
     let followLocation = false;
-    let targetLocation = L.latLng(47.66, 9.49);
+    const targetLocation = L.latLng(47.66, 9.49);
     let navigation = null;
-    var lastPosition = null;
-    L.marker(targetLocation, { icon: targetIcon }).addTo(map);
+    let lastPosition = null;
+    L.marker(targetLocation, {icon: targetIcon}).addTo(map);
+
     /**
      * Add location marker to map if location found
      *
@@ -84,32 +85,36 @@ export default function MyMap() {
      */
     function onLocationFound(e) {
       if (locationMarker == null) {
-        locationMarker = L.marker(e.latlng, { icon }).addTo(map);
+        locationMarker = L.marker(e.latlng, {icon}).addTo(map);
         if (navigation == null) {
           startNavigation(e, targetLocation);
           lastPosition = e.latlng;
         }
       } else {
         locationMarker.setLatLng(e.latlng);
-        //if the location has changed, update the navigation 
+        // if the location has changed, update the navigation
         if (Math.abs(e.latlng.lat - lastPosition.lat) > 0.00001 || Math.abs(e.latlng.lng - lastPosition.lng) > 0.00001) {
           console.log('location changed | ' + (e.latlng.lat - lastPosition.lat) + ' ' + (e.latlng.lng - lastPosition.lng));
           lastPosition = e.latlng;
           if (navigation != null) {
             console.log('navigation changed');
-            navigation
+            navigation;
             navigation.spliceWaypoints(0, 1, e.latlng);
           }
         }
 
-        //center the view to the current location
+        // center the view to the current location
         if (followLocation) {
           map.flyTo(e.latlng, 18);
         }
-
       }
     }
 
+    /**
+     * Start navigation
+     *
+     * @param {Object} e - location Data
+     */
     function startNavigation(e) {
       navigation = L.Routing.control({
         waypoints: [
@@ -117,7 +122,7 @@ export default function MyMap() {
           targetLocation,
         ],
         routeWhileDragging: false,
-        /*router: new Routing.OSRMv1({
+        /* router: new Routing.OSRMv1({
           serviceUrl: 'https://router.project-osrm.org/route/v1',
         }),*/
         show: false,
@@ -126,11 +131,13 @@ export default function MyMap() {
         draggableWaypoints: false,
         lineOptions: {
           styles: [
-            { color: 'black', opacity: 0.4, weight: 9 },
-            { color: "#ff2d55", opacity: 1, weight: 6 }
-          ]
+            {color: 'black', opacity: 0.4, weight: 9},
+            {color: '#ff2d55', opacity: 1, weight: 6},
+          ],
         },
-        createMarker: function () { return null; },
+        createMarker: function() {
+          return null;
+        },
         fitSelectedRoutes: false,
       }).addTo(map);
       followLocation = true;
@@ -142,10 +149,10 @@ export default function MyMap() {
       console.log('climousedown');
     });
 
-    //new L.Control.Zoom({ position: 'topleft' }).addTo(map);
-    L.control.scale({ imperial: false }).addTo(map);
-    L.control.groupedLayers(mapStyles, {}, { position: 'bottomleft' }).addTo(map);
+    // new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+    L.control.scale({imperial: false}).addTo(map);
+    L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
   }, []);
 
-  return <div id="map" className="map" />;
+  return <div id="map" className="map"/>;
 }

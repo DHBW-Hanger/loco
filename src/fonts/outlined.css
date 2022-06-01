@@ -5,6 +5,7 @@
   font-display: block;
   src: url("./material-icons-outlined.woff2") format("woff2"), url("./material-icons-outlined.woff") format("woff");
 }
+
 .material-icons-outlined {
   font-family: "Material Icons Outlined";
   font-weight: normal;
@@ -19,6 +20,6 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   font-feature-settings: "liga";
 }
