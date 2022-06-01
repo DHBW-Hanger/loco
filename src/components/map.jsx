@@ -13,9 +13,9 @@ const icon = L.icon({
   iconSize: [20, 20],
 });
 const targetIcon = L.icon({
-  iconUrl: '/icons/map-pin.svg',
-  iconSize: [40, 100],
-  iconAnchor: [20, 70],
+  iconUrl: '/icons/mappin.svg',
+  iconSize: [32, 32],
+  iconAnchor: [20, 40],
 });
 
 /**
