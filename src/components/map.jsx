@@ -12,6 +12,11 @@ const icon = L.icon({
   iconUrl: '/icons/currentLocation.svg',
   iconSize: [20, 20],
 });
+const targetIcon = L.icon({
+  iconUrl: '/icons/map-pin.svg',
+  iconSize: [40, 100],
+  iconAnchor: [20, 70],
+});
 
 /**
  *
@@ -62,6 +67,10 @@ export default function MyMap() {
 
     let locationMarker = null;
     let followLocation = false;
+    let targetLocation = L.latLng(47.66, 9.49);
+    let navigation = null;
+    var lastPosition = null;
+    L.marker(targetLocation, { icon: targetIcon }).addTo(map);
     /**
      * Add location marker to map if location found
      *
@@ -69,26 +78,37 @@ export default function MyMap() {
      */
     function onLocationFound(e) {
       if (locationMarker == null) {
-        locationMarker = L.marker(e.latlng, { icon });
-        locationMarker.addTo(map);
-        startNavigation(e);
-        //wait 5 seconds and remove the marker
-        setTimeout(() => {
-          map.flyTo(e.latlng, 15);
-        }, 5000);
+        locationMarker = L.marker(e.latlng, { icon }).addTo(map);
+        if (navigation == null) {
+          startNavigation(e, targetLocation);
+          lastPosition = e.latlng;
+        }
       } else {
         locationMarker.setLatLng(e.latlng);
+        //if the location has changed, update the navigation 
+        if (Math.abs(e.latlng.lat - lastPosition.lat) > 0.00001 || Math.abs(e.latlng.lng - lastPosition.lng) > 0.00001) {
+          console.log('location changed | ' + (e.latlng.lat - lastPosition.lat) + ' ' + (e.latlng.lng - lastPosition.lng));
+          lastPosition = e.latlng;
+          if (navigation != null) {
+            console.log('navigation changed');
+            navigation
+            navigation.spliceWaypoints(0, 1, e.latlng);
+          }
+        }
+
+        //center the view to the current location
         if (followLocation) {
           map.flyTo(e.latlng, 18);
         }
+
       }
     }
 
-    function startNavigation(e){
-      L.Routing.control({
+    function startNavigation(e) {
+      navigation = L.Routing.control({
         waypoints: [
           e.latlng,
-          L.latLng(47.66, 9.49)
+          targetLocation,
         ],
         routeWhileDragging: false,
         /*router: new Routing.OSRMv1({
@@ -105,6 +125,7 @@ export default function MyMap() {
           ]
         },
         createMarker: function () { return null; },
+        fitSelectedRoutes: false,
       }).addTo(map);
       followLocation = true;
     }
