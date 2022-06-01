@@ -1,5 +1,5 @@
 import React from 'react';
-import {Page, Navbar, List, ListItem, Block, Button, useStore, Sheet} from 'framework7-react';
+import {Page, Navbar, List, ListItem, Block, Button, useStore} from 'framework7-react';
 import store from '../js/store';
 
 const CatalogPage = () => {
