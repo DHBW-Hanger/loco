@@ -1,13 +1,49 @@
 :root {
   --map-tiles-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+  --background-color: white;
+  --background-color-map: rgb(234, 217, 217);
+  --text-color: black;
+}
+
+.leaflet-routing-container {
+  display: none;
+  background-color: var(--background-color);
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin-bottom: 10px;
+
+}
+
+.leaflet-control-layers-toggle {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.leaflet-control-layers-expanded {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.map {
+  background-color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: rgb(20, 20, 20);
+    --background-color-map: rgb(0, 0, 0);
+    --text-color: white;
+  }
+
   .map-tiles {
     filter: var(--map-tiles-filter, none);
   }
 
-  .map {
-    background-color: #000;
+  .leaflet-control-attribution {
+    background-color: rgba(20,20,20, 0.8) !important;
+    color: var(--text-color);
   }
+
+
 }

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useRef} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import L from 'leaflet';
 import Routing from 'leaflet-routing-machine';
 // makes clean rendering of the map possible without lagging
@@ -19,7 +19,7 @@ const icon = L.icon({
  * @constructor
  */
 export default function MyMap() {
-  const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
+  const [center] = useState({ lat: 47.67, lng: 9.46 }); // add setCenter when used
   const ZOOM_LEVEL = 13;
   const tileSize = '256';
   const scale = '@2x';
@@ -34,20 +34,19 @@ export default function MyMap() {
   useEffect(() => {
     const mapStyles = {
       Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, { className: 'map-tiles' },
       ),
       Outdoor: L.tileLayer(
-          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, { className: 'map-tiles' },
       ),
       OpenStreetMap: L.tileLayer(
-          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, { className: 'map-tiles' },
       ),
       Satellite: L.tileLayer(
-          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
       ),
     };
 
-    // document.getElementsByClassName( 'leaflet-control-attribution' )[0].style.display = 'none';
 
     const map = L.map('map', {
       center: center,
@@ -59,10 +58,10 @@ export default function MyMap() {
       layers: [mapStyles.Streets],
     });
 
-    map.locate({watch: true});
+    map.locate({ watch: true });
 
     let locationMarker = null;
-
+    let followLocation = false;
     /**
      * Add location marker to map if location found
      *
@@ -70,32 +69,55 @@ export default function MyMap() {
      */
     function onLocationFound(e) {
       if (locationMarker == null) {
-        locationMarker = L.marker(e.latlng, {icon});
+        locationMarker = L.marker(e.latlng, { icon });
         locationMarker.addTo(map);
-        //map.flyTo(e.latlng, 15);
-
-        L.Routing.control({
-          waypoints: [
-            e.latlng,
-            L.latLng(47.66, 9.49)
-          ],
-          lineOptions: {
-            styles: [
-              {color: 'black', opacity: 0.15, weight: 9},
-              {color: "#ff2d55", opacity: 1, weight: 6}
-            ]
-          },
-          addWaypoints: false
-          
-        }).addTo(map);
-        
+        startNavigation(e);
+        //wait 5 seconds and remove the marker
+        setTimeout(() => {
+          map.flyTo(e.latlng, 15);
+        }, 5000);
       } else {
         locationMarker.setLatLng(e.latlng);
+        if (followLocation) {
+          map.flyTo(e.latlng, 18);
+        }
       }
     }
+
+    function startNavigation(e){
+      L.Routing.control({
+        waypoints: [
+          e.latlng,
+          L.latLng(47.66, 9.49)
+        ],
+        routeWhileDragging: false,
+        /*router: new Routing.OSRMv1({
+          serviceUrl: 'https://router.project-osrm.org/route/v1',
+        }),*/
+        show: false,
+        addWaypoints: false,
+        collapsible: false,
+        draggableWaypoints: false,
+        lineOptions: {
+          styles: [
+            { color: 'black', opacity: 0.4, weight: 9 },
+            { color: "#ff2d55", opacity: 1, weight: 6 }
+          ]
+        },
+        createMarker: function () { return null; },
+      }).addTo(map);
+      followLocation = true;
+    }
+
     map.on('locationfound', onLocationFound);
-    L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
+    map.on('mousedown', () => {
+      followLocation = false;
+      console.log('climousedown');
+    });
+
+
+    L.control.groupedLayers(mapStyles, {}, { position: 'bottomleft' }).addTo(map);
   }, []);
-  
-  return <div id="map" className="map"/>;
+
+  return <div id="map" className="map" />;
 }
