@@ -131,8 +131,7 @@ export default function MyMap() {
         draggableWaypoints: false,
         lineOptions: {
           styles: [
-            {color: 'black', opacity: 0.4, weight: 9},
-            {color: '#ff2d55', opacity: 1, weight: 6},
+            {color: '#fc2c54', opacity: 1, weight: 6},
           ],
         },
         createMarker: function() {

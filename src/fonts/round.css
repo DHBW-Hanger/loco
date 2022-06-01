@@ -5,7 +5,6 @@
   font-display: block;
   src: url("./material-icons-round.woff2") format("woff2"), url("./material-icons-round.woff") format("woff");
 }
-
 .material-icons-round {
   font-family: "Material Icons Round";
   font-weight: normal;
@@ -20,6 +19,6 @@
   direction: ltr;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility;
+  text-rendering: optimizeLegibility;
   font-feature-settings: "liga";
 }
