@@ -39,8 +39,12 @@ export default function MyMap() {
 
   useEffect((e) => {
     const mapStyles = {
+      // the mapbox maps
       Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
+          `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
+      ),
+      Satellite: L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ),
       Outdoor: L.tileLayer(
           `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
@@ -48,19 +52,24 @@ export default function MyMap() {
       OpenStreetMap: L.tileLayer(
           `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
       ),
-      Satellite: L.tileLayer(
-          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
+      /*
+      Unused map layers, replaced with mapbox
+      Streets2: L.tileLayer(
+        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, { className: 'map-tiles' },
       ),
       Satellite2: L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
+        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
       ),
-      Streets2: L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
-      ),
-      Streets2Dark: L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
-      ),
+      */
+
     };
+    // if darkmode is enabled replace the map tiles with the darkmode tiles
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      console.log('darkmode is enabled');
+      mapStyles.Streets = L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+      );
+    }
 
 
     const map = L.map('map', {
@@ -157,5 +166,5 @@ export default function MyMap() {
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
   }, []);
 
-  return <div id="map" className="map"/>;
+  return <div id="map" className="map" />;
 }
