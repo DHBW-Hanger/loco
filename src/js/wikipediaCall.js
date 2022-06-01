@@ -77,8 +77,23 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   }
 
   async function imageWikiUrls(userInput) {
-    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&origin=*`;
-    let content;
+    //gets name for of 30 images (imlimit=30)
+    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&imlimit=30&origin=*`;
+    /*
+    let url = "https://de.wikipedia.org/w/api.php?"
+    let params = {
+      action: "query",
+      titles: userInput,
+      format: "json",
+      prop: "images",
+      imlimit: "30",
+      origin: "*"
+    }
+    Object.keys(params).forEach((key) => {
+      url += "&" + key + "=" + params[key];
+    });
+    */
+   let content;
     await fetch(
         url,
         {
@@ -94,13 +109,20 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   }
 
   async function createImageAPIUrls(data) {
+    /*
+    creates the url apicalls for the imagenames and only includes the .jpg files
+     */
     const pageId = Object.keys(data.query.pages)[0];
     const images = data.query.pages[pageId]['images'];
     const urls = [];
+    let count =0;
     for (let i = 0; i < images.length; i++) {
-      let imagename = images[i]['title'];
-      imagename = imagename.replace('Datei', 'File');
-      urls[i] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
+      if ((images[i]['title']).includes(".jpg")) {
+        let imagename = images[i]['title'];
+        imagename = imagename.replace('Datei', 'File');
+        urls[count] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
+        count++;
+      }
     }
     return urls;
   }
