@@ -136,7 +136,8 @@ export default function MyMap() {
       console.log('climousedown');
     });
 
-
+    //new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+    L.control.scale({ imperial: false }).addTo(map);
     L.control.groupedLayers(mapStyles, {}, { position: 'bottomleft' }).addTo(map);
   }, []);
 
