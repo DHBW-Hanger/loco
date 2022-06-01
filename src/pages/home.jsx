@@ -11,17 +11,16 @@ import {
   Page,
   Searchbar,
   theme,
+  NavRight,
+  Navbar,
   // NavLeft,
   // NavTitle,
   // NavTitleLarge,
-  // NavRight,
-  // Link,
   // Toolbar,
   // Block,
   Button,
   Sheet,
   // Toolbar,
-  // Link,
   // PageContent,
   BlockTitle,
   List,
@@ -52,32 +51,26 @@ export default function App() {
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
-      <div className="navbar">
-        <div className="navbar-bg"></div>
-        <div className="navbar-inner">
-          <Button fill sheetOpen=".demo-sheet-swipe-to-step">
-            Swipe To Step
-          </Button>
-          <img className="logo" src="../img/logo.png" alt="Loco" />
-          <div className="logo-text sliding">LOCO</div>
-          <div className="right">
-            <Link
-              searchbarEnable=".searchbar-demo"
-              iconIos="f7:search"
-              iconAurora="f7:search"
-              iconMd="material:search"
-            ></Link>
-            <Searchbar
-              className="searchbar-demo"
-              expandable
-              searchContainer=".search-list"
-              searchIn=".item-title"
-              disableButton={!theme.aurora}
-            ></Searchbar>
-            <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="avatar"></img>
-          </div>
-        </div>
-      </div>
+      <Navbar>
+        <img className="logo" src="../img/logo.png" alt="Loco"/>
+        <div className="logo-text sliding">LOCO</div>
+        <NavRight>
+          <Link
+            searchbarEnable=".searchbar-demo"
+            iconIos="f7:search"
+            iconAurora="f7:search"
+            iconMd="material:search"
+          ></Link>
+        </NavRight>
+        <Searchbar
+          className="searchbar-demo"
+          expandable
+          searchContainer=".search-list"
+          searchIn=".item-title"
+          disableButton={!theme.aurora}
+        ></Searchbar>
+      </Navbar>
+
       <MyMap/>
 
       <Sheet
@@ -97,7 +90,9 @@ export default function App() {
           <div className="display-flex padding justify-content-space-between align-items-center">
 
             <div className="display-flex align-items-center">
-              <img src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png" alt="Avatar" className="wiki-pic"></img>
+              <img
+                src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
+                alt="Avatar" className="wiki-pic"></img>
               <div style={{fontSize: '24px', opacity: 0.9, paddingLeft: 15.0}}>
                 <b>Friedrichshafen, 88540</b>
                 <div style={{fontSize: '16px', opacity: 0.75}}>
@@ -108,7 +103,7 @@ export default function App() {
 
             <Button fill round align-items-center>
               <div style={{fontSize: '24px', paddingTop: 7}}>
-                <BiLocationPlus />
+                <BiLocationPlus/>
               </div>
             </Button>
           </div>
@@ -116,44 +111,44 @@ export default function App() {
           <div className="padding-horizontal padding-bottom">
             <Button large fill round>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
-                <TiLocationArrowOutline />
+                <TiLocationArrowOutline/>
               </div>
-              Route
+                            Route
             </Button>
             <div className="margin-top text-align-center">
-              { sheetOpened == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
+              {sheetOpened == true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>
 
         <BlockTitle medium className="margin-top">
-          Information:
+                    Information:
         </BlockTitle>
         <List noHairlines>
           <ListItem title="Bundesland:">
             <b slot="after" className="text-color-black">
-                Baden-Württemberg
+                            Baden-Württemberg
             </b>
           </ListItem>
 
           <ListItem title="Postleitzahlen:">
             <b slot="after" className="text-color-black">
-                88045, 88046, 88048
+                            88045, 88046, 88048
             </b>
           </ListItem>
 
           <ListItem title="Einwohner:">
             <b slot="after" className="text-color-black">
-                61.221
+                            61.221
             </b>
           </ListItem>
 
           <ListItem>
             <f7-block>
               <p>
-                    Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
-                    on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
-                    fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
+                                Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
+                                on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
+                                fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
               </p>
             </f7-block>
           </ListItem>
