@@ -57,6 +57,9 @@ export default function MyMap() {
       Streets2: L.tileLayer(
           `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ),
+      Streets2Dark: L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+      ),
     };
 
 
