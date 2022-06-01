@@ -24,6 +24,7 @@ export default (props, {$, $f7, $on}) => {
       },
     });
   });
-
+  console.log(searchbar);
+  console.log(autocompleteDropdownSimple);
   return $render;
 };

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useRef} from 'react';
 import L from 'leaflet';
-import Routing from 'leaflet-routing-machine';
+import Routing from 'leaflet-routing-machine'; // eslint-disable-line
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
