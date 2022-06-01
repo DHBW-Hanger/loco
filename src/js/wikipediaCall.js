@@ -1,11 +1,11 @@
-const userInput = 'Stuttgart';
+const userInput = 'Friedrichshafen';
 
 
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   await reverseGeocoding(longitude, latitude);
   // searchWiki(userInput);
   // contentWiki(userInput);
-  await imageWiki(userInput);
+  await getImages(userInput);
 
   /**
    * gibt Adresse auf der Konsole aus
@@ -53,11 +53,32 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         });
   }
 
-  async function imageWiki(userInput) {
-    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&origin=*`;
-    let urls;
+  async function getImages(location) {
+    let imageNames;
+    let apiurls;
     let contentImageApi;
     let content = [];
+    // get names of images
+    imageNames = await imageWikiUrls(location);
+    // create urls for image api Call
+    apiurls = await createImageAPIUrls(imageNames);
+    // get image urls
+    for (let i = 0; i < apiurls.length; i++) {
+      contentImageApi = await getImageUrl(apiurls[i]);
+      if ('imageinfo' in contentImageApi['query']['pages'][0]) {
+        if ('url' in contentImageApi['query']['pages'][0]['imageinfo'][0]) {
+          content.push(contentImageApi['query']['pages'][0]['imageinfo'][0]['url']);
+        }
+      } else {
+        content.push("");
+      }
+    }
+    console.log(content)
+  }
+
+  async function imageWikiUrls(userInput) {
+    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&origin=*`;
+    let content;
     await fetch(
         url,
         {
@@ -65,26 +86,14 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
         },
     )
         .then((response) => response.json())
-        .then(async (json) => {
-          urls = createImageAPIUrls(json);
-          console.log(urls)
-          for (let i = 0; i < urls.length; i++) {
-            contentImageApi = await getImageUrl(urls[i]);
-            if ('url' in contentImageApi) {
-              content[i] = contentImageApi['url'];
-            } else {
-              content[i] = 0;
-            }
-          }
-          console.log(content);
-        })
+        .then((json) => content = json)
         .catch((error) => {
-          console.log(content);
           console.log(error.message);
         });
+    return content;
   }
 
-  function createImageAPIUrls(data) {
+  async function createImageAPIUrls(data) {
     const pageId = Object.keys(data.query.pages)[0];
     const images = data.query.pages[pageId]['images'];
     const urls = [];
@@ -100,8 +109,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     let content;
     await fetch(urls)
         .then((response) => response.json())
-        .then((json) => content = json['query']['pages'][0]['imageinfo'][0])
-        .catch((response) => response.json())
+        .then((json) => content = json)
+        .catch((response) => response.json());
     return content;
   }
 }
