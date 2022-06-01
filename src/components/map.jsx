@@ -78,7 +78,15 @@ export default function MyMap() {
           waypoints: [
             e.latlng,
             L.latLng(47.66, 9.49)
-          ]
+          ],
+          lineOptions: {
+            styles: [
+              {color: 'black', opacity: 0.15, weight: 9},
+              {color: "#ff2d55", opacity: 1, weight: 6}
+            ]
+          },
+          addWaypoints: false
+          
         }).addTo(map);
         
       } else {
