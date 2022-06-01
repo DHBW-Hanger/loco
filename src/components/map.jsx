@@ -28,7 +28,8 @@ export default function MyMap() {
   const ZOOM_LEVEL = 13;
   const tileSize = '256';
   const scale = '@2x';
-  const apiKey = 'zuWv6WszYelAVMVuJZe3';
+  const apiKeyMaptiler = 'zuWv6WszYelAVMVuJZe3';
+  const apiKeyMapbox = 'pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA';
   const mapRef = useRef();
   const MIN_ZOOM = 3;
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
@@ -39,22 +40,22 @@ export default function MyMap() {
   useEffect((e) => {
     const mapStyles = {
       Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
       ),
       Outdoor: L.tileLayer(
-          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
       ),
       OpenStreetMap: L.tileLayer(
-          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`, {className: 'map-tiles'},
+        `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
       ),
       Satellite: L.tileLayer(
-          `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
+        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
       ),
       Satellite2: L.tileLayer(
-        `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA`,
+        `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ),
       Streets2: L.tileLayer(
-        `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA`,
+        `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ),
     };
 
@@ -134,7 +135,7 @@ export default function MyMap() {
             {color: '#fc2c54', opacity: 1, weight: 6},
           ],
         },
-        createMarker: function() {
+        createMarker: function () {
           return null;
         },
         fitSelectedRoutes: false,
