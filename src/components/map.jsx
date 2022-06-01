@@ -50,6 +50,12 @@ export default function MyMap() {
       Satellite: L.tileLayer(
         `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKey}`,
       ),
+      Satellite2: L.tileLayer(
+        `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA`,
+      ),
+      Streets2: L.tileLayer(
+        `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA`,
+      ),
     };
 
 
