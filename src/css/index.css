@@ -4,6 +4,23 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
+/* Avatar for Userprofile */
+.avatar {
+  vertical-align: middle;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Wikipediapicture */
+.wiki-pic {
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  border-radius: 20%;
+}
+
 .logo {
   vertical-align: middle;
   margin-left: 10px;
@@ -28,7 +45,7 @@
 }
 
 .leaflet-container {
-  min-height: 93vh;
+  height: 100%;
   width: 100%;
   position: relative;
 }
@@ -64,5 +81,28 @@
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --f7-bars-text-color: white;
+  }
+
+  .navbar-bg {
+    background-color: #222;
+  }
+
+  .logo-text {
+    color: white;
+  }
+
+  .toolbar {
+    background-color: #222;
+    color: white;
+
+    --f7-tabbar-link-inactive-color: white;
+    --f7-navbar-text-color: white;
+    --f7-bars-text-color: white;
   }
 }

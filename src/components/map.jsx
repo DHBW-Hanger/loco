@@ -1,19 +1,35 @@
-import React, {useState} from 'react';
-
-import {MapContainer, Marker, TileLayer} from 'react-leaflet';
+import React, {useEffect, useState} from 'react';
 import {useRef} from 'react';
 import L from 'leaflet';
+import Routing from 'leaflet-routing-machine'; // eslint-disable-line
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
+import '../css/map.css';
+import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 
-const MyMap = () => {
-  const [center] = useState({lat: 47.6618, lng: 9.48}); // add setCenter when used
-  const [currentPosition, setCurrentPosition] = useState(null);
-  const ZOOM_LEVEL = 12;
+// icon for current position
+const icon = L.icon({
+  iconUrl: '/icons/currentLocation.svg',
+  iconSize: [20, 20],
+});
+const targetIcon = L.icon({
+  iconUrl: '/icons/mappin.svg',
+  iconSize: [32, 32],
+  iconAnchor: [13, 28],
+});
+
+/**
+ *
+ * @return {JSX.Element} - Map Component
+ * @constructor
+ */
+export default function MyMap() {
+  const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
+  const ZOOM_LEVEL = 13;
   const tileSize = '256';
-  const [mapStyle] = useState('streets'); // add setMapStyle when used
   const scale = '@2x';
-  const apiKey = 'zuWv6WszYelAVMVuJZe3';
+  const apiKeyMaptiler = 'zuWv6WszYelAVMVuJZe3';
+  const apiKeyMapbox = 'pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA';
   const mapRef = useRef();
   const MIN_ZOOM = 3;
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
@@ -21,59 +37,134 @@ const MyMap = () => {
   // will prevent the user from moving out of the map bounds
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
 
-  // icon for current position
-  const icon = L.icon({
-    iconUrl: '/icons/currentLocation.svg',
-    iconSize: [20, 20],
-  });
+  useEffect((e) => {
+    const mapStyles = {
+      // the mapbox maps
+      Streets: L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
+      ),
+      Satellite: L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
+      ),
+      Outdoor: L.tileLayer(
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
+      ),
+      OpenStreetMap: L.tileLayer(
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
+      ),
+      /*
+      Unused map layers, replaced with mapbox
+      Streets2: L.tileLayer(
+        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, { className: 'map-tiles' },
+      ),
+      Satellite2: L.tileLayer(
+        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
+      ),
+      */
 
-  // get current position if functionality is supported
-  if (navigator.geolocation) {
-    navigator.geolocation.watchPosition((position) => {
-      setCurrentPosition([
-        position.coords.latitude,
-        position.coords.longitude,
-      ]);
-    }, () => {
-      // warn if location was not found
-      console.warn('Unable to retrieve your location');
-    }, {
-      // options for location retrieval
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
+    };
+    // if darkmode is enabled replace the map tiles with the darkmode tiles
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      console.log('darkmode is enabled');
+      mapStyles.Streets = L.tileLayer(
+          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+      );
+    }
+
+
+    const map = L.map('map', {
+      center: center,
+      zoom: ZOOM_LEVEL,
+      ref: mapRef,
+      minZoom: MIN_ZOOM,
+      maxBounds: BOUNDS,
+      zoomControl: false,
+      layers: [mapStyles.Streets],
     });
-  } else {
-    // alert if geolocation is not supported
-    alert('Geolocation is not supported by your browser!');
-  }
 
-  // return the MapContainer
-  // add marker if current position is known
-  if (currentPosition == null) {
-    return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
-        ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
-        <TileLayer
-          url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
-          attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
-            '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'}
-        />
-      </MapContainer>
-    );
-  } else {
-    return (
-      <MapContainer center={center} zoom={ZOOM_LEVEL} zoomControl = {false}
-        ref={mapRef} minZoom={MIN_ZOOM} maxBounds={BOUNDS} attributionControl={false}>
-        <TileLayer
-          url={`https://api.maptiler.com/maps/${mapStyle}/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKey}`}
-          attribution={'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>' +
-            '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'}
-        />
-        <Marker position={currentPosition} icon={icon}/>
-      </MapContainer>
-    );
-  }
-};
+    map.locate({watch: true});
 
-export default MyMap;
+    let locationMarker = null;
+    let followLocation = false;
+    const targetLocation = L.latLng(47.66, 9.49);
+    let navigation = null;
+    let lastPosition = null;
+    L.marker(targetLocation, {icon: targetIcon}).addTo(map);
+
+    /**
+     * Add location marker to map if location found
+     *
+     * @param {Object} e - location Data
+     */
+    function onLocationFound(e) {
+      if (locationMarker == null) {
+        locationMarker = L.marker(e.latlng, {icon}).addTo(map);
+        if (navigation == null) {
+          startNavigation(e, targetLocation);
+          lastPosition = e.latlng;
+        }
+      } else {
+        locationMarker.setLatLng(e.latlng);
+        // if the location has changed, update the navigation
+        if (Math.abs(e.latlng.lat - lastPosition.lat) > 0.00001 || Math.abs(e.latlng.lng - lastPosition.lng) > 0.00001) {
+          console.log('location changed | ' + (e.latlng.lat - lastPosition.lat) + ' ' + (e.latlng.lng - lastPosition.lng));
+          lastPosition = e.latlng;
+          if (navigation != null) {
+            console.log('navigation changed');
+            navigation;
+            navigation.spliceWaypoints(0, 1, e.latlng);
+          }
+        }
+
+        // center the view to the current location
+        if (followLocation) {
+          map.flyTo(e.latlng, 18);
+        }
+      }
+    }
+
+    /**
+     * Start navigation
+     *
+     * @param {Object} e - location Data
+     */
+    function startNavigation(e) {
+      navigation = L.Routing.control({
+        waypoints: [
+          e.latlng,
+          targetLocation,
+        ],
+        routeWhileDragging: false,
+        /* router: new Routing.OSRMv1({
+          serviceUrl: 'https://router.project-osrm.org/route/v1',
+        }),*/
+        show: false,
+        addWaypoints: false,
+        collapsible: false,
+        draggableWaypoints: false,
+        lineOptions: {
+          styles: [
+            {color: '#fc2c54', opacity: 1, weight: 6},
+          ],
+        },
+        createMarker: function() {
+          return null;
+        },
+        fitSelectedRoutes: false,
+      }).addTo(map);
+      followLocation = true;
+    }
+
+    map.on('locationfound', onLocationFound);
+    map.on('mousedown', () => {
+      followLocation = false;
+      console.log('climousedown');
+    });
+
+    // new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+    L.control.scale({imperial: false}).addTo(map);
+    L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
+  }, []);
+
+  return <div id="map" className="map" />;
+}
