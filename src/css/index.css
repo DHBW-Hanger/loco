@@ -1,3 +1,11 @@
+:root {
+  --background-color: white;
+  --background-color-disabled: rgb(178 178 178);
+  --text-color: black;
+  --text-color-disabled: rgb(73 73 73);
+  --accent-color: #fc2c54;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +14,10 @@
 
 .list-container {
   color: #fff;
+}
+
+.searchbar {
+  background-color: #fff;
 }
 
 /* Avatar for Userprofile */
@@ -96,8 +108,12 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --f7-bars-text-color: white;
+    --background-color: rgb(20 20 20);
+    --text-color: white;
+    --text-color-disabled: rgb(154 154 154);
+    --background-color-disabled: rgb(66 66 66);
   }
-
+  
   .navbar-bg {
     background-color: #222;
   }
