@@ -54,6 +54,14 @@ export default function App() {
     f7.sheet.open(sheet.current);
   };
   /* eslint-enable*/
+  //get if darkmode overide from local storage
+  const darkmode = () => {
+    if (document.cookie.indexOf('darkmode=true') === -1) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return document.cookie.indexOf('darkmode=true') !== -1;
+  };
+  console.log("Darkmode " + darkmode());
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
