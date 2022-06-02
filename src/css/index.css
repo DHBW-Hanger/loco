@@ -113,7 +113,7 @@
     --background-color: rgb(20 20 20);
     --text-color: white;
     --text-color-disabled: rgb(154 154 154);
-    --background-color-disabled: rgb(255 255 255);
+    --background-color-disabled: white;
     --f7-searchbar-input-bg-color: var(--background-color);
     --f7-searchbar-input-text-color: #fff;
 
