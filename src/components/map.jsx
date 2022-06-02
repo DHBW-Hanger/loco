@@ -13,7 +13,7 @@ const icon = L.icon({
   iconSize: [20, 20],
 });
 const targetIcon = L.icon({
-  iconUrl: '/icons/mappin.svg',
+  iconUrl: '/icons/marker_darkm.svg',
   iconSize: [32, 32],
   iconAnchor: [13, 28],
 });
