@@ -96,6 +96,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --f7-bars-text-color: white;
+    --f7-searchbar-input-bg-color: black;
+    --f7-searchbar-input-text-color: #fc3c54;
   }
 
   .navbar-bg {
