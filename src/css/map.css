@@ -142,6 +142,44 @@
   }
 }
 
+.leaflet-control-layers-base input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.leaflet-control-layers-base label {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  padding: 8px 16px;
+  margin-right: -5px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 30%), 0 1px rgba(201, 188, 188, 0.1);
+  transition: all 0.1s ease-in-out;
+}
+.leaflet-control-layers-base label:hover {
+	cursor: pointer;
+  background-color: var(--background-color-disabled);
+}
+input:checked + span {
+  background-color: var(--accent-color) !important;
+  color: var(--text-color);
+  box-shadow: none;
+}
+.leaflet-control-layers-base label:first-of-type {
+	border-radius: 4px 4px 0 0;
+}
+
+.leaflet-control-layers-base label:last-of-type {
+	border-radius: 0 0 4px 4px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background-color: rgb(20 20 20);

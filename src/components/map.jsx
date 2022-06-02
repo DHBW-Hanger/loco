@@ -12,7 +12,7 @@ const icon = L.icon({
   iconUrl: '/icons/currentLocation.svg',
   iconSize: [20, 20],
 });
-var targetIcon = L.icon({
+let targetIcon = L.icon({
   iconUrl: '/icons/marker_lightm.svg',
   iconSize: [32, 32],
   iconAnchor: [13, 28],
