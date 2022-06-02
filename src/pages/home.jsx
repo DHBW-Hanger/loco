@@ -13,15 +13,8 @@ import {
   theme,
   NavRight,
   Navbar,
-  // NavLeft,
-  // NavTitle,
-  // NavTitleLarge,
-  // Toolbar,
-  // Block,
   Button,
   Sheet,
-  // Toolbar,
-  // PageContent,
   BlockTitle,
   List,
   ListItem,
@@ -115,7 +108,7 @@ export default function App() {
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
               </div>
-                            Route
+                Route
             </Button>
             <div className="margin-top text-align-center iconcolor">
               {sheetOpened == true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
