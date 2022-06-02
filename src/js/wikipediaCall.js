@@ -77,7 +77,7 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
    * prints urls of images on console
    *
    * @param {string} location
-   * @return nothing so far
+   * @return {string} nothing so far
    */
   async function getImages(location) {
     // get names of images

@@ -26,7 +26,6 @@ import {
 
 import routes from '../js/routes';
 import store from '../js/store';
-import setup from '../js/wikipediaCall';
 
 const MyApp = () => {
   // Login screen demo data
