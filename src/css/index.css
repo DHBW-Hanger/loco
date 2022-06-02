@@ -29,7 +29,7 @@
   border-radius: 50%;
 }
 
-.icon-color{
+.icon-color {
   color: #fff;
   opacity: 0.8;
 }
@@ -102,8 +102,8 @@
     color: white;
   }
 
-  .icon-color{
-    color: rgb(255, 255, 255);
+  .icon-color {
+    color: rgb(255 255 255);
   }
 
   .toolbar {

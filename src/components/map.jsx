@@ -154,16 +154,67 @@ export default function MyMap() {
       }).addTo(map);
       followLocation = true;
     }
+    /**
+     * Show the reset button if the user moved the map
+     *
+     */
+    function showResetButton() {
+      const slidecontainer = document.getElementsByClassName('reset-button-field')[0];
+      slidecontainer.classList.add('slide-in');
+      slidecontainer.classList.remove('slide-out');
+      const resetButton = document.querySelector('input.recenter-button');
+      // listen for input changes
+      resetButton.addEventListener('change', () => {
+        console.log('reset button changed');
+        if (resetButton.checked) {
+          followLocation = true;
+          map.flyTo(lastPosition, 18);
+          setTimeout(() => {
+            hideResetButton();
+          }, 500);
+          setTimeout(() => {
+            resetButton.checked = false;
+          }, 1000);
+        }
+      });
+    }
+    /**
+     * Hide the reset button after resetting the view
+     *
+     */
+    function hideResetButton() {
+      const slidecontainer = document.getElementsByClassName('reset-button-field')[0];
+      slidecontainer.classList.add('slide-out');
+      slidecontainer.classList.remove('slide-in');
+    }
 
     map.on('locationfound', onLocationFound);
     map.on('mousedown', () => {
-      followLocation = false;
-      console.log('climousedown');
+      if (lastPosition != null) {
+        followLocation = false;
+        showResetButton();
+      }
     });
 
     // new L.Control.Zoom({ position: 'topleft' }).addTo(map);
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
+
+    const info = L.control({position: 'bottomright'});
+    info.onAdd = function(map) {
+      this._div = L.DomUtil.create('div', 'slider');
+      this.update();
+      return this._div;
+    };
+    // method that we will use to update the control based on feature properties passed
+    info.update = function(props) {
+      this._div.innerHTML = '<div class="reset-button-field slide-out">' +
+        '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
+        '<label for="recenter-button">Recenter Map</label>' +
+        '</div>';
+    };
+
+    info.addTo(map);
   }, []);
 
   return <div id="map" className="map" />;

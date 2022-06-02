@@ -41,18 +41,19 @@ export default function App() {
     if (sheet.current) sheet.current.destroy();
   };
 
-  //Needs changes (on Button Press up and down the modal box)
-  //also add route infiormation if clikced on route (part close it and also make background appear as normal and nort darker)
+  // Needs changes (on Button Press up and down the modal box)
+  // also add route infiormation if clikced on route (part close it and also make background appear as normal and nort darker)
+  /*eslint-disable*/
   const sheetPartClose = () => {
     // Close sheet part
     f7.sheet.close();
-  }
+  };
 
   const sheetPartOpen = () => {
     // Open sheet part
     f7.sheet.open(sheet.current);
-  }
-
+  };
+  /* eslint-enable*/
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
@@ -161,6 +162,7 @@ export default function App() {
           </ListItem>
         </List>
       </Sheet>
+
     </Page>
   );
 };
