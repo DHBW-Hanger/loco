@@ -41,6 +41,18 @@ export default function App() {
     if (sheet.current) sheet.current.destroy();
   };
 
+  //Needs changes (on Button Press up and down the modal box)
+  //also add route infiormation if clikced on route (part close it and also make background appear as normal and nort darker)
+  const sheetPartClose = () => {
+    // Close sheet part
+    f7.sheet.close();
+  }
+
+  const sheetPartOpen = () => {
+    // Open sheet part
+    f7.sheet.open(sheet.current);
+  }
+
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
@@ -110,7 +122,7 @@ export default function App() {
               </div>
                 Route
             </Button>
-            <div className="margin-top text-align-center iconcolor">
+            <div className="margin-top text-align-center icon-color">
               {sheetOpened == true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
