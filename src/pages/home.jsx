@@ -54,6 +54,9 @@ export default function App() {
       <Navbar>
         <img className="logo" src="../img/logo.png" alt="Loco"/>
         <div className="logo-text sliding">LOCO</div>
+        <Button fill sheetOpen=".demo-sheet-swipe-to-step">
+            Swipe To Step
+        </Button>
         <NavRight>
           <Link
             searchbarEnable=".searchbar-demo"
@@ -75,7 +78,6 @@ export default function App() {
 
       <Sheet
         className="demo-sheet-swipe-to-step"
-        style={{'height': 'auto', '--f7-sheet-bg-color': '#fff'}}
         swipeToClose
         swipeToStep
         backdrop
@@ -93,10 +95,10 @@ export default function App() {
               <img
                 src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
                 alt="Avatar" className="wiki-pic"></img>
-              <div style={{fontSize: '24px', opacity: 0.9, paddingLeft: 15.0}}>
-                <b>Friedrichshafen, 88540</b>
-                <div style={{fontSize: '16px', opacity: 0.75}}>
-                  <b>Die Stadt der Lebenden lel</b>
+              <div>
+                <b className="sheet-text-main">Friedrichshafen, 88540</b>
+                <div>
+                  <b className="sheet-text-secondary">Die Stadt der Lebenden lel</b>
                 </div>
               </div>
             </div>
@@ -121,7 +123,7 @@ export default function App() {
           </div>
         </div>
 
-        <BlockTitle medium className="margin-top">
+        <BlockTitle medium className="margin-top sheet-text-main">
                     Information:
         </BlockTitle>
         <List noHairlines>
@@ -152,7 +154,6 @@ export default function App() {
               </p>
             </f7-block>
           </ListItem>
-
         </List>
       </Sheet>
     </Page>
