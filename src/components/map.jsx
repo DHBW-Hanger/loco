@@ -148,6 +148,7 @@ export default function MyMap() {
         draggableWaypoints: false,
         lineOptions: {
           styles: [
+            {color: 'black', opacity: 0.2, weight: 9},
             {color: '#fc2c54', opacity: 1, weight: 6},
           ],
         },
