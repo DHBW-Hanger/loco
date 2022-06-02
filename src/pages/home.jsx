@@ -57,7 +57,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <MyMap/>
+      <MyMap />
 
       <Sheet
         className="demo-sheet-swipe-to-step"
@@ -100,7 +100,7 @@ export default function App() {
               Route
             </Button>
             <div className="margin-top text-align-center">
-              { sheetOpened == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
+              {sheetOpened == true ? <IoIosArrowDown /> : <IoIosArrowUp />}
             </div>
           </div>
         </div>
@@ -111,34 +111,35 @@ export default function App() {
         <List noHairlines>
           <ListItem title="Bundesland:">
             <b slot="after" className="text-color-black">
-                Baden-Württemberg
+              Baden-Württemberg
             </b>
           </ListItem>
 
           <ListItem title="Postleitzahlen:">
             <b slot="after" className="text-color-black">
-                88045, 88046, 88048
+              88045, 88046, 88048
             </b>
           </ListItem>
 
           <ListItem title="Einwohner:">
             <b slot="after" className="text-color-black">
-                61.221
+              61.221
             </b>
           </ListItem>
 
           <ListItem>
             <f7-block>
               <p>
-                    Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
-                    on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
-                    fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
+                Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
+                on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
+                fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
               </p>
             </f7-block>
           </ListItem>
 
         </List>
       </Sheet>
+
     </Page>
   );
 };
