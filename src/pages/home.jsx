@@ -54,14 +54,6 @@ export default function App() {
     f7.sheet.open(sheet.current);
   };
   /* eslint-enable*/
-  //get if darkmode overide from local storage
-  const darkmode = () => {
-    if (document.cookie.indexOf('darkmode=true') === -1) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return document.cookie.indexOf('darkmode=true') !== -1;
-  };
-  console.log("Darkmode " + darkmode());
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
@@ -140,7 +132,7 @@ export default function App() {
         <BlockTitle medium className="margin-top sheet-text-main">
           Information:
         </BlockTitle>
-        <List noHairlines className="dark">
+        <List noHairlines className="sheet-container">
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               Baden-Württemberg

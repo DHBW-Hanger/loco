@@ -4,6 +4,10 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.list-container {
+  color: #fff;
+}
+
 /* Avatar for Userprofile */
 .avatar {
   vertical-align: middle;
@@ -113,5 +117,9 @@
     --f7-tabbar-link-inactive-color: white;
     --f7-navbar-text-color: white;
     --f7-bars-text-color: white;
+  }
+
+  .list-container {
+    color: #222;
   }
 }
