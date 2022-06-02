@@ -29,6 +29,11 @@
   border-radius: 50%;
 }
 
+.icon-color{
+  color: #fff;
+  opacity: 0.8;
+}
+
 .logo-text {
   margin-left: 5px;
   color: rgb(32 32 32);
@@ -95,6 +100,10 @@
 
   .logo-text {
     color: white;
+  }
+
+  .icon-color{
+    color: rgb(255, 255, 255);
   }
 
   .toolbar {
