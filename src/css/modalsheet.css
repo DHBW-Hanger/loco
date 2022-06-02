@@ -49,12 +49,35 @@
   color: rgb(0 0 0);
 }
 
+.sheet-text-tertiary{
+  font-size: 14px;
+  opacity: 0.75;
+  padding-left: 15px;
+  color: rgb(0 0 0);
+}
+
+.sheet-text-tertiary-bold{
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.9;
+  padding-left: 15px;
+  color: rgb(0 0 0);
+}
+
 @media (prefers-color-scheme: dark) {
   .sheet-text-main {
     color: rgb(255 255 255);
   }
 
   .sheet-text-secondary {
+    color: rgb(255 255 255);
+  }
+
+  .sheet-text-tertiary{
+    color: rgb(255 255 255);
+  }
+
+  .sheet-text-tertiary-bold{
     color: rgb(255 255 255);
   }
 

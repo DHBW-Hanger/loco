@@ -132,28 +132,28 @@ export default function App() {
         <BlockTitle medium className="margin-top sheet-text-main">
           Information:
         </BlockTitle>
-        <List noHairlines>
-          <ListItem title="Bundesland:">
-            <b slot="after" className="text-color-black">
+        <List noHairlines className="dark">
+          <ListItem title="Bundesland:" className="sheet-text-tertiary">
+            <b slot="after" className="sheet-text-tertiary-bold">
               Baden-Württemberg
             </b>
           </ListItem>
 
-          <ListItem title="Postleitzahlen:">
-            <b slot="after" className="text-color-black">
+          <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
+            <b slot="after" className="sheet-text-tertiary-bold">
               88045, 88046, 88048
             </b>
           </ListItem>
 
-          <ListItem title="Einwohner:">
-            <b slot="after" className="text-color-black">
+          <ListItem title="Einwohner:" className="sheet-text-tertiary">
+            <b slot="after" className="sheet-text-tertiary-bold">
               61.221
             </b>
           </ListItem>
 
           <ListItem>
             <f7-block>
-              <p>
+              <p className = "sheet-text-tertiary">
                 Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
                 on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
                 fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
