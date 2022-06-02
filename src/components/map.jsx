@@ -12,8 +12,8 @@ const icon = L.icon({
   iconUrl: '/icons/currentLocation.svg',
   iconSize: [20, 20],
 });
-const targetIcon = L.icon({
-  iconUrl: '/icons/marker_darkm.svg',
+var targetIcon = L.icon({
+  iconUrl: '/icons/marker_lightm.svg',
   iconSize: [32, 32],
   iconAnchor: [13, 28],
 });
@@ -65,10 +65,14 @@ export default function MyMap() {
     };
     // if darkmode is enabled replace the map tiles with the darkmode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      console.log('darkmode is enabled');
       mapStyles.Streets = L.tileLayer(
           `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
       );
+      targetIcon = L.icon({
+        iconUrl: '/icons/marker_darkm.svg',
+        iconSize: [32, 32],
+        iconAnchor: [13, 28],
+      });
     }
 
 
