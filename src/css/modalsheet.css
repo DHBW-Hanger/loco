@@ -38,29 +38,28 @@
 .sheet-text-main {
   font-size: 24px;
   opacity: 0.9;
-  padding-left: 15.0px;
-  color: rgb(0, 0, 0);
+  padding-left: 15px;
+  color: rgb(0 0 0);
 }
 
 .sheet-text-secondary {
   font-size: 16px;
   opacity: 0.75;
-  padding-left: 15.0px;
-  color: rgb(0, 0, 0);
+  padding-left: 15px;
+  color: rgb(0 0 0);
 }
 
 @media (prefers-color-scheme: dark) {
-
   .sheet-text-main {
-    color: rgb(255, 255, 255);
+    color: rgb(255 255 255);
   }
 
   .sheet-text-secondary {
-    color: rgb(255, 255, 255);
+    color: rgb(255 255 255);
   }
 
   .aurora {
-    --f7-sheet-bg-color: rgb(27, 27, 27);
+    --f7-sheet-bg-color: rgb(27 27 27);
     --f7-sheet-border-color: transparent;
   }
 
