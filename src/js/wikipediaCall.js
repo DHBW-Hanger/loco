@@ -3,9 +3,9 @@ const userInput = 'Friedrichshafen';
 /**
  * wikipedia Api Call for everything
  *
- * @param longitude
- * @param latitude
- * @returns {Promise<void>}
+ * @param {float} longitude
+ * @param {float} latitude
+ *
  */
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   await reverseGeocoding(longitude, latitude);
@@ -16,9 +16,9 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   /**
    * prints address on console
    *
-   * @param lon
-   * @param lat
-   * @returns {Promise<void>}
+   * @param {float} lon
+   * @param {float} lat
+   * @return {Promise<void>}
    */
   async function reverseGeocoding(lon, lat) {
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
@@ -29,7 +29,7 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   /**
    * searches wiki with user input
    *
-   * @param userInput
+   * @param {string} userInput
    */
   function searchWiki(userInput) {
     const url = `https://de.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&formatversion=2&origin=*&srlimit=20&srsearch=${userInput}`;
@@ -52,7 +52,7 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   /**
    * prints the content of the wiki page
    *
-   * @param userInput
+   * @param {string} userInput
    */
   function contentWiki(userInput) {
     const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&prop=revisions&rvprop=content&format=json&formatversion=2&origin=*`;
@@ -76,8 +76,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   /**
    * prints urls of images on console
    *
-   * @param location
-   * @returns nothing so far
+   * @param {string} location
+   * @return nothing so far
    */
   async function getImages(location) {
     // get names of images
@@ -103,8 +103,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
 
   /**
    * gets name of 30 images (imlimit=30)
-   * @param userInput
-   * @returns {Promise<*>}
+   * @param {String} userInput
+   * @return {Promise<*>}
    */
   async function imageWikiUrls(userInput) {
     const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&format=json&prop=images&imlimit=30&origin=*`;
@@ -139,8 +139,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
 
   /**
    * creates the url apicalls for the imagenames and only includes the .jpg files
-   * @param data
-   * @returns {Promise<*[]>}
+   * @param {json} data
+   * @return {Promise<*[]>}
    */
   async function createImageAPIUrls(data) {
     const pageId = Object.keys(data.query.pages)[0];
@@ -160,8 +160,8 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
 
   /**
    * fetches the url and returns the content
-   * @param url
-   * @returns {Promise<*>}
+   * @param {string} url
+   * @return {Promise<*>}
    */
   async function getImageUrl(url) {
     let content;
