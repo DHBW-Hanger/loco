@@ -5,6 +5,7 @@
   --text-color-disabled: rgb(73 73 73);
   --accent-color: #fc2c54;
   --f7-searchbar-link-color: #fc2c54;
+  --f7-searchbar-placeholder-color: var(--text-color-disabled);
 }
 
 * {
@@ -112,9 +113,12 @@
     --background-color: rgb(20 20 20);
     --text-color: white;
     --text-color-disabled: rgb(154 154 154);
-    --background-color-disabled: rgb(255, 255, 255);
+    --background-color-disabled: rgb(255 255 255);
     --f7-searchbar-input-bg-color: var(--background-color);
     --f7-searchbar-input-text-color: #fff;
+
+    color: white;
+    background-color: var(--background-color);
   }
 
   .navbar-bg {
