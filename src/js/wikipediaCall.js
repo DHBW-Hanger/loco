@@ -8,7 +8,10 @@ const userInput = 'Berlin';
  *
  */
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
+
   // Functions
+
+  // reverseGeocoding returns a json object. Within the key address are country, city and more.
   const location = await reverseGeocoding(longitude, latitude);
   console.log(location);
 
@@ -50,7 +53,9 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
       data = data[id]['extract'];
       data = data.replace(/<[^>]+>/g, '');
       // removes everything between square brackets, however some wikipedia articles look bad then.
-      // data = data.replace(/ *\[[^\]]*]/g, '');
+      data = data.replace(/ *\[[^\]]*]/g, '');
+      // removes everything between normal brackets.
+      data = data.replace(/\(.*?\)/g, '');
     } catch {
     }
     return data;
