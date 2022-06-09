@@ -1,4 +1,4 @@
-const userInput = 'Friedrichshafen';
+const userInput = 'Berlin';
 
 /**
  * wikipedia Api Call for everything
@@ -8,53 +8,17 @@ const userInput = 'Friedrichshafen';
  *
  */
 async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
-  let location = await reverseGeocoding(longitude, latitude);
+  // Functions
+  const location = await reverseGeocoding(longitude, latitude);
   console.log(location);
 
-  // townInfo(location);
-  // searchWiki(userInput);
-  contentWiki(userInput);
-  // await getImages(userInput);
-  /**
-   * location ist leer, bis location mit userInput verbunden ist.
-   * @param {string} location
-   * @return {string} nothing so far
-   */
-  async function townInfo(location){
-    const dict = {};
-    location = location.toString()
-    const country = location.split(' ').pop();
-    /*
-    dict['country'] = country;
-    */
-    dict['country'] = 'test';
-    /*
-    const url = `https://query.wikidata.org/sparql?query=%0ASELECT%20%3Ftown%20%3FtownLabel%20%3Fcountry%20%0AWHERE%20%0A%7B%0A%20%20%3Ftown%20%3Flabel%20%22${location}%22%40de.%0A%20%20%3Ftown%20wdt%3AP17%20%20%3Fcountry.%0A%7D`
-    const content = await getContent(url);
-    // Deutschland
-    if conent.results.bindings[0].country.value.contains('Q183') {
-    }
+  const city = userInput;
+  // city = location['address']['city'];
+  const info = await townInfo(city);
+  console.log(info);
 
-     */
-
-    if ("Deutschland" in dict)
-    {
-      const url = `https://query.wikidata.org/sparql?format=json&query=SELECT%20%3Ftown%20%3FtownLabel%20%3Farea%20%3Fpopulation%20%3Fcountry%20%3Fpostcode%20WHERE%20%7B%0A%20%20%3Ftown%20%3Flabel%20%22${userInput}%22%40de.%0A%20%20%3Ftown%20wdt%3AP2046%20%3Farea.%0A%20%20%3Ftown%20wdt%3AP1082%20%3Fpopulation.%0A%20%20%3Ftown%20wdt%3AP17%20%3Fcountry.%0A%20%20%3Ftown%20wdt%3AP281%20%3Fpostcode%0A%7D`;
-      const content = await getContent(url);
-      console.log(content);
-      dict['area'] = content.results.bindings[0].area.value;
-      dict['population'] = content.results.bindings[0].population.value;
-      dict['postcode'] = content.results.bindings[0].postcode.value;
-    }else{
-      const url = `https://query.wikidata.org/sparql?format=json&query=SELECT%20%3Ftown%20%3FtownLabel%20%3Farea%20%3Fpopulation%20%3Fcountry%20%3Fpostcode%20WHERE%20%7B%0A%20%20%3Ftown%20%3Flabel%20%22${userInput}%22%40de.%0A%20%20%3Ftown%20wdt%3AP2046%20%3Farea.%0A%20%20%3Ftown%20wdt%3AP1082%20%3Fpopulation.%0A%20%20%3Ftown%20wdt%3AP17%20%3Fcountry.%0A%20%20%3Ftown%20wdt%3AP281%20%3Fpostcode%0A%7D`;
-      const content = await getContent(url);
-      console.log(content);
-
-      dict['area'] = content.results.bindings[0].area.value;
-      dict['population'] = content.results.bindings[0].population.value;
-    }
-    console.log(dict);
-  }
+  const images = await getImages(userInput);
+  console.log(images);
 
   /**
    * prints address on console
@@ -66,79 +30,41 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   async function reverseGeocoding(lon, lat) {
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
     const data = await response.json();
-    return(data['display_name']);
+    return (data);
   }
 
   /**
-   * searches wiki with user input
+   * returns the first extract in wikipedia about the location and removes all html elements and brackets
+   * since the pageid changes from every apicall, the first key in the dictionary data['query']['pages] is collected
    *
-   * @param {string} userInput
+   * @param {string} location
+   * @return {string} data
    */
-  function searchWiki(userInput) {
-    const url = `https://de.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&formatversion=2&origin=*&srlimit=20&srsearch=${userInput}`;
-
-    fetch(
-        url,
-        {
-          method: 'GET',
-        },
-    )
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          console.log(json['query']['search'][0]);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-  }
-
-  /**
-   * prints the content of the wiki page
-   *
-   * @param {string} userInput
-   */
-  function contentWiki(userInput) {
-    const url = `https://de.wikipedia.org/w/api.php?action=query&titles=${userInput}&prop=revisions&rvprop=content&format=json&formatversion=2&rvsection=0&rvlimit=1&origin=*`;
-    console.log(url);
-    let content;
-    fetch(
-        url,
-        {
-          method: 'GET',
-        },
-    )
-        .then((response) => response.json())
-        .then((json) => {
-          content = json['query']['pages'][0]['revisions'][0]['content'];
-          //console.log(content);
-          content = content.toString();
-          let info = content.split("'''").pop();
-          info = info.replace((/[{()]/g),'[');
-          info = "adsff[asdjklö|";
-          console.log(info);
-          info = info.replace((/[{()]/g)*(/[|]/g), '');
-
-
-          //info = info.replace(/[\[\]']+/g, '[');
-
-          console.log(info);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-    console.log(content)
+  async function townInfo(location) {
+    const url = `https://de.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=${location}&format=json&origin=*`;
+    let data = await getContent(url);
+    try {
+      data = data['query']['pages'];
+      // gets first key from data
+      let [id] = Object.keys(data);
+      data = data[id]['extract'];
+      data = data.replace(/<[^>]+>/g, '');
+      // removes everything between square brackets, however some wikipedia articles look bad then.
+      // data = data.replace(/ *\[[^\]]*]/g, '');
+    } catch {
+    }
+    return data;
   }
 
   /**
    * prints urls of images on console
    *
    * @param {string} location
-   * @return {string} nothing so far
+   * @return {string} urls of images
    */
   async function getImages(location) {
     // get names of images at location
-    const locationurl = `https://de.wikipedia.org/w/api.php?action=query&titles=${location}&format=json&prop=images&imlimit=30&origin=*`;
+    const locationurl = `https://de.wikipedia.org/w/api.php?action=query&titles=${location}&format=json&prop=images&imlimit=10&origin=*`;
     const imageNames = await getContent(locationurl);
 
     // create urls for image api Call
@@ -147,23 +73,26 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     let contentImageApi;
     const content = [];
     // get image urls
-    for (let i = 0; i < apiurls.length; i++) {
-      contentImageApi = await getContent(apiurls[i]);
-      if ('imageinfo' in contentImageApi['query']['pages'][0]) {
-        if ('url' in contentImageApi['query']['pages'][0]['imageinfo'][0]) {
-          content.push(contentImageApi['query']['pages'][0]['imageinfo'][0]['url']);
+    try {
+      for (let i = 0; i < apiurls.length; i++) {
+        contentImageApi = await getContent(apiurls[i]);
+        if ('imageinfo' in contentImageApi['query']['pages'][0]) {
+          if ('url' in contentImageApi['query']['pages'][0]['imageinfo'][0]) {
+            content.push(contentImageApi['query']['pages'][0]['imageinfo'][0]['url']);
+          }
+        } else {
+          content.push('');
         }
-      } else {
-        content.push('');
       }
+    } catch {
     }
-    console.log(content);
+    return content;
   }
 
   /**
    * creates the url apicalls for the imagenames and only includes the .jpg files
    * @param {json} data
-   * @return {Promise<*[]>}
+   * @return {string} urls
    */
   async function createImageAPIUrls(data) {
     const pageId = Object.keys(data.query.pages)[0];
@@ -171,7 +100,7 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
     const urls = [];
     let count = 0;
     for (let i = 0; i < images.length; i++) {
-      if ((images[i]['title']).includes('.jpg')) {
+      if ((images[i]['title']).includes('.jpg') && (count < 2)) {
         let imagename = images[i]['title'];
         imagename = imagename.replace('Datei', 'File');
         urls[count] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
@@ -182,25 +111,11 @@ async function wikiCall(longitude = 9.44376, latitude = 47.667223) {
   }
 
   /**
-   * slower than getContent(url)
    * fetches the url and returns the content
    * @param {string} url
    * @return {json} content
    */
-  async function getContent2(url) {
-    let content;
-    await fetch(url)
-        .then((response) => response.json())
-        .then((json) => content = json)
-        .catch((response) => response.json());
-    return content;
-  }
-  /**
-   * fetches the url and returns the content
-   * @param {string} url
-   * @return {json} content
-   */
-  async function getContent(url){
+  async function getContent(url) {
     let content;
     await fetch(
         url,
