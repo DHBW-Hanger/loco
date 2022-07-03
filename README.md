@@ -12,6 +12,8 @@ Hosted PWA:
 
 [locomap.de](https://locomap.de)
 
+Our Jira Board:
+
 [Jira](https://projectxtasks.atlassian.net/jira/software/projects/PD/pages)
 
 ## Used Frameworks and APIs
