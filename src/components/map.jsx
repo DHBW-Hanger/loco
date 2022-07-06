@@ -117,7 +117,7 @@ export default function MyMap() {
     const targetLocation = L.latLng(47.66, 9.49);
     let navigation = null;
     let lastPosition = null;
-    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan:true}).addTo(map);
+    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
 
     /**
      * Add location marker to map if location found
@@ -178,7 +178,7 @@ export default function MyMap() {
           ],
         },
         createMarker: function() {
-            //display wikipedia api info
+          // display wikipedia api info
           return null;
         },
         fitSelectedRoutes: true,
@@ -227,7 +227,7 @@ export default function MyMap() {
       }
     });
 
-    new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
+    new L.Control.Zoom({position: 'bottomright'}).addTo(map);
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
 
