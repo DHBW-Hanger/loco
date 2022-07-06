@@ -62,7 +62,6 @@ export default function MyMap() {
         `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
       ),
       */
-
     };
     // if darkmode is enabled replace the map tiles with the darkmode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -118,12 +117,12 @@ export default function MyMap() {
     const targetLocation = L.latLng(47.66, 9.49);
     let navigation = null;
     let lastPosition = null;
-    L.marker(targetLocation, {icon: targetIcon}).addTo(map);
+    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan:true}).addTo(map);
 
     /**
      * Add location marker to map if location found
      *
-     * @param {Object} e - location Data
+     * @param {touple} e - location Data
      */
     function onLocationFound(e) {
       if (locationMarker == null) {
@@ -167,6 +166,7 @@ export default function MyMap() {
         /* router: new Routing.OSRMv1({
           serviceUrl: 'https://router.project-osrm.org/route/v1',
         }),*/
+        draggable: false,
         show: false,
         addWaypoints: false,
         collapsible: false,
@@ -178,9 +178,10 @@ export default function MyMap() {
           ],
         },
         createMarker: function() {
+            //display wikipedia api info
           return null;
         },
-        fitSelectedRoutes: false,
+        fitSelectedRoutes: true,
       }).addTo(map);
       followLocation = true;
     }
@@ -226,7 +227,7 @@ export default function MyMap() {
       }
     });
 
-    // new L.Control.Zoom({ position: 'topleft' }).addTo(map);
+    new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
 
