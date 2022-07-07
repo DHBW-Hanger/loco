@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import MyMap from '../components/map';
 import '../css/index.css';
 import '../css/modalsheet.css';
@@ -29,6 +29,36 @@ import {
 export default function App() {
   const [sheetOpened, setSheetOpened] = useState(false);
   const sheet = useRef(null);
+  const [search, setSearch] = useState('');
+  const [results, setResults] = useState([]);
+  const [cityInfo, setCityInfo] = useState({});
+
+  let id = '';
+
+  const handleSearch = async e => {
+    e.preventDefault();
+    if(search === '') return;
+    const endpoint = `https://de.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=${search}&format=json&origin=*`;
+    const response = await fetch(endpoint);
+
+    console.log(response);
+
+    if(!response.ok){
+      throw Error(response.statusText);
+    }
+
+    const json = await response.json();
+    console.log(json);
+
+    setResults(json.query.search);
+    setCityInfo(json.query.pages);
+    id = Object.keys(json.query.pages).toString();
+    console.log(id);
+    console.log(cityInfo);
+    console.log(json.query.pages);
+  }
+  
+
 
   const onPageBeforeOut = () => {
     // Close opened sheets on page out
@@ -53,6 +83,7 @@ export default function App() {
     // Open sheet part
     f7.sheet.open(sheet.current);
   };
+
   /* eslint-enable*/
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
@@ -76,7 +107,10 @@ export default function App() {
           expandable
           searchContainer=".search-list"
           searchIn=".item-title"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           disableButton={!theme.aurora}
+          onSubmit={handleSearch}
         ></Searchbar>
       </Navbar>
 
@@ -150,6 +184,15 @@ export default function App() {
               61.221
             </b>
           </ListItem>
+
+          {(cityInfo[0] =! null) ?
+          <ListItem>
+            <f7-block>
+              <p className = "sheet-text-tertiary">
+                {cityInfo[id]} Danny ist ein Hänger
+              </p>
+            </f7-block>
+          </ListItem> : null}
 
           <ListItem>
             <f7-block>

@@ -1,4 +1,26 @@
 const userInput = 'Berlin';
+/*
+const App = () => {
+  return <Headline />;
+};
+
+const Headline = () => {
+  const [greeting, setGreeting] = useState(
+    'Hello Function Component!'
+  );
+
+  return <p>{data}</p>;
+};
+
+export default App;
+
+function App() {
+  const greeting = 'Hello Function Component!';
+
+  return <Headline value={greeting} />;
+}
+
+*/
 
 /**
  * wikipedia Api Call for everything
@@ -31,6 +53,7 @@ async function testWikiApi(longitude = 9.44376, latitude = 47.667223) {
  * @param {float} lat
  * @return {Promise<void>}
  */
+
 async function reverseGeocoding(lon, lat) {
   const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
   const data = await response.json();
@@ -57,6 +80,7 @@ async function townInfo(location) {
     data = data.replace(/ *\[[^\]]*]/g, '');
     // removes everything between normal brackets.
     data = data.replace(/\(.*?\)/g, '');
+    data = data.replace('  ', ' ');
   } catch {
   }
   return data;
