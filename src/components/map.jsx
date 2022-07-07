@@ -254,7 +254,7 @@ export default function MyMap() {
     info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
-        '<label for="recenter-button"><img src="../icons/recenter.svg" height="30" width="30"/></label>' + '</div>';
+        '<label for="recenter-button"><img src="/icons/recenter.svg" height="30" width="30"/></label>' + '</div>';
     };
 
     info.addTo(map);
@@ -269,7 +269,7 @@ export default function MyMap() {
     help.update = function() {
       this._div.innerHTML = '<div class="help-button-field">' +
           '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
-          '<label for="help-button"><img src="../icons/help.svg" height="30" width="30"/></label>' + '</div>';
+          '<label for="help-button"><img src="/icons/help.svg" height="30" width="30"/></label>' + '</div>';
     };
     help.addTo(map);
   }, []);

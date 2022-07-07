@@ -58,10 +58,10 @@ export default function App() {
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
       <Navbar>
-        <img className="logo" src="../icons/logo.svg" alt="Loco"/>
+        <img className="logo" src="/icons/logo.svg" alt="Loco"/>
         <div className="logo-text sliding">loco</div>
         <Button fill sheetOpen=".demo-sheet-swipe-to-step">
-            Swipe To Step
+          Swipe To Step
         </Button>
         <NavRight>
           <Link
@@ -100,7 +100,7 @@ export default function App() {
             <div className="display-flex align-items-center">
               <img
                 src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
-                alt="Avatar" className="wiki-pic"></img>
+                alt="Avatar" className="wiki-pic"/>
               <div>
                 <b className="sheet-text-main">Friedrichshafen, 88540</b>
                 <div>
@@ -121,10 +121,10 @@ export default function App() {
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
               </div>
-                Route
+              Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {sheetOpened == true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
+              {sheetOpened === true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function App() {
 
           <ListItem>
             <f7-block>
-              <p className = "sheet-text-tertiary">
+              <p className="sheet-text-tertiary">
                 Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
                 on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
                 fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
