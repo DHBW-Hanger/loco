@@ -58,8 +58,8 @@ export default function App() {
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
       <Navbar>
-        <img className="logo" src="../img/logo.png" alt="Loco"/>
-        <div className="logo-text sliding">LOCO</div>
+        <img className="logo" src="../icons/logo.svg" alt="Loco"/>
+        <div className="logo-text sliding">loco</div>
         <Button fill sheetOpen=".demo-sheet-swipe-to-step">
             Swipe To Step
         </Button>
