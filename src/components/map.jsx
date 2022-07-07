@@ -10,15 +10,12 @@ import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
 
 // icon for current position
 const icon = L.icon({
-  iconUrl: '/icons/currentLocation.svg',
-  iconSize: [20, 20],
+  iconUrl: '/icons/currentLocation.svg', iconSize: [20, 20],
 });
 
 // icon for target position
 let targetIcon = L.icon({
-  iconUrl: '/icons/marker_lightm.svg',
-  iconSize: [32, 32],
-  iconAnchor: [13, 28],
+  iconUrl: '/icons/marker_lightm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
 });
 
 /**
@@ -46,22 +43,11 @@ export default function MyMap() {
   useEffect(() => {
     const mapStyles = {
       // the mapbox maps
-      Streets: L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
-      ),
-      Satellite: L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
-      ),
-      Outdoor: L.tileLayer(
-          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
-      ),
-      OpenStreetMap: L.tileLayer(
-          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`, {className: 'map-tiles'},
-      ),
-      Streets2: L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
-      ),
-      /*
+      Streets: L.tileLayer(`https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'}),
+      Satellite: L.tileLayer(`https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`),
+      Outdoor: L.tileLayer(`https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`, {className: 'map-tiles'}),
+      OpenStreetMap: L.tileLayer(`https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`, {className: 'map-tiles'}),
+      Streets2: L.tileLayer(`https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`), /*
       TODO Unused map layers, replaced with mapbox
 
       Satellite2: L.tileLayer(
@@ -72,13 +58,9 @@ export default function MyMap() {
 
     // if dark mode is enabled replace the map tiles with the dark mode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      mapStyles.Streets = L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
-      );
+      mapStyles.Streets = L.tileLayer(`https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`);
       targetIcon = L.icon({
-        iconUrl: '/icons/marker_darkm.svg',
-        iconSize: [32, 32],
-        iconAnchor: [13, 28],
+        iconUrl: '/icons/marker_darkm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
       });
     }
 
@@ -86,22 +68,14 @@ export default function MyMap() {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       console.log('Darkmode changed to ' + e.matches);
       if (e.matches) {
-        mapStyles.Streets = L.tileLayer(
-            `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
-        );
+        mapStyles.Streets = L.tileLayer(`https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`);
         targetIcon = L.icon({
-          iconUrl: '/icons/marker_darkm.svg',
-          iconSize: [32, 32],
-          iconAnchor: [13, 28],
+          iconUrl: '/icons/marker_darkm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
         });
       } else {
-        mapStyles.Streets = L.tileLayer(
-            `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
-        );
+        mapStyles.Streets = L.tileLayer(`https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`);
         targetIcon = L.icon({
-          iconUrl: '/icons/marker_lightm.svg',
-          iconSize: [32, 32],
-          iconAnchor: [13, 28],
+          iconUrl: '/icons/marker_lightm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
         });
       }
       map.removeLayer(mapStyles.Streets);
@@ -110,13 +84,7 @@ export default function MyMap() {
 
     // create map with given props
     const map = L.map('map', {
-      center: center,
-      zoom: ZOOM_LEVEL,
-      ref: mapRef,
-      minZoom: MIN_ZOOM,
-      maxBounds: BOUNDS,
-      zoomControl: false,
-      layers: [mapStyles.Streets],
+      center: center, zoom: ZOOM_LEVEL, ref: mapRef, minZoom: MIN_ZOOM, maxBounds: BOUNDS, zoomControl: false, layers: [mapStyles.Streets],
     });
 
     // initialize marker props
@@ -126,6 +94,7 @@ export default function MyMap() {
     let navigation = null;
     let followLocation = false;
 
+    let currentCoords = null;
     map.locate({watch: true});
 
     /**
@@ -134,41 +103,49 @@ export default function MyMap() {
      * @param {object} e - location Data
      */
     map.on('locationfound', (e) => {
-      const coords = e.latlng;
+      currentCoords = e.latlng;
 
       // if no marker exists yet, create one
       if (locationMarker == null) {
-        locationMarker = L.marker(coords, {icon}).addTo(map);
+        locationMarker = L.marker(currentCoords, {icon}).addTo(map);
 
         if (navigation == null) {
-          startNavigation(coords, targetLocation);
-          lastPosition = coords;
+          startNavigation(currentCoords, targetLocation);
+          lastPosition = currentCoords;
         }
         // if marker exists, update its position
       } else {
-        locationMarker.setLatLng(coords);
+        locationMarker.setLatLng(currentCoords);
 
         // if the location has changed, update the navigation or add a new one
-        if (Math.abs(coords.lat - lastPosition.lat) > 0.00001 || Math.abs(coords.lng - lastPosition.lng) > 0.00001) {
-          console.log('location changed | ' + (coords.lat - lastPosition.lat) + ' ' + (coords.lng - lastPosition.lng));
-          lastPosition = coords;
+        if (Math.abs(currentCoords.lat - lastPosition.lat) > 0.00001 || Math.abs(currentCoords.lng - lastPosition.lng) > 0.00001) {
+          console.log('location changed | ' + (currentCoords.lat - lastPosition.lat) + ' ' + (currentCoords.lng - lastPosition.lng));
+          lastPosition = currentCoords;
 
           if (navigation != null) {
             console.log('navigation changed');
-            navigation.spliceWaypoints(0, 1, coords);
+            navigation.spliceWaypoints(0, 1, currentCoords);
           }
         }
 
         // TODO discuss if this is needed
         // center the view to the current location
         if (followLocation) {
-          map.flyTo(coords, 18);
+          map.flyTo(currentCoords, 18);
         }
       }
     });
 
-    const targetLocation = L.latLng(47.66, 9.49);
-    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
+    let targetLocation = L.latLng(47.66, 9.49);
+    const targetMarker = L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
+
+    // update route when target marker is moved
+    targetMarker.on('dragend', (e) => {
+      targetLocation = e.target.getLatLng();
+      navigation.remove();
+      startNavigation(currentCoords, targetLocation);
+      console.log('target marker moved');
+    });
 
     /**
      * Start navigation
@@ -178,30 +155,17 @@ export default function MyMap() {
      */
     function startNavigation(startLocation, targetLocation) {
       navigation = L.Routing.control({
-        waypoints: [
-          startLocation,
-          targetLocation,
-        ],
-        routeWhileDragging: false,
+        waypoints: [startLocation, targetLocation], routeWhileDragging: false,
+        // TODO discuss if this is needed
         /* router: new Routing.OSRMv1({
           serviceUrl: 'https://router.project-osrm.org/route/v1',
         }),*/
-        draggable: false,
-        show: false,
-        addWaypoints: false,
-        collapsible: false,
-        draggableWaypoints: false,
-        lineOptions: {
-          styles: [
-            {color: 'black', opacity: 0.2, weight: 9},
-            {color: '#fc2c54', opacity: 1, weight: 6},
-          ],
-        },
-        createMarker: () => {
+        draggable: false, show: false, addWaypoints: false, collapsible: false, draggableWaypoints: false, lineOptions: {
+          styles: [{color: 'black', opacity: 0.2, weight: 9}, {color: '#fc2c54', opacity: 1, weight: 6}],
+        }, createMarker: () => {
           // display wikipedia api info
           return null;
-        },
-        fitSelectedRoutes: true,
+        }, fitSelectedRoutes: true,
       });
 
       navigation.addTo(map);
@@ -272,8 +236,7 @@ export default function MyMap() {
     info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
-        '<label for="recenter-button">Recenter Map</label>' +
-        '</div>';
+        '<label for="recenter-button">Recenter Map</label>' + '</div>';
     };
 
     info.addTo(map);
