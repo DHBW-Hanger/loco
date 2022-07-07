@@ -267,13 +267,12 @@ export default function MyMap() {
     };
     // method that we will use to update the control based on feature properties passed
     help.update = function() {
-      this._div.innerHTML = '<div class="help-button-field ">' +
+      this._div.innerHTML = '<div class="help-button-field">' +
           '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
           '<label for="help-button"><img src="../icons/help.svg" height="30" width="30"/></label>' + '</div>';
     };
     help.addTo(map);
   }, []);
-
 
 
   return <div id="map" className="map"/>;
