@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useRef} from 'react';
 import L from 'leaflet';
-import Routing from 'leaflet-routing-machine'; // eslint-disable-line
+import Routing from 'leaflet-routing-machine' // eslint-disable-line
+
 // makes clean rendering of the map possible without lagging
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
@@ -12,6 +13,8 @@ const icon = L.icon({
   iconUrl: '/icons/currentLocation.svg',
   iconSize: [20, 20],
 });
+
+// icon for target position
 let targetIcon = L.icon({
   iconUrl: '/icons/marker_lightm.svg',
   iconSize: [32, 32],
@@ -24,7 +27,8 @@ let targetIcon = L.icon({
  * @constructor
  */
 export default function MyMap() {
-  const [center] = useState({lat: 47.67, lng: 9.46}); // add setCenter when used
+  // default map props
+  const center = {lat: 47.67, lng: 9.46};
   const ZOOM_LEVEL = 13;
   const tileSize = '256';
   const scale = '@2x';
@@ -32,12 +36,14 @@ export default function MyMap() {
   const apiKeyMapbox = 'pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA';
   const mapRef = useRef();
   const MIN_ZOOM = 3;
+
+  // will prevent the user from moving out of the map bounds
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
   const NORTHEAST = L.latLng(89.99346179538875, 180);
-  // will prevent the user from moving out of the map bounds
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
 
-  useEffect((e) => {
+  // tile layers
+  useEffect(() => {
     const mapStyles = {
       // the mapbox maps
       Streets: L.tileLayer(
@@ -56,14 +62,15 @@ export default function MyMap() {
           `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ),
       /*
-      Unused map layers, replaced with mapbox
+      TODO Unused map layers, replaced with mapbox
 
       Satellite2: L.tileLayer(
         `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
       ),
       */
     };
-    // if darkmode is enabled replace the map tiles with the darkmode tiles
+
+    // if dark mode is enabled replace the map tiles with the dark mode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       mapStyles.Streets = L.tileLayer(
           `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
@@ -74,8 +81,10 @@ export default function MyMap() {
         iconAnchor: [13, 28],
       });
     }
+
+    // TODO add comment
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      console.log('Darkmode changed to ' +e.matches);
+      console.log('Darkmode changed to ' + e.matches);
       if (e.matches) {
         mapStyles.Streets = L.tileLayer(
             `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
@@ -99,7 +108,7 @@ export default function MyMap() {
       map.addLayer(mapStyles.Streets);
     });
 
-
+    // create map with given props
     const map = L.map('map', {
       center: center,
       zoom: ZOOM_LEVEL,
@@ -110,56 +119,67 @@ export default function MyMap() {
       layers: [mapStyles.Streets],
     });
 
-    map.locate({watch: true});
-
+    // initialize marker props
     let locationMarker = null;
-    let followLocation = false;
-    const targetLocation = L.latLng(47.66, 9.49);
-    let navigation = null;
     let lastPosition = null;
-    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
+
+    let navigation = null;
+    let followLocation = false;
+
+    map.locate({watch: true});
 
     /**
      * Add location marker to map if location found
      *
-     * @param {touple} e - location Data
+     * @param {object} e - location Data
      */
-    function onLocationFound(e) {
+    map.on('locationfound', (e) => {
+      const coords = e.latlng;
+
+      // if no marker exists yet, create one
       if (locationMarker == null) {
-        locationMarker = L.marker(e.latlng, {icon}).addTo(map);
+        locationMarker = L.marker(coords, {icon}).addTo(map);
+
         if (navigation == null) {
-          startNavigation(e, targetLocation);
-          lastPosition = e.latlng;
+          startNavigation(coords, targetLocation);
+          lastPosition = coords;
         }
+        // if marker exists, update its position
       } else {
-        locationMarker.setLatLng(e.latlng);
-        // if the location has changed, update the navigation
-        if (Math.abs(e.latlng.lat - lastPosition.lat) > 0.00001 || Math.abs(e.latlng.lng - lastPosition.lng) > 0.00001) {
-          console.log('location changed | ' + (e.latlng.lat - lastPosition.lat) + ' ' + (e.latlng.lng - lastPosition.lng));
-          lastPosition = e.latlng;
+        locationMarker.setLatLng(coords);
+
+        // if the location has changed, update the navigation or add a new one
+        if (Math.abs(coords.lat - lastPosition.lat) > 0.00001 || Math.abs(coords.lng - lastPosition.lng) > 0.00001) {
+          console.log('location changed | ' + (coords.lat - lastPosition.lat) + ' ' + (coords.lng - lastPosition.lng));
+          lastPosition = coords;
+
           if (navigation != null) {
             console.log('navigation changed');
-            navigation;
-            navigation.spliceWaypoints(0, 1, e.latlng);
+            navigation.spliceWaypoints(0, 1, coords);
           }
         }
 
+        // TODO discuss if this is needed
         // center the view to the current location
         if (followLocation) {
-          map.flyTo(e.latlng, 18);
+          map.flyTo(coords, 18);
         }
       }
-    }
+    });
+
+    const targetLocation = L.latLng(47.66, 9.49);
+    L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
 
     /**
      * Start navigation
      *
-     * @param {Object} e - location Data
+     * @param {number[]} startLocation - start location
+     * @param {number[]} targetLocation - target location
      */
-    function startNavigation(e) {
+    function startNavigation(startLocation, targetLocation) {
       navigation = L.Routing.control({
         waypoints: [
-          e.latlng,
+          startLocation,
           targetLocation,
         ],
         routeWhileDragging: false,
@@ -177,49 +197,59 @@ export default function MyMap() {
             {color: '#fc2c54', opacity: 1, weight: 6},
           ],
         },
-        createMarker: function() {
+        createMarker: () => {
           // display wikipedia api info
           return null;
         },
         fitSelectedRoutes: true,
-      }).addTo(map);
+      });
+
+      navigation.addTo(map);
       followLocation = true;
     }
+
     /**
      * Show the reset button if the user moved the map
      *
      */
     function showResetButton() {
-      const slidecontainer = document.getElementsByClassName('reset-button-field')[0];
-      slidecontainer.classList.add('slide-in');
-      slidecontainer.classList.remove('slide-out');
+      const slideContainer = document.getElementsByClassName('reset-button-field')[0];
+
+      // TODO add comment
+      slideContainer.classList.add('slide-in');
+      slideContainer.classList.remove('slide-out');
+
+      // get reset button from dom
       const resetButton = document.querySelector('input.recenter-button');
+
       // listen for input changes
       resetButton.addEventListener('change', () => {
         console.log('reset button changed');
         if (resetButton.checked) {
           followLocation = true;
           map.flyTo(lastPosition, 18);
+
           setTimeout(() => {
             hideResetButton();
           }, 500);
+
           setTimeout(() => {
             resetButton.checked = false;
           }, 1000);
         }
       });
     }
+
     /**
      * Hide the reset button after resetting the view
      *
      */
     function hideResetButton() {
-      const slidecontainer = document.getElementsByClassName('reset-button-field')[0];
-      slidecontainer.classList.add('slide-out');
-      slidecontainer.classList.remove('slide-in');
+      const slideContainer = document.getElementsByClassName('reset-button-field')[0];
+      slideContainer.classList.add('slide-out');
+      slideContainer.classList.remove('slide-in');
     }
 
-    map.on('locationfound', onLocationFound);
     map.on('mousedown', () => {
       if (lastPosition != null) {
         followLocation = false;
@@ -227,18 +257,19 @@ export default function MyMap() {
       }
     });
 
+    // add map controls
     new L.Control.Zoom({position: 'bottomright'}).addTo(map);
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
 
     const info = L.control({position: 'bottomright'});
-    info.onAdd = function(map) {
+    info.onAdd = function() {
       this._div = L.DomUtil.create('div', 'slider');
       this.update();
       return this._div;
     };
     // method that we will use to update the control based on feature properties passed
-    info.update = function(props) {
+    info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
         '<label for="recenter-button">Recenter Map</label>' +
@@ -248,5 +279,5 @@ export default function MyMap() {
     info.addTo(map);
   }, []);
 
-  return <div id="map" className="map" />;
+  return <div id="map" className="map"/>;
 }
