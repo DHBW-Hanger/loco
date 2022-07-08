@@ -31,7 +31,7 @@ import {
 export default function App() {
   const [sheetOpened, setSheetOpened] = useState(false);
   const sheet = useRef(null);
-  const [search, setSearch] = useState({});
+  const [search, setSearch] = useState('');
   const [townInfo, setTownInfo] = useState({});
   const [townImage1, setTownImage1] = useState('');
   const [townImage2, setTownImage2] = useState('');
@@ -48,12 +48,19 @@ export default function App() {
 
   async function handleSearch(e) {
     if (search === '') return;
+
+    //get the searched towns longitude and latitude
+    
+
     //setTownInfo({town: await fetchDataWikiInfo(search) });
-    setTownInfo({townInfo: await townInfoWiki(search)});
+    let towninfo = await townInfoWiki(search);
+    if(towninfo.length > 150){
+      const wherecuttext = towninfo.indexOf(' ', 150)
+      towninfo = towninfo.substring(0, wherecuttext) + '...';
+    }
+    setTownInfo({townInfo: towninfo});
     let images = await getImages(search);
     setTownImage1({townImage1: images[0]});
-    setTownImage2({townImage2: images[1]});
-    setTownImage3({townImage3: images[2]});
   }
 
   const onPageBeforeOut = () => {
@@ -129,12 +136,12 @@ export default function App() {
 
               <div className="display-flex align-items-center">
                 <img
-                    src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
+                    src={townImage1.townImage1}
                     alt="Avatar" className="wiki-pic"></img>
                 <div>
                   <b className="sheet-text-main">Friedrichshafen, 88540</b>
                   <div>
-                    <b className="sheet-text-secondary">Die Stadt der Lebenden lel</b>
+                    <b className="sheet-text-secondary">{townInfo.townInfo}</b>
                   </div>
                 </div>
               </div>
@@ -162,7 +169,9 @@ export default function App() {
           <BlockTitle medium className="margin-top sheet-text-main">
             Information:
           </BlockTitle>
+
           <List noHairlines className="sheet-container">
+
             <ListItem title="Bundesland:" className="sheet-text-tertiary">
               <b slot="after" className="sheet-text-tertiary-bold">
                 Baden-Württemberg
@@ -180,30 +189,9 @@ export default function App() {
                 61.221
               </b>
             </ListItem>
-
-            <ListItem>
-              <f7-block>
-                {townInfo.townInfo}
-              </f7-block>
-            </ListItem>
-
-            <ListItem title="Bilder" className="sheet-text-tertiary">
-              <f7-block>
-                <div className="image-container">
-                  <img src={townImage1.townImage1} alt="image 1" width="100%"></img>
-                </div>
-                <div className="image-container">
-                  <img src={townImage2.townImage2} alt="image 2" width="100%"></img>
-                </div>
-                <div className="image-container">
-                  <img src={townImage3.townImage3} alt="image 3" width="100%"></img>
-                </div>
-              </f7-block>
-            </ListItem>
           </List>
         </Sheet>
 
       </Page>
   );
 }
-;
