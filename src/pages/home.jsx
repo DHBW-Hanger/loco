@@ -1,12 +1,7 @@
-import React, {useState, useRef} from 'react';
+import React from 'react';
 import MyMap from '../components/map';
 import '../css/index.css';
-import '../css/modalsheet.css';
-import {BiLocationPlus} from 'react-icons/Bi';
-import {TiLocationArrowOutline} from 'react-icons/Ti';
-import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
 import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation} from '../js/wikipediaCall';
-
 
 import {
   Link,
@@ -15,7 +10,7 @@ import {
   theme,
   NavRight,
   Navbar,
-  Button
+  Button,
 } from 'framework7-react';
 
 import ModalPopup from "../components/modalPopup";
@@ -26,7 +21,7 @@ class App extends React.Component {
     super();
     this.state = {
       showModalPopup: false,
-      showModalSheet: true,
+      showModalSheet: false,
       sheet: null,
       search: '',
       townInfo: {},
@@ -39,7 +34,7 @@ class App extends React.Component {
   };
 
   isShowSheet = (status) => {
-    this.setState({ showModalPopup: status });
+    this.setState({ showModalSheet: status });
   };
 
   /* eslint-enable*/
@@ -50,9 +45,7 @@ class App extends React.Component {
         <Navbar>
           <img className="logo" src="/icons/logo.svg" alt="Loco"/>
           <div className="logo-text sliding">loco</div>
-          <Button fill sheetOpen=".demo-sheet-swipe-to-step">
-            Swipe To Step
-          </Button>
+          <Button className={'submit-button'} fill sheetOpen=".demo-sheet-swipe-to-step"> </Button>
           <NavRight>
             <Link
               searchbarEnable=".searchbar-demo"
@@ -67,6 +60,12 @@ class App extends React.Component {
             searchContainer=".search-list"
             searchIn=".item-title"
             disableButton={!theme.aurora}
+            value={this.search}
+            onChange={(e) => {this.search = (e.target.value)}}
+            onSubmit={() => {
+              const submitButton = document.getElementsByClassName('submit-button')[0]
+              submitButton.click()
+            }}
           />
         </Navbar>
 
@@ -79,7 +78,7 @@ class App extends React.Component {
 
         <ModalSheet
           showModalPopup={this.state.showModalSheet}
-          onPopupClose={this.isShowSheet}
+          onSheetClose={this.isShowSheet}
         />
 
       </Page>

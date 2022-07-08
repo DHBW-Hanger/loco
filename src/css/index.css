@@ -78,6 +78,10 @@
   height: 80px;
 }
 
+.submit-button {
+  display: none;
+}
+
 .navbar {
   position: absolute;
 }

@@ -1,23 +1,20 @@
-import React, {Component, useRef, useState} from 'react';
+import React, {Component} from 'react';
+import '../css/modalsheet.css'
 
 import {
-  Link,
-  Page,
-  Searchbar,
-  theme,
-  NavRight,
-  Navbar,
   Button,
   Sheet,
   BlockTitle,
   List,
   ListItem,
-  f7,
 } from 'framework7-react';
+
 import {BiLocationPlus} from "react-icons/Bi";
 import {TiLocationArrowOutline} from "react-icons/Ti";
 import {IoIosArrowDown, IoIosArrowUp} from "react-icons/Io";
 
+
+// https://v4.framework7.io/react/sheet-modal
 
 class ModalSheet extends Component {
   constructor(props) {
@@ -33,7 +30,7 @@ class ModalSheet extends Component {
   }
 
   handleClose = () => {
-    this.props.onPopupClose(false);
+    this.props.onSheetClose(false);
   }
 
   render() {
@@ -48,13 +45,10 @@ class ModalSheet extends Component {
           <div className="display-flex padding justify-content-space-between align-items-center">
 
             <div className="display-flex align-items-center">
-              <img
-                src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
-                alt="Avatar" className="wiki-pic"/>
               <div>
-                <b className="sheet-text-main">Friedrichshafen, 88540</b>
+                <b className="sheet-text-main">{'berlin'}</b>
                 <div>
-                  <b className="sheet-text-secondary">Die Stadt der Lebenden lel</b>
+                  <b className="sheet-text-secondary">{'kdsfjkjasdkjdkasjakdf'}</b>
                 </div>
               </div>
             </div>
@@ -74,7 +68,7 @@ class ModalSheet extends Component {
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {this.isShowModal === true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
+              {this.state.showModal === true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>
@@ -82,16 +76,18 @@ class ModalSheet extends Component {
         <BlockTitle medium className="margin-top sheet-text-main">
           Information:
         </BlockTitle>
+
         <List noHairlines className="sheet-container">
+
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              Baden-Württemberg
+              {'bw'}
             </b>
           </ListItem>
 
           <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              88045, 88046, 88048
+              {123}
             </b>
           </ListItem>
 
@@ -99,16 +95,6 @@ class ModalSheet extends Component {
             <b slot="after" className="sheet-text-tertiary-bold">
               61.221
             </b>
-          </ListItem>
-
-          <ListItem>
-            <f7-block>
-              <p className="sheet-text-tertiary">
-                Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
-                on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
-                fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
-              </p>
-            </f7-block>
           </ListItem>
         </List>
       </Sheet>
