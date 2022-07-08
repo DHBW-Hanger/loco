@@ -5,7 +5,7 @@ import '../css/modalsheet.css';
 import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
-import {getImages, townInfoWiki, searchGeoCodeInfos} from '../js/wikipediaCall';
+import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation} from '../js/wikipediaCall';
 
 
 import {
@@ -37,6 +37,7 @@ export default function App() {
   const [town, setTown] = useState('');
   const [state, setState] = useState('');
   const [postcode, setPostcode] = useState('');
+  const [population, setPopulation] = useState('');
 
   //
   // muss noch mit Marker verbunden werden
@@ -61,15 +62,24 @@ export default function App() {
     } else {
       // select top result
       geocodeInfo = geocodeInfo[0];
-
-      const stadt = geocodeInfo.address.town;
+      let stadt = '';
+      // city or town in keys
+      if ('town' in geocodeInfo.address) {
+        stadt = geocodeInfo.address.town;
+      }else if('city' in geocodeInfo.address){
+        stadt = geocodeInfo.address.city;
+      }
       setTown({town: stadt});
       console.log(geocodeInfo.address);
+      let test = await getPopulation(stadt);
+      console.log(test);
+      //setPopulation({population: aw})
 
       let towninfo = await townInfoWiki(stadt);
-      if (towninfo.length > 150) {
-        const wherecuttext = towninfo.indexOf(' ', 150);
-        towninfo = towninfo.substring(0, wherecuttext) + '...';
+      let laenge = towninfo.length;
+      if (laenge > 150) {
+        laenge = towninfo.indexOf(' ', 150);
+        towninfo = towninfo.substring(0, laenge) + '...';
       }
       setTownInfo({townInfo: towninfo});
       const images = await getImages(stadt);

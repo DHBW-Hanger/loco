@@ -17,9 +17,26 @@ export async function reverseGeocoding(lon, lat) {
  * @param {string}search
  * @return {Promise<any>}
  */
-export async function searchGeoCodeInfos (search){
+export async function searchGeoCodeInfos(search) {
   const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
   const data = await response.json();
+  return data;
+}
+
+/**
+ *
+ * @param {string}location
+ * @return {Promise<any>}
+ */
+export async function getPopulation(location){
+  const response = await fetch(`https://de.wikipedia.org/w/api.php?format=json&action=query&titles=${location}&prop=revisions&rvprop=content&rvsection=0&origin=*`);
+  let data = await response.json();
+  data = data['query']['pages'];
+
+  // gets first key from data
+  const [id] = Object.keys(data);
+  data = data[id]['revisions'][0]['*'];
+  console.log(data);
   return data;
 }
 
@@ -39,7 +56,6 @@ export async function townInfoWiki(location) {
     // gets first key from data
     const [id] = Object.keys(data);
     data = data[id]['extract'];
-    console.log(data);
     data = data.replace(/<[^>]+>/g, '');
     // removes everything between square brackets, however some wikipedia articles look bad then.
     data = data.replace(/ *\[[^\]]*]/g, '');
@@ -128,5 +144,5 @@ async function getContent(url) {
       });
   return content;
 }
-// export default testWikiApi();
+
 
