@@ -113,8 +113,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --f7-bars-text-color: white;
-    --f7-list-bg-color: #222;
+    --background-color: rgb(20 20 20);
+    --text-color: white;
+    --text-color-disabled: rgb(154 154 154);
+    --background-color-disabled: white;
+    --f7-searchbar-input-bg-color: var(--background-color);
+    --f7-searchbar-input-text-color: #fff;
   }
 
   .navbar-bg {
