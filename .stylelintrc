@@ -2,5 +2,8 @@
   "extends": "stylelint-config-standard-scss",
   "ignoreFiles": [
     "src/fonts/**/*"
-  ]
+  ],
+  "rules": {
+    "no-descending-specificity": null
+  }
 }

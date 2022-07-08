@@ -95,10 +95,10 @@ export default function App() {
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
 
       <Navbar>
-        <img className="logo" src="../img/logo.png" alt="Loco"/>
-        <div className="logo-text sliding">LOCO</div>
+        <img className="logo" src="/icons/logo.svg" alt="Loco"/>
+        <div className="logo-text sliding">loco</div>
         <Button fill sheetOpen=".demo-sheet-swipe-to-step">
-            Swipe To Step
+          Swipe To Step
         </Button>
         <NavRight>
           <Link
@@ -161,10 +161,10 @@ export default function App() {
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
               </div>
-                Route
+              Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {sheetOpened == true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
+              {sheetOpened === true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>

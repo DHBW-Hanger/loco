@@ -12,6 +12,6 @@ parserOptions:
 plugins:
   - react
 rules: {
-  "max-len": [2, {"code": 140, "tabWidth": 2, "ignoreUrls": true}],
+  "max-len": [2, {"code": 150, "tabWidth": 2, "ignoreUrls": true}],
   "react/prop-types": 0
 }

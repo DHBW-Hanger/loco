@@ -1,3 +1,13 @@
+:root {
+  --background-color: white;
+  --background-color-disabled: rgb(178 178 178);
+  --text-color: black;
+  --text-color-disabled: rgb(73 73 73);
+  --accent-color: #fc2c54;
+  --f7-searchbar-link-color: #fc2c54;
+  --f7-searchbar-placeholder-color: var(--text-color-disabled);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +16,10 @@
 
 .list-container {
   color: #fff;
+}
+
+.searchbar {
+  background-color: #fff;
 }
 
 /* Avatar for Userprofile */

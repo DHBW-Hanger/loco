@@ -8,10 +8,22 @@ This project is made for WebEngineering2 (DHBW).
 The goal is to create a location based PWA.
 
 ## Links
+Hosted PWA:
 
-[OneNote](https://1drv.ms/u/s!Ai-2aGe7J6VomgO7CQUWVe0Rc9by)
+[locomap.de](https://locomap.de)
+
+Our Jira Board:
 
 [Jira](https://projectxtasks.atlassian.net/jira/software/projects/PD/pages)
+
+## Used Frameworks and APIs
+
+[reactjs](https://reactjs.org/)
+[Framework7](https://leafletjs.com/)
+[leaflet](https://framework7.io/)
+[leaflet routing machine](https://www.liedman.net/leaflet-routing-machine/)
+[maptiler](https://www.maptiler.com/)
+
 
 ## Install Dependencies
 
@@ -20,7 +32,7 @@ First we need to install dependencies, run in terminal:
 npm install
 ```
 
-## Use Linters
+## Used Linters
 
 HTMLHint for HTML:
 ```shell
@@ -130,11 +142,3 @@ framework7 assets --ui
 
 
 
-## Documentation & Resources
-
-* [Framework7 Core Documentation](https://framework7.io/docs/)
-
-* [Framework7 React Documentation](https://framework7.io/react/)
-
-* [Framework7 Icons Reference](https://framework7.io/icons/)
-* [Community Forum](https://forum.framework7.io)
