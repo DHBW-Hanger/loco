@@ -1,31 +1,31 @@
 import React, {Component, Fragment} from 'react';
 import {Modal} from 'react-bootstrap';
 
+
 class ModalPopup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
     };
   }
 
   isShowModal = (status) => {
     this.handleClose();
     this.setState({showModal: status});
-  }
+  };
 
   handleClose = () => {
     this.props.onPopupClose(false);
-  }
-
+  };
 
   render() {
     return (
       <Fragment>
         <Modal show={this.props.showModalPopup} onHide={this.handleClose}
-               size="lg"
-               aria-labelledby="contained-modal-title-vcenter"
-               centered
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
         >
           <Modal.Header closeButton>
             <Modal.Title id="sign-in-title">

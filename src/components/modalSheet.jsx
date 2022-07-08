@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../css/modalsheet.css'
+import '../css/modalsheet.css';
 
 import {
   Button,
@@ -9,9 +9,9 @@ import {
   ListItem,
 } from 'framework7-react';
 
-import {BiLocationPlus} from "react-icons/Bi";
-import {TiLocationArrowOutline} from "react-icons/Ti";
-import {IoIosArrowDown, IoIosArrowUp} from "react-icons/Io";
+import {BiLocationPlus} from 'react-icons/Bi';
+import {TiLocationArrowOutline} from 'react-icons/Ti';
+import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
 
 
 // https://v4.framework7.io/react/sheet-modal
@@ -25,8 +25,8 @@ class ModalSheet extends Component {
       townImage: props.townImage,
       federalState: props.federalState,
       postCode: props.postCode,
-      population: props.population
-    }
+      population: props.population,
+    };
   }
 
   render() {
@@ -40,7 +40,7 @@ class ModalSheet extends Component {
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-space-between align-items-center">
             <img src={this.props.townImage}
-                 alt="city image" className="wiki-pic"/>
+              alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div>
                 <b className="sheet-text-main">{this.props.townName}</b>

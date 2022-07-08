@@ -1,7 +1,7 @@
 import React from 'react';
 import MyMap from '../components/map';
 import '../css/index.css';
-import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation, handleSearch1} from '../js/wikipediaCall';
+import {handleSearch1} from '../js/wikipediaCall';
 
 import {
   Link,
@@ -13,8 +13,9 @@ import {
   Button,
 } from 'framework7-react';
 
-import ModalPopup from "../components/modalPopup";
-import ModalSheet from "../components/modalSheet";
+import ModalPopup from '../components/modalPopup';
+import ModalSheet from '../components/modalSheet';
+
 
 class App extends React.Component {
   constructor() {
@@ -28,13 +29,13 @@ class App extends React.Component {
       townImage: '',
       federalState: '',
       postCode: 0,
-      population: 0
-    }
+      population: 0,
+    };
   }
 
   isShowPopup = (status) => {
-    this.setState({ showModalPopup: status });
-  }
+    this.setState({showModalPopup: status});
+  };
 
   /* eslint-enable*/
   render() {
@@ -60,19 +61,21 @@ class App extends React.Component {
             searchIn=".item-title"
             disableButton={!theme.aurora}
             value={this.search}
-            onChange={(e) => {this.search = (e.target.value)}}
+            onChange={(e) => {
+              this.search = (e.target.value);
+            }}
             onSubmit={() => {
-              handleSearch1(this.search).then(r => {
+              handleSearch1(this.search).then((r) => {
                 this.setState({
                   townName: r.city,
                   townDescription: r.townInfo,
                   townImage: r.image,
                   federalState: r.state,
                   postCode: r.postCode,
-                  population: r.population
-                })
-                const submitButton = document.getElementsByClassName('submit-button')[0]
-                submitButton.click()
+                  population: r.population,
+                });
+                const submitButton = document.getElementsByClassName('submit-button')[0];
+                submitButton.click();
               });
             }}
           />

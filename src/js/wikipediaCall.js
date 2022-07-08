@@ -6,7 +6,7 @@
  */
 export async function handleSearch(search) {
   let geocodeInfo = await searchGeoCodeInfos(search);
-  let result = {}
+  const result = {};
 
   if (geocodeInfo.length === 0) {
     console.log('empty');
@@ -16,7 +16,7 @@ export async function handleSearch(search) {
     // city or town in keys
     if ('town' in geocodeInfo.address) {
       result.city = geocodeInfo.address.town;
-    }else if('city' in geocodeInfo.address){
+    } else if ('city' in geocodeInfo.address) {
       result.city = geocodeInfo.address.city;
     }
     console.log(geocodeInfo.address);
@@ -32,26 +32,26 @@ export async function handleSearch(search) {
 
     // if country is Germany
     if (geocodeInfo.address.country === 'Deutschland') {
-      result.state = geocodeInfo.address.state
-      result.postCode = geocodeInfo.address.postcode
+      result.state = geocodeInfo.address.state;
+      result.postCode = geocodeInfo.address.postcode;
     }
   }
 
-  return result
+  return result;
 }
 
 // test sheet info display
 export async function handleSearch1() {
-  let result = {}
+  const result = {};
 
   result.city = 'Stuttgart';
-  result.population = 635000
-  result.townInfo = 'Anim ex quis excepteur et est irure et cupidatat non.'
+  result.population = 635000;
+  result.townInfo = 'Anim ex quis excepteur et est irure et cupidatat non.';
   result.image = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Stuttgart.svg';
   result.state = 'Baden-Württemberg';
-  result.postCode = 70000
+  result.postCode = 70000;
 
-  return result
+  return result;
 }
 
 /**
@@ -83,7 +83,7 @@ export async function searchGeoCodeInfos(search) {
  * @param {string}location
  * @return {Promise<any>}
  */
-export async function getPopulation(location){
+export async function getPopulation(location) {
   const response = await fetch(`https://de.wikipedia.org/w/api.php?format=json&action=query&titles=${location}&prop=revisions&rvprop=content&rvsection=0&origin=*`);
   let data = await response.json();
   data = data['query']['pages'];
