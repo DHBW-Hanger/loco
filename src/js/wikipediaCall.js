@@ -15,9 +15,9 @@ export async function reverseGeocoding(lon, lat) {
 /**
  *
  * @param {string}search
- * @returns {Promise<any>}
+ * @return {Promise<any>}
  */
-export async function searchGeoCodeInfos(search){
+export async function searchGeoCodeInfos (search){
   const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
   const data = await response.json();
   return data;
