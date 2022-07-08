@@ -1,50 +1,3 @@
-const userInput = 'Berlin';
-/*
-const App = () => {
-  return <Headline />;
-};
-
-const Headline = () => {
-  const [greeting, setGreeting] = useState(
-    'Hello Function Component!'
-  );
-
-  return <p>{data}</p>;
-};
-
-export default App;
-
-function App() {
-  const greeting = 'Hello Function Component!';
-
-  return <Headline value={greeting} />;
-}
-
-*/
-
-/**
- * wikipedia Api Call for everything
- *
- * @param {float} longitude
- * @param {float} latitude
- *
- */
-async function testWikiApi(longitude = 9.44376, latitude = 47.667223) {
-
-  // Functions
-
-  // reverseGeocoding returns a json object. Within the key address are country, city and more.
-  const location = await reverseGeocoding(longitude, latitude);
-  console.log(location);
-
-  const city = userInput;
-  // city = location['address']['city'];
-  const info = await townInfo(city);
-  console.log(info);
-
-  const images = await getImages(userInput);
-  console.log(images);
-}
 
 /**
  * prints address on console
@@ -53,7 +6,6 @@ async function testWikiApi(longitude = 9.44376, latitude = 47.667223) {
  * @param {float} lat
  * @return {Promise<void>}
  */
-
 export async function reverseGeocoding(lon, lat) {
   const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
   const data = await response.json();
@@ -84,7 +36,7 @@ export async function townInfoWiki(location) {
   } catch {
   }
   return (
-      data
+    data
   );
 }
 
@@ -163,5 +115,5 @@ async function getContent(url) {
       });
   return content;
 }
-//export default testWikiApi();
+// export default testWikiApi();
 
