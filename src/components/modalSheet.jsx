@@ -20,17 +20,13 @@ class ModalSheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
-    };
-  }
-
-  isShowModal = (status) => {
-    this.handleClose();
-    this.setState({showModal: status});
-  }
-
-  handleClose = () => {
-    this.props.onSheetClose(false);
+      townName: props.townName,
+      townDescription: props.townDescription,
+      townImage: props.townImage,
+      federalState: props.federalState,
+      postCode: props.postCode,
+      population: props.population
+    }
   }
 
   render() {
@@ -43,12 +39,13 @@ class ModalSheet extends Component {
       >
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-space-between align-items-center">
-
+            <img src={this.props.townImage}
+                 alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div>
-                <b className="sheet-text-main">{'berlin'}</b>
+                <b className="sheet-text-main">{this.props.townName}</b>
                 <div>
-                  <b className="sheet-text-secondary">{'kdsfjkjasdkjdkasjakdf'}</b>
+                  <b className="sheet-text-secondary">{this.props.townDescription}</b>
                 </div>
               </div>
             </div>
@@ -68,7 +65,8 @@ class ModalSheet extends Component {
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {this.state.showModal === true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
+              {/* TODO turn arrow on step */}
+              {true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>
@@ -81,19 +79,19 @@ class ModalSheet extends Component {
 
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              {'bw'}
+              {this.props.federalState}
             </b>
           </ListItem>
 
           <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              {123}
+              {this.props.postCode}
             </b>
           </ListItem>
 
           <ListItem title="Einwohner:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              61.221
+              {this.props.population}
             </b>
           </ListItem>
         </List>

@@ -1,5 +1,60 @@
 
 /**
+ *
+ * @param search
+ * @return {Promise<void>}
+ */
+export async function handleSearch(search) {
+  let geocodeInfo = await searchGeoCodeInfos(search);
+  let result = {}
+
+  if (geocodeInfo.length === 0) {
+    console.log('empty');
+  } else {
+    // select top result
+    geocodeInfo = geocodeInfo[0];
+    // city or town in keys
+    if ('town' in geocodeInfo.address) {
+      result.city = geocodeInfo.address.town;
+    }else if('city' in geocodeInfo.address){
+      result.city = geocodeInfo.address.city;
+    }
+    console.log(geocodeInfo.address);
+    result.population = await getPopulation(result.city);
+
+    result.townInfo = await townInfoWiki(result.city);
+    let length = result.townInfo.length;
+    if (length > 150) {
+      length = townInfo.indexOf(' ', 150);
+      result.townInfo = townInfo.substring(0, length) + '...';
+    }
+    result.image = await getImages(city)[0];
+
+    // if country is Germany
+    if (geocodeInfo.address.country === 'Deutschland') {
+      result.state = geocodeInfo.address.state
+      result.postCode = geocodeInfo.address.postcode
+    }
+  }
+
+  return result
+}
+
+// test sheet info display
+export async function handleSearch1() {
+  let result = {}
+
+  result.city = 'Stuttgart';
+  result.population = 635000
+  result.townInfo = 'Anim ex quis excepteur et est irure et cupidatat non.'
+  result.image = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Stuttgart.svg';
+  result.state = 'Baden-Württemberg';
+  result.postCode = 70000
+
+  return result
+}
+
+/**
  * prints address on console
  *
  * @param {float} lon

@@ -1,7 +1,7 @@
 import React from 'react';
 import MyMap from '../components/map';
 import '../css/index.css';
-import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation} from '../js/wikipediaCall';
+import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation, handleSearch1} from '../js/wikipediaCall';
 
 import {
   Link,
@@ -21,21 +21,20 @@ class App extends React.Component {
     super();
     this.state = {
       showModalPopup: false,
-      showModalSheet: false,
       sheet: null,
       search: '',
-      townInfo: {},
-      townImage1: ''
+      townName: '',
+      townDescription: '',
+      townImage: '',
+      federalState: '',
+      postCode: 0,
+      population: 0
     }
   }
 
   isShowPopup = (status) => {
     this.setState({ showModalPopup: status });
-  };
-
-  isShowSheet = (status) => {
-    this.setState({ showModalSheet: status });
-  };
+  }
 
   /* eslint-enable*/
   render() {
@@ -63,8 +62,18 @@ class App extends React.Component {
             value={this.search}
             onChange={(e) => {this.search = (e.target.value)}}
             onSubmit={() => {
-              const submitButton = document.getElementsByClassName('submit-button')[0]
-              submitButton.click()
+              handleSearch1(this.search).then(r => {
+                this.setState({
+                  townName: r.city,
+                  townDescription: r.townInfo,
+                  townImage: r.image,
+                  federalState: r.state,
+                  postCode: r.postCode,
+                  population: r.population
+                })
+                const submitButton = document.getElementsByClassName('submit-button')[0]
+                submitButton.click()
+              });
             }}
           />
         </Navbar>
@@ -77,8 +86,12 @@ class App extends React.Component {
         <MyMap/>
 
         <ModalSheet
-          showModalPopup={this.state.showModalSheet}
-          onSheetClose={this.isShowSheet}
+          townName={this.state.townName}
+          townDescription={this.state.townDescription}
+          townImage={this.state.townImage}
+          federalState={this.state.federalState}
+          postCode={this.state.postCode}
+          population={this.state.population}
         />
 
       </Page>
