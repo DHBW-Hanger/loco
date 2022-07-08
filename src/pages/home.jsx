@@ -5,6 +5,8 @@ import '../css/modalsheet.css';
 import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
+import {getImages, townInfoWiki} from '../js/wikipediaCall';
+
 
 import {
   Link,
@@ -29,6 +31,40 @@ import {
 export default function App() {
   const [sheetOpened, setSheetOpened] = useState(false);
   const sheet = useRef(null);
+  const [search, setSearch] = useState('');
+  const [townInfo, setTownInfo] = useState({});
+  const [townImage1, setTownImage1] = useState('');
+
+  //
+  // muss noch mit Marker verbunden werden
+  //
+
+  // async function setTargetGoal(e) {
+  //   setSearch({search: await reverseGeocoding(lon, lat)});
+  // }
+
+
+  /**
+   *
+   * @param {object} e
+   * @return {Promise<void>}
+   */
+  async function handleSearch(e) {
+    if (search === '') return;
+
+    // get the searched towns longitude and latitude
+
+
+    // setTownInfo({town: await fetchDataWikiInfo(search) });
+    let towninfo = await townInfoWiki(search);
+    if (towninfo.length > 150) {
+      const wherecuttext = towninfo.indexOf(' ', 150);
+      towninfo = towninfo.substring(0, wherecuttext) + '...';
+    }
+    setTownInfo({townInfo: towninfo});
+    const images = await getImages(search);
+    setTownImage1({townImage1: images[0]});
+  }
 
   const onPageBeforeOut = () => {
     // Close opened sheets on page out
@@ -53,6 +89,7 @@ export default function App() {
     // Open sheet part
     f7.sheet.open(sheet.current);
   };
+
   /* eslint-enable*/
   return (
     <Page name='home' onPageBeforeOut={onPageBeforeOut} onPageBeforeRemove={onPageBeforeRemove}>
@@ -76,7 +113,10 @@ export default function App() {
           expandable
           searchContainer=".search-list"
           searchIn=".item-title"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           disableButton={!theme.aurora}
+          onSubmit={handleSearch}
         ></Searchbar>
       </Navbar>
 
@@ -99,12 +139,12 @@ export default function App() {
 
             <div className="display-flex align-items-center">
               <img
-                src="https://www.sketchappsources.com/resources/source-image/profile-illustration-gunaldi-yunus.png"
-                alt="Avatar" className="wiki-pic"/>
+                src={townImage1.townImage1}
+                alt="Avatar" className="wiki-pic"></img>
               <div>
                 <b className="sheet-text-main">Friedrichshafen, 88540</b>
                 <div>
-                  <b className="sheet-text-secondary">Die Stadt der Lebenden lel</b>
+                  <b className="sheet-text-secondary">{townInfo.townInfo}</b>
                 </div>
               </div>
             </div>
@@ -130,39 +170,31 @@ export default function App() {
         </div>
 
         <BlockTitle medium className="margin-top sheet-text-main">
-          Information:
+            Information:
         </BlockTitle>
+
         <List noHairlines className="sheet-container">
+
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              Baden-Württemberg
+                Baden-Württemberg
             </b>
           </ListItem>
 
           <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              88045, 88046, 88048
+                88045, 88046, 88048
             </b>
           </ListItem>
 
           <ListItem title="Einwohner:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
-              61.221
+                61.221
             </b>
-          </ListItem>
-
-          <ListItem>
-            <f7-block>
-              <p className="sheet-text-tertiary">
-                Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
-                on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
-                fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
-              </p>
-            </f7-block>
           </ListItem>
         </List>
       </Sheet>
 
     </Page>
   );
-};
+}
