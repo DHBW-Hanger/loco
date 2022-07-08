@@ -37,7 +37,7 @@ export default function App() {
   const [town, setTown] = useState('');
   const [state, setState] = useState('');
   const [postcode, setPostcode] = useState('');
-  const [population, setPopulation] = useState('');
+  // const [population, setPopulation] = useState('');
 
   //
   // muss noch mit Marker verbunden werden
@@ -66,14 +66,14 @@ export default function App() {
       // city or town in keys
       if ('town' in geocodeInfo.address) {
         stadt = geocodeInfo.address.town;
-      }else if('city' in geocodeInfo.address){
+      } else if ('city' in geocodeInfo.address) {
         stadt = geocodeInfo.address.city;
       }
       setTown({town: stadt});
       console.log(geocodeInfo.address);
-      let test = await getPopulation(stadt);
+      const test = await getPopulation(stadt);
       console.log(test);
-      //setPopulation({population: aw})
+      // setPopulation({population: aw})
 
       let towninfo = await townInfoWiki(stadt);
       let laenge = towninfo.length;

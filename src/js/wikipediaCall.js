@@ -28,7 +28,7 @@ export async function searchGeoCodeInfos(search) {
  * @param {string}location
  * @return {Promise<any>}
  */
-export async function getPopulation(location){
+export async function getPopulation(location) {
   const response = await fetch(`https://de.wikipedia.org/w/api.php?format=json&action=query&titles=${location}&prop=revisions&rvprop=content&rvsection=0&origin=*`);
   let data = await response.json();
   data = data['query']['pages'];
