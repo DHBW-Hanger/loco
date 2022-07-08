@@ -5,6 +5,8 @@ import '../css/modalsheet.css';
 import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
+import {getImages, townInfoWiki, searchGeoCodeInfos, getPopulation} from '../js/wikipediaCall';
+
 
 import {
   Link,

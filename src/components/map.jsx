@@ -15,7 +15,9 @@ const icon = L.icon({
 
 // icon for target position
 let targetIcon = L.icon({
-  iconUrl: '/icons/marker_lightm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
+  iconUrl: '/icons/marker_lightm.svg',
+  iconSize: [32, 32],
+  iconAnchor: [13, 28],
 });
 
 /**
