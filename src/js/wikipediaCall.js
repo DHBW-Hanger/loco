@@ -54,7 +54,7 @@ async function testWikiApi(longitude = 9.44376, latitude = 47.667223) {
  * @return {Promise<void>}
  */
 
-async function reverseGeocoding(lon, lat) {
+export async function reverseGeocoding(lon, lat) {
   const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
   const data = await response.json();
   return (data);
@@ -67,7 +67,7 @@ async function reverseGeocoding(lon, lat) {
  * @param {string} location
  * @return {string} data
  */
-async function townInfo(location) {
+export async function townInfoWiki(location) {
   const url = `https://de.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=${location}&format=json&origin=*`;
   let data = await getContent(url);
   try {
@@ -83,8 +83,11 @@ async function townInfo(location) {
     data = data.replace('  ', ' ');
   } catch {
   }
-  return data;
+  return (
+      data
+  );
 }
+
 
 /**
  * prints urls of images on console
@@ -92,7 +95,7 @@ async function townInfo(location) {
  * @param {string} location
  * @return {string} urls of images
  */
-async function getImages(location) {
+export async function getImages(location) {
   // get names of images at location
   const locationurl = `https://de.wikipedia.org/w/api.php?action=query&titles=${location}&format=json&prop=images&imlimit=10&origin=*`;
   const imageNames = await getContent(locationurl);
@@ -130,7 +133,7 @@ async function createImageAPIUrls(data) {
   const urls = [];
   let count = 0;
   for (let i = 0; i < images.length; i++) {
-    if ((images[i]['title']).includes('.jpg') && (count < 2)) {
+    if ((images[i]['title']).includes('.jpg') && (count < 3)) {
       let imagename = images[i]['title'];
       imagename = imagename.replace('Datei', 'File');
       urls[count] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;

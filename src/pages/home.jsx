@@ -5,6 +5,7 @@ import '../css/modalsheet.css';
 import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowUp, IoIosArrowDown} from 'react-icons/Io';
+import {getImages, townInfoWiki, reverseGeocoding} from "../js/wikipediaCall";
 
 
 import {
@@ -32,34 +33,28 @@ export default function App() {
   const sheet = useRef(null);
   const [search, setSearch] = useState({});
   const [townInfo, setTownInfo] = useState({});
+  const [townImage1, setTownImage1] = useState('');
+  const [townImage2, setTownImage2] = useState('');
+  const [townImage3, setTownImage3] = useState('');
   const [results, setResults] = useState([]);
+
+  //
+  // muss noch mit Marker verbunden werden
+  //
+
+  async function setTargetGoal(e) {
+    setSearch({search: await reverseGeocoding(lon, lat)})
+  }
 
   async function handleSearch(e) {
     if (search === '') return;
-    setTownInfo({town: await fetchDataWikiInfo(search) });
+    //setTownInfo({town: await fetchDataWikiInfo(search) });
+    setTownInfo({townInfo: await townInfoWiki(search)});
+    let images = await getImages(search);
+    setTownImage1({townImage1: images[0]});
+    setTownImage2({townImage2: images[1]});
+    setTownImage3({townImage3: images[2]});
   }
-  async function fetchDataWikiInfo(value) {
-    const api = `https://de.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=${value}&format=json&origin=*`;
-
-    const response = await fetch(api);
-    if (!response.ok) {
-      throw Error(response.statusText)
-    }
-    const json = await response.json()
-    const [id] = Object.keys(json.query.pages);
-    //[id] = Object.keys(json.query.pages).toString();
-    let data = json.query.pages;
-    data = data[id].extract;
-    data = data.replace(/<[^>]+>/g, '');
-    // removes everything between square brackets, however some wikipedia articles look bad then.
-    data = data.replace(/ *\[[^\]]*]/g, '');
-    // removes everything between normal brackets.
-    data = data.replace(/\(.*?\)/g, '');
-    data = data.replace('  ', ' ');
-    data = data.replace(' ,', ',');
-    return data;
-  }
-
 
   const onPageBeforeOut = () => {
     // Close opened sheets on page out
@@ -188,19 +183,21 @@ export default function App() {
 
             <ListItem>
               <f7-block>
-                <p className="sheet-text-tertiary">
-                </p>
-                {townInfo.town}
+                {townInfo.townInfo}
               </f7-block>
             </ListItem>
 
-            <ListItem>
+            <ListItem title="Bilder" className="sheet-text-tertiary">
               <f7-block>
-                <p className="sheet-text-tertiary">
-                  Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus
-                  on vero corporis voluptat fsjfjlksfjklfjösalkfjölkfjaölkfjaöslkdj
-                  fösklafjalksjdföalkfjölfkjösdlkfjasjklfdjsaölkfibus similique odit ab...
-                </p>
+                <div className="image-container">
+                  <img src={townImage1.townImage1} alt="image 1" width="100%"></img>
+                </div>
+                <div className="image-container">
+                  <img src={townImage2.townImage2} alt="image 2" width="100%"></img>
+                </div>
+                <div className="image-container">
+                  <img src={townImage3.townImage3} alt="image 3" width="100%"></img>
+                </div>
               </f7-block>
             </ListItem>
           </List>
