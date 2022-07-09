@@ -1,5 +1,5 @@
 :root {
-  --background-color: white;
+  --background-color: #222;
   --background-color-disabled: rgb(178 178 178);
   --text-color: black;
   --text-color-disabled: rgb(73 73 73);
@@ -15,11 +15,11 @@
 }
 
 .list-container {
-  color: #fff;
+  color: #222;
 }
 
 .searchbar {
-  background-color: #fff;
+  background-color: #222;
 }
 
 /* Avatar for Userprofile */
@@ -117,10 +117,14 @@
     --f7-list-bg-color: #222;
     --background-color: rgb(20 20 20);
     --text-color: white;
-    --text-color-disabled: rgb(154 154 154);
-    --background-color-disabled: white;
+    --text-color-disabled: white;
+    --background-color-disabled: black;
     --f7-searchbar-input-bg-color: var(--background-color);
     --f7-searchbar-input-text-color: #fff;
+  }
+
+  .navbar-inner {
+    background-color: #222;
   }
 
   .navbar-bg {
@@ -139,7 +143,7 @@
     background-color: #222;
     color: white;
 
-    --f7-tabbar-link-inactive-color: white;
+    --f7-tabbar-link-inactive-color: #222;
     --f7-navbar-text-color: white;
     --f7-bars-text-color: white;
   }

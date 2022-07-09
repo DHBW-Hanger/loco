@@ -4,7 +4,7 @@
   --background-color-map: rgb(234 217 217);
   --background-color-disabled: rgb(178 178 178);
   --text-color: black;
-  --text-color-disabled: rgb(73 73 73);
+  --text-color-disabled: rgb(0 0 0);
   --accent-color: #fc2c54;
 }
 
@@ -217,7 +217,7 @@ input:checked + span {
     --background-color: rgb(20 20 20);
     --background-color-map: rgb(0 0 0);
     --text-color: white;
-    --text-color-disabled: rgb(154 154 154);
+    --text-color-disabled: rgb(255 255 255);
     --background-color-disabled: rgb(66 66 66);
   }
 
