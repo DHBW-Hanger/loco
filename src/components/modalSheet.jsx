@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {BiLocationPlus} from 'react-icons/Bi';
+import {TiLocationArrowOutline} from 'react-icons/Ti';
+import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
 import '../css/modalsheet.css';
 
 import {
@@ -9,14 +12,25 @@ import {
   ListItem,
 } from 'framework7-react';
 
-import {BiLocationPlus} from 'react-icons/Bi';
-import {TiLocationArrowOutline} from 'react-icons/Ti';
-import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
-
 
 // https://v4.framework7.io/react/sheet-modal
 
+
+/**
+ * modalSheet component
+ *
+ * @param {boolean} status - status of the modal
+ * @param {string} title - title of the town
+ * @param {string} description - description of the town
+ * @param {string} image - image of the town
+ * @param {string} federalState - federal state of the town
+ * @param {number} postCode - post code of the town
+ * @param {number} population - population of the town
+ */
 class ModalSheet extends Component {
+  /**
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +43,10 @@ class ModalSheet extends Component {
     };
   }
 
+  /**
+   * render the component
+   * @return {JSX.Element}
+   */
   render() {
     return (
       <Sheet

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MyMap from '../components/map';
-import '../css/index.css';
+import ModalPopup from '../components/modalPopup';
+import ModalSheet from '../components/modalSheet';
 import {handleSearch1} from '../js/wikipediaCall';
+import '../css/index.css';
 
 import {
   Link,
@@ -13,11 +15,15 @@ import {
   Button,
 } from 'framework7-react';
 
-import ModalPopup from '../components/modalPopup';
-import ModalSheet from '../components/modalSheet';
 
-
-class App extends React.Component {
+/**
+ * @param {boolean} status - status of the modal
+ */
+class App extends Component {
+  /**
+   * initialize the component
+   *
+   */
   constructor() {
     super();
     this.state = {
@@ -37,7 +43,10 @@ class App extends React.Component {
     this.setState({showModalPopup: status});
   };
 
-  /* eslint-enable*/
+  /**
+   * render the component
+   * @return {JSX.Element}
+   */
   render() {
     return (
       <Page name='home'>

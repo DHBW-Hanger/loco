@@ -1,7 +1,7 @@
 
 /**
  *
- * @param search
+ * @param {string} search - the searchterm
  * @return {Promise<void>}
  */
 export async function handleSearch(search) {
@@ -41,6 +41,7 @@ export async function handleSearch(search) {
 }
 
 // test sheet info display
+/*eslint-disable */
 export async function handleSearch1() {
   const result = {};
 
@@ -53,6 +54,7 @@ export async function handleSearch1() {
 
   return result;
 }
+/* eslint-enable */
 
 /**
  * prints address on console

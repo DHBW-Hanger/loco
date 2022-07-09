@@ -1,8 +1,15 @@
 import React, {Component, Fragment} from 'react';
 import {Modal} from 'react-bootstrap';
 
-
+/**
+ * modalPopup component
+ *
+ * @param {boolean} status - status of the modal
+ */
 class ModalPopup extends Component {
+  /**
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +26,10 @@ class ModalPopup extends Component {
     this.props.onPopupClose(false);
   };
 
+  /**
+   * render the component
+   * @return {JSX.Element}
+   */
   render() {
     return (
       <Fragment>
