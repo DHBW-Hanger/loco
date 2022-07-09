@@ -1,6 +1,6 @@
 {
   "name": "Loco",
-  "short_name": "Loco",
+  "short_name" : "Loco",
   "description": "Loco",
   "lang": "en-US",
   "start_url": "/",
