@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
+import {geocodeTown} from '../js/wikipediaCall';
 import '../css/modalsheet.css';
 
 import {
@@ -40,6 +41,7 @@ class ModalSheet extends Component {
       federalState: props.federalState,
       postCode: props.postCode,
       population: props.population,
+      targetMarkerLocation: props.targetMarkerLocation,
     };
   }
 
@@ -68,7 +70,19 @@ class ModalSheet extends Component {
               </div>
             </div>
 
-            <Button fill round align-items-center>
+            <Button fill round align-items-center onClick={
+              () => {
+                geocodeTown(this.props.townName).then((response) => {
+                  const lat = response[0].lat;
+                  const lon = response[0].lon;
+                  this.setState({
+                    targetMarkerLocation: {lat, lon},
+                  }, () => {
+                    console.log(this.state.targetMarkerLocation);
+                  });
+                });
+              }
+            }>
               <div style={{fontSize: '24px', paddingTop: 7}}>
                 <BiLocationPlus/>
               </div>

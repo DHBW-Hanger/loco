@@ -23,9 +23,10 @@ let targetIcon = L.icon({
 /**
  *
  * @return {JSX.Element} - Map Component
+ * @param {object} props - props of the component
  * @constructor
  */
-export default function MyMap() {
+export default function MyMap(props) {
   // default map props
   const center = {lat: 47.67, lng: 9.46};
   const ZOOM_LEVEL = 13;
@@ -156,7 +157,7 @@ export default function MyMap() {
       }
     });
 
-    let targetLocation = L.latLng(47.66, 9.49);
+    let targetLocation = L.latLng(props.targetMarkerLocation.lat, props.targetMarkerLocation.lon);
     const targetMarker = L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
 
     // update route when target marker is moved

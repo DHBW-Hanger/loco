@@ -36,6 +36,7 @@ class App extends Component {
       federalState: '',
       postCode: 0,
       population: 0,
+      targetMarkerLocation: {lat: 47.66, lon: 9.49},
     };
   }
 
@@ -95,7 +96,9 @@ class App extends Component {
           onPopupClose={this.isShowPopup}
         />
 
-        <MyMap/>
+        <MyMap
+          targetMarkerLocation={this.state.targetMarkerLocation}
+        />
 
         <ModalSheet
           townName={this.state.townName}

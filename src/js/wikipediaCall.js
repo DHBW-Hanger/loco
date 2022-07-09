@@ -56,6 +56,19 @@ export async function handleSearch1() {
 }
 /* eslint-enable */
 
+const openWeatherMapKey = 'e12cd34ba9dc90e41910b20cdee02430';
+
+/**
+ * fetches the url and returns the content
+ * @param {string} town - name of the town
+ * @return {Promise<any>}
+ */
+export async function geocodeTown(town) {
+  const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${town}&limit=1&appid=${openWeatherMapKey}`);
+  const data = await response.json();
+  return data;
+}
+
 /**
  * prints address on console
  *
