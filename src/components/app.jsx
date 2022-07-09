@@ -87,14 +87,14 @@ const MyApp = () => {
                 placeholder="Your username"
                 value={username}
                 onInput={(e) => setUsername(e.target.value)}
-              ></ListInput>
+              />
               <ListInput
                 type="password"
                 name="password"
                 placeholder="Your password"
                 value={password}
                 onInput={(e) => setPassword(e.target.value)}
-              ></ListInput>
+              />
             </List>
             <List>
               <ListButton title="Sign In" onClick={() => alertLoginData()}/>
