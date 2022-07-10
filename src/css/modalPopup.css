@@ -1,13 +1,13 @@
 .modal-popup {
   position: fixed;
   overflow-y: scroll;
-  top: 10%;
+  top: 8%;
   left: 12%;
   width: 70%;
   height: 80%;
   z-index: 99999;
-  background: #222;
-  color: #fff;
+  background: #fff;
+  color: #000;
   padding: 40px;
   display: flex;
   justify-content: center;
@@ -64,4 +64,11 @@
 
 .help-section .help-text {
   padding: 0 25px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal-popup {
+    background: #222;
+    color: #fff;
+  }
 }

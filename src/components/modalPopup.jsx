@@ -38,9 +38,6 @@ class ModalPopup extends Component {
         <Modal
           className="modal-popup"
           show={this.props.showModalPopup}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
         >
           <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/recenter.svg" alt="close"/>
           <Modal.Header>
