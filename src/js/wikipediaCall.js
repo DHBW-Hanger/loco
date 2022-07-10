@@ -2,7 +2,7 @@
 /**
  *
  * @param {string}input
- * @returns {Promise<{}>}
+ * @return {Promise<{}>}
  */
 export async function handleSearch(input) {
   const result = {};
@@ -25,11 +25,11 @@ export async function handleSearch(input) {
     let postcode = cityInfos.address.postalCode;
     if (postcode == null) postcode = cityInfosWikidata.postalCode;
     if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
-      let postcode2 = await getCityInfosNominatim(cityInfos.address.town);
+      const postcode2 = await getCityInfosNominatim(cityInfos.address.town);
       postcode = postcode2.address.postcode;
     }
     // if no image was found in wikipedia use custom svg
-    if (imageurls[0] === undefined) imageurls[0] = "../icons/altimage.svg";
+    if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
 
     // set states
     result.city = stadt;
@@ -294,11 +294,13 @@ async function createImageAPIUrls(data) {
  */
 async function getContent(url) {
   let content;
-  await fetch(url,{method: 'GET', },)
-    .then((response) => response.json())
-    .then((json) => content = json)
-    .catch((error) => {console.log(error.message);});
-    return content;
-  }
+  await fetch(url, {method: 'GET'})
+      .then((response) => response.json())
+      .then((json) => content = json)
+      .catch((error) => {
+        console.log(error.message);
+      });
+  return content;
+}
 
 
