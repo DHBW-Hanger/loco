@@ -1,0 +1,48 @@
+.modal-popup {
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  width: 70%;
+  height: 80%;
+  z-index: 99999;
+  background: #222;
+  color: #fff;
+  padding: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.modal-popup .close {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  width: 30px;
+  height: 30px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.help-content {
+  font-size: 16px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 150%;
+  background: rgba(10, 10, 10, 0.8);
+  z-index: 9999;
+}

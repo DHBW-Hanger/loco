@@ -27,7 +27,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      showModalPopup: false,
+      showModalPopup: true,
       sheet: null,
       search: '',
       townName: '',
