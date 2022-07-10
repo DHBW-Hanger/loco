@@ -24,10 +24,10 @@ class App extends Component {
    * initialize the component
    *
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showModalPopup: true,
+      showModalPopup: false,
       sheet: null,
       search: '',
       townName: '',
@@ -38,6 +38,15 @@ class App extends Component {
       population: 0,
       targetMarkerLocation: {lat: 47.66, lon: 9.49},
     };
+
+    this.helpHandler = this.helpHandler.bind(this)
+  }
+
+  helpHandler() {
+    console.log('helpHandler');
+    this.setState({
+      showModalPopup: true
+    })
   }
 
   isShowPopup = (status) => {
@@ -98,6 +107,7 @@ class App extends Component {
 
         <MyMap
           targetMarkerLocation={this.state.targetMarkerLocation}
+          helpHandler={this.helpHandler}
         />
 
         <ModalSheet
