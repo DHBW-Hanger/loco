@@ -83,6 +83,12 @@ class ModalPopup extends Component {
                 </p>
                 <img src="/icons/help.svg" alt="logo"/>
               </div>
+              <div className="help-section">
+                <p className="help-text"> Hilfe für die Suche
+
+                </p>
+                <img src=""/>
+              </div>
             </div>
           </Modal.Body>
         </Modal>
