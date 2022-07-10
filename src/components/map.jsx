@@ -279,8 +279,6 @@ export default function MyMap(props) {
     const helpButton = document.querySelector('input.help-button');
 
     helpButton.addEventListener('click', () => {
-      console.log('help button clicked');
-      console.log(props);
       props.helpHandler();
     });
   }, []);

@@ -47,7 +47,6 @@ class App extends Component {
    * handle the help button click
    */
   helpHandler() {
-    console.log('helpHandler');
     this.setState({
       showModalPopup: true,
     });

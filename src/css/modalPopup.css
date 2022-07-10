@@ -57,6 +57,16 @@
   align-items: center;
 }
 
+@media only screen and (max-width: 900px) {
+  .help-section {
+    flex-direction: column;
+  }
+
+  .help-section:nth-child(2n) {
+    flex-direction: column-reverse;
+  }
+}
+
 .help-section img {
   height: 25%;
   width: 25%;
