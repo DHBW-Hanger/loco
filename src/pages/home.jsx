@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MyMap from '../components/map';
 import ModalPopup from '../components/modalPopup';
 import ModalSheet from '../components/modalSheet';
-import {handleSearch1} from '../js/wikipediaCall';
+import {handleSearch} from '../js/wikipediaCall';
 import '../css/index.css';
 
 import {
@@ -70,12 +70,11 @@ class App extends Component {
             searchContainer=".search-list"
             searchIn=".item-title"
             disableButton={!theme.aurora}
-            value={this.search}
             onChange={(e) => {
               this.search = (e.target.value);
             }}
             onSubmit={() => {
-              handleSearch1(this.search).then((r) => {
+              handleSearch(this.search).then((r) => {
                 this.setState({
                   townName: r.city,
                   townDescription: r.townInfo,

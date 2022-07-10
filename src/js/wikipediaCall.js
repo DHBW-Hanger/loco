@@ -1,59 +1,47 @@
-
+// test sheet info display
 /**
  *
- * @param {string} search - the searchterm
- * @return {Promise<void>}
+ * @param {string}input
+ * @returns {Promise<{}>}
  */
-export async function handleSearch(search) {
-  let geocodeInfo = await searchGeoCodeInfos(search);
+export async function handleSearch(input) {
   const result = {};
+  if (input !== '') {
+    // cityInfos
+    const cityInfos = await getCityInfosNominatim(input);
+    const stadt = cityInfos.address.stadt;
 
-  if (geocodeInfo.length === 0) {
-    console.log('empty');
-  } else {
-    // select top result
-    geocodeInfo = geocodeInfo[0];
-    // city or town in keys
-    if ('town' in geocodeInfo.address) {
-      result.city = geocodeInfo.address.town;
-    } else if ('city' in geocodeInfo.address) {
-      result.city = geocodeInfo.address.city;
-    }
-    console.log(geocodeInfo.address);
-    result.population = await getPopulation(result.city);
+    const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
+    let towninfo = await townInfoWiki(stadt);
 
-    result.townInfo = await townInfoWiki(result.city);
-    let length = result.townInfo.length;
-    if (length > 150) {
-      length = townInfo.indexOf(' ', 150);
-      result.townInfo = townInfo.substring(0, length) + '...';
+    let laenge = towninfo.length;
+    if (laenge > 150) {
+      laenge = towninfo.indexOf(' ', 150);
+      if (laenge < towninfo.length && laenge > 0) {
+        towninfo = towninfo.substring(0, laenge) + '...';
+      }
     }
-    result.image = await getImages(city)[0];
+    const imageurls = await getImages(stadt);
+    let postcode = cityInfos.address.postalCode;
+    if (postcode == null) postcode = cityInfosWikidata.postalCode;
+    if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
+      let postcode2 = await getCityInfosNominatim(cityInfos.address.town);
+      postcode = postcode2.address.postcode;
+    }
+    // if no image was found in wikipedia use custom svg
+    if (imageurls[0] === undefined) imageurls[0] = "../icons/altimage.svg";
 
-    // if country is Germany
-    if (geocodeInfo.address.country === 'Deutschland') {
-      result.state = geocodeInfo.address.state;
-      result.postCode = geocodeInfo.address.postcode;
-    }
+    // set states
+    result.city = stadt;
+    result.population = cityInfosWikidata.population;
+    result.townInfo = towninfo;
+    result.image = imageurls[0];
+    result.state = cityInfos.address.state;
+    result.postCode = postcode;
   }
-
   return result;
 }
 
-// test sheet info display
-/*eslint-disable */
-export async function handleSearch1() {
-  const result = {};
-
-  result.city = 'Stuttgart';
-  result.population = 635000;
-  result.townInfo = 'Anim ex quis excepteur et est irure et cupidatat non.';
-  result.image = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Stuttgart.svg';
-  result.state = 'Baden-Württemberg';
-  result.postCode = 70000;
-
-  return result;
-}
 /* eslint-enable */
 
 const openWeatherMapKey = 'e12cd34ba9dc90e41910b20cdee02430';
@@ -87,27 +75,131 @@ export async function reverseGeocoding(lon, lat) {
  * @param {string}search
  * @return {Promise<any>}
  */
-export async function searchGeoCodeInfos(search) {
+async function getCityInfosNominatim(search) {
   const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
-  const data = await response.json();
+  let data = await response.json();
+  if (data.length !== 0) {
+    data = data[0];
+    if (data.address.country === 'Vereinigte Staaten von Amerika') {
+      data.address.country = 'Vereinigte Staaten';
+    }
+    if ('suburb' in data.address) {
+      data.address.stadt = data.address.suburb;
+    } else if ('city_district' in data.address) {
+      data.address.stadt = data.address['city_district'];
+    } else if ('town' in data.address) {
+      data.address.stadt = data.address.town;
+    } else if ('city' in data.address) {
+      data.address.stadt = data.address.city;
+    } else if ('county' in data.address && !('town') in data.address) {
+      data.address.stadt = data.address.county;
+    }
+  }
   return data;
 }
 
 /**
- *
- * @param {string}location
- * @return {Promise<any>}
+ * Internetlink: https://query.wikidata.org/#SELECT%20%3Fcity%20%3FcityLabel%20%3Fcountry%20%3FcountryLabel%20%3Fpopulation%0A%20%20%20%20WHERE%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%3Fcity%20rdfs%3Alabel%20%27Friedrichshafen%27%40de.%0A%20%20%20%20%20%20%3Fcity%20wdt%3AP1082%20%3Fpopulation.%0A%20%20%20%20%20%20%3Fcity%20wdt%3AP17%20%3Fcountry.%0A%20%20%20%20%20%20%3Fcity%20rdfs%3Alabel%20%3FcityLabel.%0A%20%20%20%20%20%20%3Fcountry%20rdfs%3Alabel%20%3FcountryLabel.%0A%20%20%20%20%20%20FILTER%28LANG%28%3FcityLabel%29%20%3D%20%22de%22%29.%0A%20%20%20%20%20%20FILTER%28LANG%28%3FcountryLabel%29%20%3D%20%22de%22%29.%0A%20%20%20%20%20%20FILTER%28CONTAINS%28%3FcountryLabel%2C%20%22Deutschland%22%29%29.%0A%20%20%20%20%7D
+ * @param {string}town
+ * @param {string}country
+ * @return {Promise<*[]>}
  */
-export async function getPopulation(location) {
-  const response = await fetch(`https://de.wikipedia.org/w/api.php?format=json&action=query&titles=${location}&prop=revisions&rvprop=content&rvsection=0&origin=*`);
+async function getCityInfosWikidata(town, country) {
+  const info = [];
+  const response = await fetch(`https://de.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${town}&rvsection=0&origin=*`);
   let data = await response.json();
-  data = data['query']['pages'];
-
-  // gets first key from data
+  data = data.query.pages;
   const [id] = Object.keys(data);
-  data = data[id]['revisions'][0]['*'];
-  console.log(data);
-  return data;
+
+  data = data[id].revisions[0]['*'];
+  // only parse Infobox
+  let anfang = data.indexOf('{{Infobox');
+  if (anfang !== -1) {
+    let informationen;
+    let position;
+    let ende = data.indexOf('}}', anfang);
+    data = data.substring(anfang, ende);
+
+    // check if Einwohner exists in Infobox
+    anfang = data.indexOf('Einwohner');
+    if (anfang !== -1) {
+      ende = data.indexOf('|', anfang);
+      informationen = data.substring(anfang, ende);
+      position = informationen.indexOf('=');
+      if (position !== -1) informationen = informationen.substring(position + 1);
+      info.population = informationen;
+    }
+    // check if postalcode exists in Infobox
+    anfang = data.indexOf('Postleitzahl');
+    const anfang2 = data.indexOf('PLZ');
+    if (anfang !== -1) {
+      ende = data.indexOf('|', anfang);
+      informationen = data.substring(anfang, ende);
+      position = informationen.indexOf('=');
+      if (position !== -1) informationen = informationen.substring(position + 1);
+      info.postalCode = informationen;
+    } else if (anfang2 !== -1) {
+      ende = data.indexOf('|', anfang2);
+      informationen = data.substring(anfang2, ende);
+      position = informationen.indexOf('=');
+      if (position !== -1) informationen = informationen.substring(position + 1);
+      ende = informationen.indexOf('<');
+      if (ende !== -1) informationen = informationen.substring(0, ende);
+      info.postalCode = informationen;
+    }
+    info.all = data;
+  }
+  if (!('population' in info)) {
+    /**
+     *
+     */
+    class SPARQLQueryDispatcher {
+      /**
+       *
+       * @param {string}endpoint
+       */
+      constructor(endpoint) {
+        this.endpoint = endpoint;
+      }
+
+      /**
+       *
+       * @param {string}sparqlQuery
+       * @return {Promise<any>}
+       */
+      query(sparqlQuery) {
+        const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
+        const headers = {'Accept': 'application/sparql-results+json'};
+
+        return fetch(fullUrl, {headers}).then((body) => body.json());
+      }
+    }
+
+    const endpointUrl = 'https://query.wikidata.org/sparql';
+    const sparqlQuery = `SELECT ?city ?cityLabel ?country ?countryLabel ?population
+    WHERE
+    {
+      ?city rdfs:label '${town}'@de.
+      ?city wdt:P1082 ?population.
+      ?city wdt:P17 ?country.
+      ?city rdfs:label ?cityLabel.
+      ?country rdfs:label ?countryLabel.
+      FILTER(LANG(?cityLabel) = "de").
+      FILTER(LANG(?countryLabel) = "de").
+      FILTER(CONTAINS(?countryLabel, "${country}")).
+    }`;
+
+    const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+    const bevoelkerung = await queryDispatcher.query(sparqlQuery);
+    const searchresults = bevoelkerung.results.bindings.length;
+    info.population = bevoelkerung.results.bindings[0].population.value;
+    for (let i = 0; i < searchresults; i++) {
+      if (info.population > bevoelkerung.results.bindings[i].population.value) {
+        info.population = bevoelkerung.results.bindings[i].population.value;
+      }
+    }
+  }
+  return info;
 }
 
 /**
@@ -117,7 +209,7 @@ export async function getPopulation(location) {
  * @param {string} location
  * @return {string} data
  */
-export async function townInfoWiki(location) {
+async function townInfoWiki(location) {
   const url = `https://de.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&titles=${location}&format=json&origin=*`;
   let data = await getContent(url);
   try {
@@ -132,6 +224,7 @@ export async function townInfoWiki(location) {
     // removes everything between normal brackets.
     data = data.replace(/\(.*?\)/g, '');
     data = data.replace('  ', ' ');
+    data = data.replace(' ,', ',');
   } catch {
   }
   return (
@@ -146,7 +239,7 @@ export async function townInfoWiki(location) {
  * @param {string} location
  * @return {string} urls of images
  */
-export async function getImages(location) {
+async function getImages(location) {
   // get names of images at location
   const locationurl = `https://de.wikipedia.org/w/api.php?action=query&titles=${location}&format=json&prop=images&imlimit=10&origin=*`;
   const imageNames = await getContent(locationurl);
@@ -201,18 +294,11 @@ async function createImageAPIUrls(data) {
  */
 async function getContent(url) {
   let content;
-  await fetch(
-      url,
-      {
-        method: 'GET',
-      },
-  )
-      .then((response) => response.json())
-      .then((json) => content = json)
-      .catch((error) => {
-        console.log(error.message);
-      });
-  return content;
-}
+  await fetch(url,{method: 'GET', },)
+    .then((response) => response.json())
+    .then((json) => content = json)
+    .catch((error) => {console.log(error.message);});
+    return content;
+  }
 
 
