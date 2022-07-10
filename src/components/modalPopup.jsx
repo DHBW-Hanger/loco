@@ -42,36 +42,44 @@ class ModalPopup extends Component {
           <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/recenter.svg" alt="close"/>
           <Modal.Header>
             <Modal.Title className="modal-title">
-              TITLE Mollit officia ut sit proident anim
+              Loco help page
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="help-content">
               <div className="help-section">
                 <img src="/icons/logo.svg" alt="logo"/>
-                <p className="help-text">Dolore aute esse ea velit ullamco. Esse dolore aliquip magna quis elit culpa laborum laborum duis veniam
-                  sint. Ipsum cillum dolore non quis irure aliquip et magna. Cillum anim esse dolore. Labore aliqua aliquip labore culpa eiusmod do
-                  proident. Consequat in enim sit id proident occaecat proident.
+                <p className="help-text"> Loco ist eine location-based progressive web app (PWA), welche dich bei deinen Reisen mit routing
+                  services und grundlegenden Daten zu deinem Ziel unterstützt.<br/> <br/>
+                  Loco is a location-based progressive web app (PWA), which supports you in finding and providing basic information for your destination. <br/>
+                  Loco also provides you this services offline, if you install it on your device before your offline usage.
                 </p>
               </div>
               <div className="help-section">
-                <p className="help-text">Duis commodo aliquip ea eu dolore cillum non ut deserunt Lorem deserunt. Officia eu irure fugiat cupidatat
-                  fugiat magna ad sint aute proident. Tempor dolor fugiat incididunt do deserunt dolore tempor excepteur id dolor. Pariatur sint velit
-                  do veniam consectetur ex mollit ipsum ipsum nostrud eu proident officia proident irure. Mollit cillum aliquip ad Lorem veniam.
+                <p className="help-text"> Mit der Stecknadel signalisierst unseren routing services dein Ziel,
+                  verschiebe sie einfach dort wo du hin willst und die optimale Route wird für dich auf der Karte angezeigt.
+                  Falsches Ziel? Kein Problem, einfach nochmal verschieben!
+                  <br/> <br/>
+                  By moving the pin where you want to go you're signaling our routing services your destination, so move it and the optimal route will be displayed for you.
+                  Wrong location? No problem at all, just move it again!
                 </p>
                 <img src="/icons/marker_darkm.svg" alt="logo"/>
               </div>
               <div className="help-section">
                 <img src="/icons/recenter.svg" alt="logo"/>
-                <p className="help-text">Qui in nulla est labore excepteur reprehenderit esse aliqua elit ea in sunt ipsum consectetur laborum. Et
-                  ipsum ut ex laboris mollit irure adipisicing ex veniam amet. Quis dolor duis adipisicing proident nulla ut aliqua ea nisi ad sint
-                  nostrud amet. Minim ipsum ad tempor minim mollit eiusmod consequat ad aliqua consectetur.
+                <p className="help-text"> Der Recenter Button ist für dich da, wenn du nach deiner Suche auf der Karte
+                  wieder auf deinen Standort und deine Route zurück willst. Der Button wird allerdings nur angezeigt,
+                  wenn dein Standort nicht in der Mitte der Karte ist.
+                  <br/> <br/>
+                  The recenter button is there for you if, after your search on the map, you  want to go back to your
+                  location and the route towards your destination. However, the recenter button will only appear when you're not centered. So no need to worry!
                 </p>
               </div>
               <div className="help-section">
-                <p className="help-text">Consectetur reprehenderit deserunt pariatur ipsum ullamco laboris amet cillum exercitation proident fugiat
-                  deserunt magna magna. In excepteur nisi aliqua consequat sint in esse. Aute laboris nulla reprehenderit quis enim minim. Dolor
-                  dolore exercitation ut proident.
+                <p className="help-text"> Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls etwas nachschauen möchtest.
+                  <br/>
+                  <br/>
+                  By clicking the help button, this pupup will be opened, if at any point in time you're lost again.
                 </p>
                 <img src="/icons/help.svg" alt="logo"/>
               </div>
