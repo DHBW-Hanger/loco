@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import '../css/modalPopup.css';
 import '../css/index.css';
@@ -39,7 +39,7 @@ class ModalPopup extends Component {
           className="modal-popup"
           show={this.props.showModalPopup}
         >
-          <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/recenter.svg" alt="close"/>
+          <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/close.svg" alt="close"/>
           <Modal.Header>
             <Modal.Title className="modal-title">
               Loco help page
