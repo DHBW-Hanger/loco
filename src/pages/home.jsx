@@ -30,6 +30,7 @@ class App extends Component {
       showModalPopup: false,
       sheet: null,
       search: '',
+      countryName: '',
       townName: '',
       townDescription: '',
       townImage: '',
@@ -76,6 +77,7 @@ class App extends Component {
             onSubmit={() => {
               handleSearch(this.search).then((r) => {
                 this.setState({
+                  countryName: r.country,
                   townName: r.city,
                   townDescription: r.townInfo,
                   townImage: r.image,
@@ -100,6 +102,7 @@ class App extends Component {
         />
 
         <ModalSheet
+          countryName={this.state.countryName}
           townName={this.state.townName}
           townDescription={this.state.townDescription}
           townImage={this.state.townImage}

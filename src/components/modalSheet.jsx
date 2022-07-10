@@ -109,6 +109,12 @@ class ModalSheet extends Component {
 
         <List noHairlines className="sheet-container">
 
+          <ListItem title="Land:" className="sheet-text-tertiary">
+            <b slot="after" className="sheet-text-tertiary-bold">
+              {this.props.countryName}
+            </b>
+          </ListItem>
+
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.federalState}

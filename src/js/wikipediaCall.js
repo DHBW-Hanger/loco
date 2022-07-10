@@ -31,9 +31,22 @@ export async function handleSearch(input) {
     // if no image was found in wikipedia use custom svg
     if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
 
+    // improve display of population number
+    let population = cityInfosWikidata.population;
+    population.trim();
+    laenge = population.length;
+    let counter = 0;
+    // add a '.' after every 3 chars
+    while (laenge > 3){
+      population = population.substring(0, laenge-3) + '.' + population.substring(laenge-3,laenge+4*counter);
+      laenge = laenge-3;
+      counter = counter+1;
+    }
+
     // set states
+    result.country = cityInfos.address.country;
     result.city = stadt;
-    result.population = cityInfosWikidata.population;
+    result.population = population;
     result.townInfo = towninfo;
     result.image = imageurls[0];
     result.state = cityInfos.address.state;
