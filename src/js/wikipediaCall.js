@@ -125,74 +125,77 @@ async function getCityInfosNominatim(search) {
 async function getCityInfosWikidata(town, country) {
   const info = [];
   let data = await getContent(`https://de.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${town}&rvsection=0&origin=*`);
-  if (['query'] in data) {
-    data = data.query.pages;
-    const [id] = Object.keys(data);
+  try {
+    if (['pages'] in data['query']) {
+      data = data.query.pages;
+      const [id] = Object.keys(data);
+      if (['*'] in data[id].revisions[0]) {
+        data = data[id].revisions[0]['*'];
+        // only parse Infobox
+        let anfang = data.indexOf('{{Infobox');
+        if (anfang !== -1) {
+          let informationen;
+          let position;
+          let ende = data.indexOf('}}', anfang);
+          data = data.substring(anfang, ende);
 
-    data = data[id].revisions[0]['*'];
-    // only parse Infobox
-    let anfang = data.indexOf('{{Infobox');
-    if (anfang !== -1) {
-      let informationen;
-      let position;
-      let ende = data.indexOf('}}', anfang);
-      data = data.substring(anfang, ende);
-
-      // check if Einwohner exists in Infobox
-      anfang = data.indexOf('Einwohner');
-      if (anfang !== -1) {
-        ende = data.indexOf('|', anfang);
-        informationen = data.substring(anfang, ende);
-        position = informationen.indexOf('=');
-        if (position !== -1) informationen = informationen.substring(position + 1);
-        info.population = informationen;
-      }
-      // check if postalcode exists in Infobox
-      anfang = data.indexOf('Postleitzahl');
-      const anfang2 = data.indexOf('PLZ');
-      if (anfang !== -1) {
-        ende = data.indexOf('|', anfang);
-        informationen = data.substring(anfang, ende);
-        position = informationen.indexOf('=');
-        if (position !== -1) informationen = informationen.substring(position + 1);
-        info.postalCode = informationen;
-      } else if (anfang2 !== -1) {
-        ende = data.indexOf('|', anfang2);
-        informationen = data.substring(anfang2, ende);
-        position = informationen.indexOf('=');
-        if (position !== -1) informationen = informationen.substring(position + 1);
-        ende = informationen.indexOf('<');
-        if (ende !== -1) informationen = informationen.substring(0, ende);
-        info.postalCode = informationen;
-      }
-      info.all = data;
-    }
-    if (!('population' in info)) {
-      /**
-       *
-       */
-      class SPARQLQueryDispatcher {
-        /**
-         *
-         * @param {string}endpoint
-         */
-        constructor(endpoint) {
-          this.endpoint = endpoint;
-        }
-
-        /**
-         *
-         * @param {string}sparqlQuery
-         * @return {Promise<any>}
-         */
-        query(sparqlQuery) {
-          const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
-          const headers = {'Accept': 'application/sparql-results+json'};
-          return fetch(fullUrl, {headers}).then((body) => body.json());
+          // check if Einwohner exists in Infobox
+          anfang = data.indexOf('Einwohner');
+          if (anfang !== -1) {
+            ende = data.indexOf('|', anfang);
+            informationen = data.substring(anfang, ende);
+            position = informationen.indexOf('=');
+            if (position !== -1) informationen = informationen.substring(position + 1);
+            info.population = informationen;
+          }
+          // check if postalcode exists in Infobox
+          anfang = data.indexOf('Postleitzahl');
+          const anfang2 = data.indexOf('PLZ');
+          if (anfang !== -1) {
+            ende = data.indexOf('|', anfang);
+            informationen = data.substring(anfang, ende);
+            position = informationen.indexOf('=');
+            if (position !== -1) informationen = informationen.substring(position + 1);
+            info.postalCode = informationen;
+          } else if (anfang2 !== -1) {
+            ende = data.indexOf('|', anfang2);
+            informationen = data.substring(anfang2, ende);
+            position = informationen.indexOf('=');
+            if (position !== -1) informationen = informationen.substring(position + 1);
+            ende = informationen.indexOf('<');
+            if (ende !== -1) informationen = informationen.substring(0, ende);
+            info.postalCode = informationen;
+          }
+          info.all = data;
         }
       }
-      const endpointUrl = 'https://query.wikidata.org/sparql';
-      const sparqlQuery = `SELECT ?city ?cityLabel ?country ?countryLabel ?population
+      if (!('population' in info)) {
+        /**
+         *
+         */
+        class SPARQLQueryDispatcher {
+          /**
+           *
+           * @param {string}endpoint
+           */
+          constructor(endpoint) {
+            this.endpoint = endpoint;
+          }
+
+          /**
+           *
+           * @param {string}sparqlQuery
+           * @return {Promise<any>}
+           */
+          query(sparqlQuery) {
+            const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
+            const headers = {'Accept': 'application/sparql-results+json'};
+            return fetch(fullUrl, {headers}).then((body) => body.json());
+          }
+        }
+
+        const endpointUrl = 'https://query.wikidata.org/sparql';
+        const sparqlQuery = `SELECT ?city ?cityLabel ?country ?countryLabel ?population
     WHERE
     {
       ?city rdfs:label '${town}'@de.
@@ -205,16 +208,19 @@ async function getCityInfosWikidata(town, country) {
       FILTER(CONTAINS(?countryLabel, "${country}")).
     }`;
 
-      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-      const bevoelkerung = await queryDispatcher.query(sparqlQuery);
-      const searchresults = bevoelkerung.results.bindings.length;
-      info.population = bevoelkerung.results.bindings[0].population.value;
-      for (let i = 0; i < searchresults; i++) {
-        if (info.population > bevoelkerung.results.bindings[i].population.value) {
-          info.population = bevoelkerung.results.bindings[i].population.value;
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        const bevoelkerung = await queryDispatcher.query(sparqlQuery);
+        const searchresults = bevoelkerung.results.bindings.length;
+        info.population = bevoelkerung.results.bindings[0].population.value;
+        for (let i = 0; i < searchresults; i++) {
+          if (info.population > bevoelkerung.results.bindings[i].population.value) {
+            info.population = bevoelkerung.results.bindings[i].population.value;
+          }
         }
       }
     }
+  } catch {
+    console.log(error.message);
   }
   return info;
 }
