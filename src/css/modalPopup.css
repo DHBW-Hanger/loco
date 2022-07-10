@@ -1,13 +1,14 @@
 .modal-popup {
   position: fixed;
+  overflow-y: scroll;
   top: 10%;
-  left: 15%;
+  left: 12%;
   width: 70%;
   height: 80%;
   z-index: 99999;
   background: #222;
   color: #fff;
-  padding: 25px;
+  padding: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,8 +17,8 @@
 
 .modal-popup .close {
   position: absolute;
-  top: 25px;
-  right: 25px;
+  top: 15px;
+  right: 15px;
   width: 30px;
   height: 30px;
   background: none;
@@ -28,21 +29,39 @@
 }
 
 .modal-title {
+  margin-top: 15px;
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
 .help-content {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
-  width: 150%;
-  height: 150%;
+  width: 100%;
+  height: 100%;
   background: rgba(10, 10, 10, 0.8);
   z-index: 9999;
+}
+
+.help-section {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.help-section img {
+  height: 25%;
+  width: 25%;
+}
+
+.help-section .help-text {
+  padding: 0 25px;
 }
