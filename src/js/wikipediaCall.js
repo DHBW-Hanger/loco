@@ -94,7 +94,7 @@ export async function reverseGeocoding(lon, lat) {
  */
 async function getCityInfosNominatim(search) {
   let data = await getContent(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
-  //let data = await response.json();
+  // let data = await response.json();
   if (data.length !== 0) {
     data = data[0];
     if (data.address.country === 'Vereinigte Staaten von Amerika') {
@@ -319,11 +319,11 @@ async function createImageAPIUrls(data) {
 async function getContent(url) {
   let content;
   await fetch(url, {method: 'GET'})
-    .then((response) => response.json())
-    .then((json) => content = json)
-    .catch((error) => {
-      console.log(error.message);
-    });
+      .then((response) => response.json())
+      .then((json) => content = json)
+      .catch((error) => {
+        console.log(error.message);
+      });
   return content;
 }
 
