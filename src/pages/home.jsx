@@ -85,8 +85,11 @@ class App extends Component {
                   postCode: r.postCode,
                   population: r.population,
                 });
-                const submitButton = document.getElementsByClassName('submit-button')[0];
-                submitButton.click();
+                // if r is not empty open modalsheet
+                if (Object.keys(r).length !== 0) {
+                  const submitButton = document.getElementsByClassName('submit-button')[0];
+                  submitButton.click();
+                }
               });
             }}
           />

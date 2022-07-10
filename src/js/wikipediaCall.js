@@ -9,48 +9,53 @@ export async function handleSearch(input) {
   if (input !== '') {
     // cityInfos
     const cityInfos = await getCityInfosNominatim(input);
-    const stadt = cityInfos.address.stadt;
+    if (cityInfos.length !== 0) {
+      const stadt = cityInfos.address.stadt;
 
-    const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
-    let towninfo = await townInfoWiki(stadt);
+      const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
+      let towninfo = await townInfoWiki(stadt);
 
-    let laenge = towninfo.length;
-    if (laenge > 150) {
-      laenge = towninfo.indexOf(' ', 150);
-      if (laenge < towninfo.length && laenge > 0) {
-        towninfo = towninfo.substring(0, laenge) + '...';
+      let laenge = towninfo.length;
+      if (laenge > 150) {
+        laenge = towninfo.indexOf(' ', 150);
+        if (laenge < towninfo.length && laenge > 0) {
+          towninfo = towninfo.substring(0, laenge) + '...';
+        }
       }
-    }
-    const imageurls = await getImages(stadt);
-    let postcode = cityInfos.address.postalCode;
-    if (postcode == null) postcode = cityInfosWikidata.postalCode;
-    if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
-      const postcode2 = await getCityInfosNominatim(cityInfos.address.town);
-      postcode = postcode2.address.postcode;
-    }
-    // if no image was found in wikipedia use custom svg
-    if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
+      const imageurls = await getImages(stadt);
+      let postcode = cityInfos.address.postcode;
+      if (postcode == null) postcode = cityInfosWikidata.postalCode;
+      if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
+        const postcode2 = await getCityInfosNominatim(cityInfos.address.town);
+        postcode = postcode2.address.postcode;
+      }
+      // if no image was found in wikipedia use custom svg
+      if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
 
-    // improve display of population number
-    let population = cityInfosWikidata.population;
-    population.trim();
-    laenge = population.length;
-    let counter = 0;
-    // add a '.' after every 3 chars
-    while (laenge > 3){
-      population = population.substring(0, laenge-3) + '.' + population.substring(laenge-3,laenge+4*counter);
-      laenge = laenge-3;
-      counter = counter+1;
-    }
+      // improve display of population number
+      if (cityInfosWikidata.length !== 0) {
+        let population = cityInfosWikidata.population;
+        population.trim();
+        laenge = population.length;
+        let counter = 0;
+        // add a '.' after every 3 chars
+        while (laenge > 3) {
+          population = population.substring(0, laenge - 3) + '.' + population.substring(laenge - 3, laenge + 4 * counter);
+          laenge = laenge - 3;
+          counter = counter + 1;
+        }
+        // set state population
+        result.population = population;
+      }
 
-    // set states
-    result.country = cityInfos.address.country;
-    result.city = stadt;
-    result.population = population;
-    result.townInfo = towninfo;
-    result.image = imageurls[0];
-    result.state = cityInfos.address.state;
-    result.postCode = postcode;
+      // set states
+      result.country = cityInfos.address.country;
+      result.city = stadt;
+      result.townInfo = towninfo;
+      result.image = imageurls[0];
+      result.state = cityInfos.address.state;
+      result.postCode = postcode;
+    }
   }
   return result;
 }
@@ -89,8 +94,8 @@ export async function reverseGeocoding(lon, lat) {
  * @return {Promise<any>}
  */
 async function getCityInfosNominatim(search) {
-  const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
-  let data = await response.json();
+  let data = await getContent(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
+  //let data = await response.json();
   if (data.length !== 0) {
     data = data[0];
     if (data.address.country === 'Vereinigte Staaten von Amerika') {
@@ -119,77 +124,75 @@ async function getCityInfosNominatim(search) {
  */
 async function getCityInfosWikidata(town, country) {
   const info = [];
-  const response = await fetch(`https://de.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${town}&rvsection=0&origin=*`);
-  let data = await response.json();
-  data = data.query.pages;
-  const [id] = Object.keys(data);
+  let data = await getContent(`https://de.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${town}&rvsection=0&origin=*`);
+  if (['query'] in data) {
+    data = data.query.pages;
+    const [id] = Object.keys(data);
 
-  data = data[id].revisions[0]['*'];
-  // only parse Infobox
-  let anfang = data.indexOf('{{Infobox');
-  if (anfang !== -1) {
-    let informationen;
-    let position;
-    let ende = data.indexOf('}}', anfang);
-    data = data.substring(anfang, ende);
+    data = data[id].revisions[0]['*'];
+    // only parse Infobox
+    let anfang = data.indexOf('{{Infobox');
+    if (anfang !== -1) {
+      let informationen;
+      let position;
+      let ende = data.indexOf('}}', anfang);
+      data = data.substring(anfang, ende);
 
-    // check if Einwohner exists in Infobox
-    anfang = data.indexOf('Einwohner');
-    if (anfang !== -1) {
-      ende = data.indexOf('|', anfang);
-      informationen = data.substring(anfang, ende);
-      position = informationen.indexOf('=');
-      if (position !== -1) informationen = informationen.substring(position + 1);
-      info.population = informationen;
+      // check if Einwohner exists in Infobox
+      anfang = data.indexOf('Einwohner');
+      if (anfang !== -1) {
+        ende = data.indexOf('|', anfang);
+        informationen = data.substring(anfang, ende);
+        position = informationen.indexOf('=');
+        if (position !== -1) informationen = informationen.substring(position + 1);
+        info.population = informationen;
+      }
+      // check if postalcode exists in Infobox
+      anfang = data.indexOf('Postleitzahl');
+      const anfang2 = data.indexOf('PLZ');
+      if (anfang !== -1) {
+        ende = data.indexOf('|', anfang);
+        informationen = data.substring(anfang, ende);
+        position = informationen.indexOf('=');
+        if (position !== -1) informationen = informationen.substring(position + 1);
+        info.postalCode = informationen;
+      } else if (anfang2 !== -1) {
+        ende = data.indexOf('|', anfang2);
+        informationen = data.substring(anfang2, ende);
+        position = informationen.indexOf('=');
+        if (position !== -1) informationen = informationen.substring(position + 1);
+        ende = informationen.indexOf('<');
+        if (ende !== -1) informationen = informationen.substring(0, ende);
+        info.postalCode = informationen;
+      }
+      info.all = data;
     }
-    // check if postalcode exists in Infobox
-    anfang = data.indexOf('Postleitzahl');
-    const anfang2 = data.indexOf('PLZ');
-    if (anfang !== -1) {
-      ende = data.indexOf('|', anfang);
-      informationen = data.substring(anfang, ende);
-      position = informationen.indexOf('=');
-      if (position !== -1) informationen = informationen.substring(position + 1);
-      info.postalCode = informationen;
-    } else if (anfang2 !== -1) {
-      ende = data.indexOf('|', anfang2);
-      informationen = data.substring(anfang2, ende);
-      position = informationen.indexOf('=');
-      if (position !== -1) informationen = informationen.substring(position + 1);
-      ende = informationen.indexOf('<');
-      if (ende !== -1) informationen = informationen.substring(0, ende);
-      info.postalCode = informationen;
-    }
-    info.all = data;
-  }
-  if (!('population' in info)) {
-    /**
-     *
-     */
-    class SPARQLQueryDispatcher {
+    if (!('population' in info)) {
       /**
        *
-       * @param {string}endpoint
        */
-      constructor(endpoint) {
-        this.endpoint = endpoint;
+      class SPARQLQueryDispatcher {
+        /**
+         *
+         * @param {string}endpoint
+         */
+        constructor(endpoint) {
+          this.endpoint = endpoint;
+        }
+
+        /**
+         *
+         * @param {string}sparqlQuery
+         * @return {Promise<any>}
+         */
+        query(sparqlQuery) {
+          const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
+          const headers = {'Accept': 'application/sparql-results+json'};
+          return fetch(fullUrl, {headers}).then((body) => body.json());
+        }
       }
-
-      /**
-       *
-       * @param {string}sparqlQuery
-       * @return {Promise<any>}
-       */
-      query(sparqlQuery) {
-        const fullUrl = this.endpoint + '?query=' + encodeURIComponent(sparqlQuery);
-        const headers = {'Accept': 'application/sparql-results+json'};
-
-        return fetch(fullUrl, {headers}).then((body) => body.json());
-      }
-    }
-
-    const endpointUrl = 'https://query.wikidata.org/sparql';
-    const sparqlQuery = `SELECT ?city ?cityLabel ?country ?countryLabel ?population
+      const endpointUrl = 'https://query.wikidata.org/sparql';
+      const sparqlQuery = `SELECT ?city ?cityLabel ?country ?countryLabel ?population
     WHERE
     {
       ?city rdfs:label '${town}'@de.
@@ -202,13 +205,14 @@ async function getCityInfosWikidata(town, country) {
       FILTER(CONTAINS(?countryLabel, "${country}")).
     }`;
 
-    const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
-    const bevoelkerung = await queryDispatcher.query(sparqlQuery);
-    const searchresults = bevoelkerung.results.bindings.length;
-    info.population = bevoelkerung.results.bindings[0].population.value;
-    for (let i = 0; i < searchresults; i++) {
-      if (info.population > bevoelkerung.results.bindings[i].population.value) {
-        info.population = bevoelkerung.results.bindings[i].population.value;
+      const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+      const bevoelkerung = await queryDispatcher.query(sparqlQuery);
+      const searchresults = bevoelkerung.results.bindings.length;
+      info.population = bevoelkerung.results.bindings[0].population.value;
+      for (let i = 0; i < searchresults; i++) {
+        if (info.population > bevoelkerung.results.bindings[i].population.value) {
+          info.population = bevoelkerung.results.bindings[i].population.value;
+        }
       }
     }
   }
@@ -239,6 +243,7 @@ async function townInfoWiki(location) {
     data = data.replace('  ', ' ');
     data = data.replace(' ,', ',');
   } catch {
+    console.log(error.message);
   }
   return (
     data
@@ -275,6 +280,7 @@ async function getImages(location) {
       }
     }
   } catch {
+    console.log(error.message);
   }
   return content;
 }
@@ -308,11 +314,11 @@ async function createImageAPIUrls(data) {
 async function getContent(url) {
   let content;
   await fetch(url, {method: 'GET'})
-      .then((response) => response.json())
-      .then((json) => content = json)
-      .catch((error) => {
-        console.log(error.message);
-      });
+    .then((response) => response.json())
+    .then((json) => content = json)
+    .catch((error) => {
+      console.log(error.message);
+    });
   return content;
 }
 
