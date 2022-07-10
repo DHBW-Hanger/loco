@@ -33,7 +33,7 @@ export async function handleSearch(input) {
       if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
 
       // improve display of population number
-      if (cityInfosWikidata.length !== 0) {
+      if (['population'] in cityInfosWikidata) {
         let population = cityInfosWikidata.population;
         population.trim();
         laenge = population.length;
@@ -47,7 +47,6 @@ export async function handleSearch(input) {
         // set state population
         result.population = population;
       }
-
       // set states
       result.country = cityInfos.address.country;
       result.city = stadt;
