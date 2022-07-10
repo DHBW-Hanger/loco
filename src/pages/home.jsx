@@ -22,6 +22,7 @@ import {
 class App extends Component {
   /**
    * initialize the component
+   * @param {object} props - properties
    *
    */
   constructor(props) {
@@ -39,14 +40,17 @@ class App extends Component {
       targetMarkerLocation: {lat: 47.66, lon: 9.49},
     };
 
-    this.helpHandler = this.helpHandler.bind(this)
+    this.helpHandler = this.helpHandler.bind(this);
   }
 
+  /**
+   * handle the help button click
+   */
   helpHandler() {
     console.log('helpHandler');
     this.setState({
-      showModalPopup: true
-    })
+      showModalPopup: true,
+    });
   }
 
   isShowPopup = (status) => {

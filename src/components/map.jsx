@@ -280,9 +280,9 @@ export default function MyMap(props) {
 
     helpButton.addEventListener('click', () => {
       console.log('help button clicked');
-      console.log(props)
-      props.helpHandler()
-    })
+      console.log(props);
+      props.helpHandler();
+    });
   }, []);
 
   return <div id="map" className="map"/>;
