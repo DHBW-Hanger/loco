@@ -1,26 +1,45 @@
 // test sheet info display
+import {indexOf} from 'leaflet/src/core/Util';
+
 /**
  *
  * @param {string}input
+ * @param {{}}reverse
  * @return {Promise<{}>}
  */
-export async function handleSearch(input) {
+export async function handleSearch(input, reverse = {}) {
   const result = {};
+  let completeAddress = '';
+  let latitude; let longitute;
+  // check if function is called via marker or submit
+  if (Object.keys(reverse).length !== 0) {
+    let infos = await reverseGeocoding(reverse.lng, reverse.lat);
+    infos = getTown(infos);
+    input = infos.address.stadt;
+    completeAddress = infos.display_name;
+    latitude = reverse.lat;
+    longitute = reverse.lng;
+  }
   if (input !== '') {
     // cityInfos
     const cityInfos = await getCityInfosNominatim(input);
-    if (cityInfos.length !== 0) {
+    if (cityInfos !== undefined) {
       const stadt = cityInfos.address.stadt;
-
+      // if latitude and longitude are not set, get them from cityInfos
+      if (latitude === null) latitude = (Number(cityInfos.boundingbox[0]) + Number(cityInfos.boundingbox[1])) / 2;
+      if (longitute === null) longitute = (Number(cityInfos.boundingbox[2]) + Number(cityInfos.boundingbox[3])) / 2;
       const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
       let towninfo = await townInfoWiki(stadt);
-
-      let laenge = towninfo.length;
-      if (laenge > 150) {
-        laenge = towninfo.indexOf(' ', 150);
-        if (laenge < towninfo.length && laenge > 0) {
-          towninfo = towninfo.substring(0, laenge) + '...';
+      if (typeof towninfo === 'string') {
+        let laenge = towninfo.length;
+        if (laenge > 150) {
+          laenge = towninfo.indexOf(' ', 150);
+          if (laenge < towninfo.length && laenge > 0) {
+            towninfo = towninfo.substring(0, laenge) + '...';
+          }
         }
+      } else {
+        towninfo = '';
       }
       const imageurls = await getImages(stadt);
       let postcode = cityInfos.address.postcode;
@@ -31,12 +50,11 @@ export async function handleSearch(input) {
       }
       // if no image was found in wikipedia use custom svg
       if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
-
       // improve display of population number
       if (['population'] in cityInfosWikidata) {
         let population = cityInfosWikidata.population;
         population.trim();
-        laenge = population.length;
+        let laenge = population.length;
         let counter = 0;
         // add a '.' after every 3 chars
         while (laenge > 3) {
@@ -54,7 +72,11 @@ export async function handleSearch(input) {
       result.image = imageurls[0];
       result.state = cityInfos.address.state;
       result.postCode = postcode;
+      result.completeAddress = completeAddress;
+      result.locationMarker = {lat: longitute, lon: latitude};
     }
+  } else {
+    console.log('invalid input');
   }
   return result;
 }
@@ -81,10 +103,10 @@ export async function geocodeTown(town) {
  * @param {float} lat
  * @return {Promise<void>}
  */
-export async function reverseGeocoding(lon, lat) {
+async function reverseGeocoding(lon, lat) {
   const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lon=${lon}&lat=${lat}`);
   const data = await response.json();
-  return (data);
+  return data;
 }
 
 /**
@@ -94,23 +116,33 @@ export async function reverseGeocoding(lon, lat) {
  */
 async function getCityInfosNominatim(search) {
   let data = await getContent(`https://nominatim.openstreetmap.org/search?q=${search}&format=json&polygon=1&addressdetails=1`);
-  // let data = await response.json();
-  if (data.length !== 0) {
-    data = data[0];
-    if (data.address.country === 'Vereinigte Staaten von Amerika') {
-      data.address.country = 'Vereinigte Staaten';
+  data = getTown(data[0]);
+  return data;
+}
+
+/**
+ *
+ * @param {*} data
+ * @return {*}
+ */
+function getTown(data) {
+  try {
+    if (Object.keys(data).length !== 0) {
+      if (data.address.country === 'Vereinigte Staaten von Amerika') {
+        data.address.country = 'Vereinigte Staaten';
+      }
+      if ('city_district' in data.address) {
+        data.address.stadt = data.address['city_district'];
+      } else if ('town' in data.address) {
+        data.address.stadt = data.address.town;
+      } else if ('city' in data.address) {
+        data.address.stadt = data.address.city;
+      } else if ('county' in data.address && !('town') in data.address) {
+        data.address.stadt = data.address.county;
+      }
     }
-    if ('suburb' in data.address) {
-      data.address.stadt = data.address.suburb;
-    } else if ('city_district' in data.address) {
-      data.address.stadt = data.address['city_district'];
-    } else if ('town' in data.address) {
-      data.address.stadt = data.address.town;
-    } else if ('city' in data.address) {
-      data.address.stadt = data.address.city;
-    } else if ('county' in data.address && !('town') in data.address) {
-      data.address.stadt = data.address.county;
-    }
+  } catch (error) {
+    console.log(error.message);
   }
   return data;
 }
@@ -144,8 +176,10 @@ async function getCityInfosWikidata(town, country) {
             ende = data.indexOf('|', anfang);
             informationen = data.substring(anfang, ende);
             position = informationen.indexOf('=');
-            if (position !== -1) informationen = informationen.substring(position + 1);
-            info.population = informationen;
+            if (indexOf(informationen) === 'Number') {
+              if (position !== -1) informationen = informationen.substring(position + 1);
+              info.population = informationen;
+            }
           }
           // check if postalcode exists in Infobox
           anfang = data.indexOf('Postleitzahl');
@@ -218,7 +252,7 @@ async function getCityInfosWikidata(town, country) {
         }
       }
     }
-  } catch {
+  } catch (error) {
     console.log(error.message);
   }
   return info;
@@ -247,12 +281,10 @@ async function townInfoWiki(location) {
     data = data.replace(/\(.*?\)/g, '');
     data = data.replace('  ', ' ');
     data = data.replace(' ,', ',');
-  } catch {
+  } catch (error) {
     console.log(error.message);
   }
-  return (
-    data
-  );
+  return data;
 }
 
 
@@ -284,7 +316,7 @@ async function getImages(location) {
         content.push('');
       }
     }
-  } catch {
+  } catch (error) {
     console.log(error.message);
   }
   return content;
@@ -296,17 +328,23 @@ async function getImages(location) {
  * @return {string} urls
  */
 async function createImageAPIUrls(data) {
-  const pageId = Object.keys(data.query.pages)[0];
-  const images = data.query.pages[pageId]['images'];
   const urls = [];
-  let count = 0;
-  for (let i = 0; i < images.length; i++) {
-    if ((images[i]['title']).includes('.jpg') && (count < 1)) {
-      let imagename = images[i]['title'];
-      imagename = imagename.replace('Datei', 'File');
-      urls[count] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
-      count++;
+  try {
+    if (['pages'] in data.query.pages) {
+      const pageId = Object.keys(data.query.pages)[0];
+      const images = data.query.pages[pageId]['images'];
+      let count = 0;
+      for (let i = 0; i < images.length; i++) {
+        if ((images[i]['title']).includes('.jpg') && (count < 1)) {
+          let imagename = images[i]['title'];
+          imagename = imagename.replace('Datei', 'File');
+          urls[count] = `https://de.wikipedia.org/w/api.php?action=query&titles=${imagename}&prop=imageinfo&iilimit=50&iiend=2007-12-31T23:59:59Z&iiprop=url&format=json&formatversion=2&origin=*`;
+          count++;
+        }
+      }
     }
+  } catch (error) {
+    console.log(error.message);
   }
   return urls;
 }
@@ -326,5 +364,3 @@ async function getContent(url) {
       });
   return content;
 }
-
-

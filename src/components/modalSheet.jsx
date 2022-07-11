@@ -35,6 +35,7 @@ class ModalSheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      markedAddress: props.markedAddress,
       townName: props.townName,
       townDescription: props.townDescription,
       townImage: props.townImage,
@@ -108,6 +109,11 @@ class ModalSheet extends Component {
         </BlockTitle>
 
         <List noHairlines className="sheet-container">
+          <ListItem title="Addresse:" className="sheet-text-tertiary">
+            <b slot="after" className="sheet-text-tertiary-bold">
+              {this.props.completeAddress}
+            </b>
+          </ListItem>
 
           <ListItem title="Land:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
