@@ -56,6 +56,7 @@ class App extends Component {
 
   /**
    * handle the marker click
+   * @param {object} location - location of the marker
    */
   markerClickHandler(location) {
     console.log(location);
