@@ -54,16 +54,41 @@ class App extends Component {
     });
   }
 
+  isShowPopup = (status) => {
+    this.setState({showModalPopup: status});
+  };
+
   /**
    * handle the marker click
    * @param {object} location - location of the marker
    */
   markerClickHandler(location) {
     console.log(location);
+    // TODO get town from the location and pass the value to the function below
+    // this.triggerModalSheet()
   }
 
-  isShowPopup = (status) => {
-    this.setState({showModalPopup: status});
+  /**
+   * trigger the modal sheet and get the data from wikipedia
+   * @param {string} town - town name
+   */
+  triggerModalSheet = (town) => {
+    handleSearch(town).then((r) => {
+      this.setState({
+        countryName: r.country,
+        townName: r.city,
+        townDescription: r.townInfo,
+        townImage: r.image,
+        federalState: r.state,
+        postCode: r.postCode,
+        population: r.population,
+      });
+      // if r is not empty open modalsheet
+      if (Object.keys(r).length !== 0) {
+        const submitButton = document.getElementsByClassName('submit-button')[0];
+        submitButton.click();
+      }
+    });
   };
 
   /**
@@ -96,22 +121,7 @@ class App extends Component {
               this.search = (e.target.value);
             }}
             onSubmit={() => {
-              handleSearch(this.search).then((r) => {
-                this.setState({
-                  countryName: r.country,
-                  townName: r.city,
-                  townDescription: r.townInfo,
-                  townImage: r.image,
-                  federalState: r.state,
-                  postCode: r.postCode,
-                  population: r.population,
-                });
-                // if r is not empty open modal sheet
-                if (Object.keys(r).length !== 0) {
-                  const submitButton = document.getElementsByClassName('submit-button')[0];
-                  submitButton.click();
-                }
-              });
+              this.triggerModalSheet(this.search);
             }}
           />
         </Navbar>
