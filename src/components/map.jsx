@@ -7,8 +7,6 @@ import Routing from 'leaflet-routing-machine' // eslint-disable-line
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
 import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
-import { $ } from 'dom7';
-import { func } from 'prop-types';
 
 // icon for current position
 const icon = L.icon({
@@ -43,7 +41,7 @@ export default function MyMap(props) {
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
   const NORTHEAST = L.latLng(89.99346179538875, 180);
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
-/*
+  /*
   function isOnline(){
     var url = {
       cache: false,
@@ -110,10 +108,10 @@ export default function MyMap(props) {
       });
     }
 
-    if (window.navigator.onLine == false){
-      mapStyles.Streets =  L.tileLayer(
-          '/img/Offline-tile.png'
-        )
+    if (window.navigator.onLine == false) {
+      mapStyles.Streets = L.tileLayer(
+          '/img/Offline-tile.png',
+      );
     }
 
     // TODO add comment
@@ -137,10 +135,10 @@ export default function MyMap(props) {
       map.removeLayer(mapStyles.Streets);
       map.addLayer(mapStyles.Streets);
     });
-    window.addEventListener("offline",() => mapStyles.Streets =  L.tileLayer(
-      '/img/Offline-tile.png'
+    window.addEventListener('offline', () => mapStyles.Streets = L.tileLayer(
+        '/img/Offline-tile.png',
     ));
-    
+
 
     // create map with given props
     const map = L.map('map', {
