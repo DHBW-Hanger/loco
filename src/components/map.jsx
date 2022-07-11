@@ -7,6 +7,8 @@ import Routing from 'leaflet-routing-machine' // eslint-disable-line
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
 import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
+import { $ } from 'dom7';
+import { func } from 'prop-types';
 
 // icon for current position
 const icon = L.icon({
@@ -41,7 +43,34 @@ export default function MyMap(props) {
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
   const NORTHEAST = L.latLng(89.99346179538875, 180);
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
+/*
+  function isOnline(){
+    var url = {
+      cache: false,
+      dataType: "jsonp",
+      async: true,
+      crossDomain:true,
+      url: $("https://locomap.de/").val(),
+      method: "GET",
+      statusCode: {
+        200: function (response) {
+          console.log("online");
+        },
+        200: function (response) {
+          console.log("offline");
+        },
+        0: function (response) {
+          console.log("offline");
+        },
+      },
+    };
+    $.ajax(url).done(function (response) {
+      console.log(response);
+    });
 
+1
+  };
+  isOnline();*/
   // tile layers
   useEffect(() => {
     const mapStyles = {
@@ -81,6 +110,12 @@ export default function MyMap(props) {
       });
     }
 
+    if (window.navigator.onLine == false){
+      mapStyles.Streets =  L.tileLayer(
+          '/img/Offline-tile.png'
+        )
+    }
+
     // TODO add comment
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       console.log('Darkmode changed to ' + e.matches);
@@ -102,6 +137,10 @@ export default function MyMap(props) {
       map.removeLayer(mapStyles.Streets);
       map.addLayer(mapStyles.Streets);
     });
+    window.addEventListener("offline",() => mapStyles.Streets =  L.tileLayer(
+      '/img/Offline-tile.png'
+    ));
+    
 
     // create map with given props
     const map = L.map('map', {
