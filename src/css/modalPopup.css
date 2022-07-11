@@ -8,7 +8,7 @@
   z-index: 99999;
   background: rgb(247 247 248);
   color: #000;
-  padding: 40px;
+  padding: 50px !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,10 +29,10 @@
 }
 
 .modal-title {
-  margin-top: 15px;
-  font-size: 24px;
+  margin: 36px;
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 10px;
+  text-align: center;
 }
 
 .help-content {
