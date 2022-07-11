@@ -38,7 +38,7 @@ class App extends Component {
       federalState: '',
       postCode: 0,
       population: 0,
-      targetMarkerLocation: {lat: 47.66524615, lon: 9.49027460067099},
+      targetMarkerLocation: {lat: 47.6652, lon: 9.4902},
       markedAddress: '',
     };
 
@@ -63,7 +63,16 @@ class App extends Component {
    * handle the marker click
    */
   markerClickHandler(location) {
-    handleSearch('', location).then((r) => {
+    this.triggerModalSheet('', location);
+  }
+
+  /**
+   * trigger the modal sheet and get the data from wikipedia
+   * @param {string} town - town name
+   * @param {{}} location
+   */
+  triggerModalSheet = (town, location) => {
+    handleSearch(town, location).then((r) => {
       this.setState({
         countryName: r.country,
         townName: r.city,
@@ -73,34 +82,10 @@ class App extends Component {
         postCode: r.postCode,
         population: r.population,
         markedAddress: r.completeAddress,
-        targetMarkerLocation: {lat: location.lat, lon: location.lng},
+        targetMarkerLocation: r.locationMarker,
       });
-
       // if r is not empty and completeAddress excluded: open modal sheet
       if (Object.keys(r).length > 1) {
-        const submitButton = document.getElementsByClassName('submit-button')[0];
-        submitButton.click();
-      }
-    });
-  }
-
-  /**
-   * trigger the modal sheet and get the data from wikipedia
-   * @param {string} town - town name
-   */
-  triggerModalSheet = (town) => {
-    handleSearch(town).then((r) => {
-      this.setState({
-        countryName: r.country,
-        townName: r.city,
-        townDescription: r.townInfo,
-        townImage: r.image,
-        federalState: r.state,
-        postCode: r.postCode,
-        population: r.population,
-      });
-      // if r is not empty open modalsheet
-      if (Object.keys(r).length !== 0) {
         const submitButton = document.getElementsByClassName('submit-button')[0];
         submitButton.click();
       }
@@ -137,7 +122,7 @@ class App extends Component {
               this.search = (e.target.value);
             }}
             onSubmit={() => {
-              this.triggerModalSheet(this.search);
+              this.triggerModalSheet(this.search, {});
             }}
           />
         </Navbar>

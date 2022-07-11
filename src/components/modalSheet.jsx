@@ -35,6 +35,7 @@ class ModalSheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      markedAddress: props.markedAddress,
       townName: props.townName,
       townDescription: props.townDescription,
       townImage: props.townImage,

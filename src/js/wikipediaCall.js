@@ -1,4 +1,6 @@
 // test sheet info display
+import {indexOf} from "leaflet/src/core/Util";
+
 /**
  *
  * @param {string}input
@@ -8,21 +10,25 @@
 export async function handleSearch(input, reverse = {}) {
   const result = {};
   let completeAddress = '';
-  try {
+  let latitude, longitute;
+  //try {
     // check if function is called via marker or submit
     if (Object.keys(reverse).length !== 0) {
       let infos = await reverseGeocoding(reverse.lng, reverse.lat);
       infos = getTown(infos);
       input = infos.address.stadt;
       completeAddress = infos.display_name;
+      latitude = reverse.lat
+      longitute = reverse.lng;
     }
     if (input !== '') {
       // cityInfos
       const cityInfos = await getCityInfosNominatim(input);
       if (cityInfos.length !== 0) {
         const stadt = cityInfos.address.stadt;
-        const latitude = (Number(cityInfos.boundingbox[0]) + Number(cityInfos.boundingbox[1])) / 2;
-        const longitute = (Number(cityInfos.boundingbox[2]) + Number(cityInfos.boundingbox[3])) / 2;
+        // if latitude and longitude are not set, get them from cityInfos
+        if (latitude === null) latitude = (Number(cityInfos.boundingbox[0]) + Number(cityInfos.boundingbox[1])) / 2;
+        if (longitute === null) longitute = (Number(cityInfos.boundingbox[2]) + Number(cityInfos.boundingbox[3])) / 2;
         const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
         let towninfo = await townInfoWiki(stadt);
         if (typeof towninfo === 'string') {
@@ -73,9 +79,9 @@ export async function handleSearch(input, reverse = {}) {
     } else {
       console.log('invalid input');
     }
-  } catch (error) {
-    console.log(error.message);
-  }
+  //} catch (error) {
+  //  console.log(error.message);
+  //}
   return result;
 }
 
@@ -174,8 +180,10 @@ async function getCityInfosWikidata(town, country) {
             ende = data.indexOf('|', anfang);
             informationen = data.substring(anfang, ende);
             position = informationen.indexOf('=');
-            if (position !== -1) informationen = informationen.substring(position + 1);
-            info.population = informationen;
+            if (indexOf(informationen) === 'Number') {
+              if (position !== -1) informationen = informationen.substring(position + 1);
+              info.population = informationen;
+            }
           }
           // check if postalcode exists in Infobox
           anfang = data.indexOf('Postleitzahl');
