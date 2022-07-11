@@ -11,77 +11,73 @@ export async function handleSearch(input, reverse = {}) {
   const result = {};
   let completeAddress = '';
   let latitude, longitute;
-  //try {
-    // check if function is called via marker or submit
-    if (Object.keys(reverse).length !== 0) {
-      let infos = await reverseGeocoding(reverse.lng, reverse.lat);
-      infos = getTown(infos);
-      input = infos.address.stadt;
-      completeAddress = infos.display_name;
-      latitude = reverse.lat
-      longitute = reverse.lng;
-    }
-    if (input !== '') {
-      // cityInfos
-      const cityInfos = await getCityInfosNominatim(input);
-      if (cityInfos.length !== 0) {
-        const stadt = cityInfos.address.stadt;
-        // if latitude and longitude are not set, get them from cityInfos
-        if (latitude === null) latitude = (Number(cityInfos.boundingbox[0]) + Number(cityInfos.boundingbox[1])) / 2;
-        if (longitute === null) longitute = (Number(cityInfos.boundingbox[2]) + Number(cityInfos.boundingbox[3])) / 2;
-        const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
-        let towninfo = await townInfoWiki(stadt);
-        if (typeof towninfo === 'string') {
-          let laenge = towninfo.length;
-          if (laenge > 150) {
-            laenge = towninfo.indexOf(' ', 150);
-            if (laenge < towninfo.length && laenge > 0) {
-              towninfo = towninfo.substring(0, laenge) + '...';
-            }
+  // check if function is called via marker or submit
+  if (Object.keys(reverse).length !== 0) {
+    let infos = await reverseGeocoding(reverse.lng, reverse.lat);
+    infos = getTown(infos);
+    input = infos.address.stadt;
+    completeAddress = infos.display_name;
+    latitude = reverse.lat
+    longitute = reverse.lng;
+  }
+  if (input !== '') {
+    // cityInfos
+    const cityInfos = await getCityInfosNominatim(input);
+    if (cityInfos !== undefined) {
+      const stadt = cityInfos.address.stadt;
+      // if latitude and longitude are not set, get them from cityInfos
+      if (latitude === null) latitude = (Number(cityInfos.boundingbox[0]) + Number(cityInfos.boundingbox[1])) / 2;
+      if (longitute === null) longitute = (Number(cityInfos.boundingbox[2]) + Number(cityInfos.boundingbox[3])) / 2;
+      const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos.address.country);
+      let towninfo = await townInfoWiki(stadt);
+      if (typeof towninfo === 'string') {
+        let laenge = towninfo.length;
+        if (laenge > 150) {
+          laenge = towninfo.indexOf(' ', 150);
+          if (laenge < towninfo.length && laenge > 0) {
+            towninfo = towninfo.substring(0, laenge) + '...';
           }
-        } else {
-          towninfo = '';
         }
-        const imageurls = await getImages(stadt);
-        let postcode = cityInfos.address.postcode;
-        if (postcode == null) postcode = cityInfosWikidata.postalCode;
-        if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
-          const postcode2 = await getCityInfosNominatim(cityInfos.address.town);
-          postcode = postcode2.address.postcode;
-        }
-        // if no image was found in wikipedia use custom svg
-        if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
-        // improve display of population number
-        if (['population'] in cityInfosWikidata) {
-          let population = cityInfosWikidata.population;
-          population.trim();
-          let laenge = population.length;
-          let counter = 0;
-          // add a '.' after every 3 chars
-          while (laenge > 3) {
-            population = population.substring(0, laenge - 3) + '.' + population.substring(laenge - 3, laenge + 4 * counter);
-            laenge = laenge - 3;
-            counter = counter + 1;
-          }
-          // set state population
-          result.population = population;
-        }
-        // set states
-        result.country = cityInfos.address.country;
-        result.city = stadt;
-        result.townInfo = towninfo;
-        result.image = imageurls[0];
-        result.state = cityInfos.address.state;
-        result.postCode = postcode;
-        result.completeAddress = completeAddress;
-        result.locationMarker = {lat: longitute, lon: latitude};
+      } else {
+        towninfo = '';
       }
-    } else {
-      console.log('invalid input');
+      const imageurls = await getImages(stadt);
+      let postcode = cityInfos.address.postcode;
+      if (postcode == null) postcode = cityInfosWikidata.postalCode;
+      if (postcode == null && stadt !== cityInfos.address.town && cityInfos.address.town !== null) {
+        const postcode2 = await getCityInfosNominatim(cityInfos.address.town);
+        postcode = postcode2.address.postcode;
+      }
+      // if no image was found in wikipedia use custom svg
+      if (imageurls[0] === undefined) imageurls[0] = '../icons/altimage.svg';
+      // improve display of population number
+      if (['population'] in cityInfosWikidata) {
+        let population = cityInfosWikidata.population;
+        population.trim();
+        let laenge = population.length;
+        let counter = 0;
+        // add a '.' after every 3 chars
+        while (laenge > 3) {
+          population = population.substring(0, laenge - 3) + '.' + population.substring(laenge - 3, laenge + 4 * counter);
+          laenge = laenge - 3;
+          counter = counter + 1;
+        }
+        // set state population
+        result.population = population;
+      }
+      // set states
+      result.country = cityInfos.address.country;
+      result.city = stadt;
+      result.townInfo = towninfo;
+      result.image = imageurls[0];
+      result.state = cityInfos.address.state;
+      result.postCode = postcode;
+      result.completeAddress = completeAddress;
+      result.locationMarker = {lat: longitute, lon: latitude};
     }
-  //} catch (error) {
-  //  console.log(error.message);
-  //}
+  } else {
+    console.log('invalid input');
+  }
   return result;
 }
 

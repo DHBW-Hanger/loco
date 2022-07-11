@@ -25,6 +25,10 @@
 
   background-color: var(--background-color);
   color: var(--text-color);
+  /*
+  item links unten, border radius hinzugefügt, daher weißer rand..............
+   */
+  border-radius: 4px;
 }
 
 .leaflet-control-layers-expanded {
