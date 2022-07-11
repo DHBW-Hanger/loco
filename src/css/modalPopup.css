@@ -65,6 +65,18 @@
   .help-section:nth-child(2n) {
     flex-direction: column-reverse;
   }
+
+  .modal-popup {
+    padding: 7px !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal-popup .close {
+    right: 25px;
+  }
 }
 
 .help-section img {
