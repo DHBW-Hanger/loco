@@ -1,5 +1,5 @@
 // test sheet info display
-import {indexOf} from "leaflet/src/core/Util";
+import {indexOf} from 'leaflet/src/core/Util';
 
 /**
  *
@@ -10,14 +10,14 @@ import {indexOf} from "leaflet/src/core/Util";
 export async function handleSearch(input, reverse = {}) {
   const result = {};
   let completeAddress = '';
-  let latitude, longitute;
+  let latitude; let longitute;
   // check if function is called via marker or submit
   if (Object.keys(reverse).length !== 0) {
     let infos = await reverseGeocoding(reverse.lng, reverse.lat);
     infos = getTown(infos);
     input = infos.address.stadt;
     completeAddress = infos.display_name;
-    latitude = reverse.lat
+    latitude = reverse.lat;
     longitute = reverse.lng;
   }
   if (input !== '') {
@@ -122,7 +122,7 @@ async function getCityInfosNominatim(search) {
 
 /**
  *
- * @param data
+ * @param {*} data
  * @return {*}
  */
 function getTown(data) {
@@ -357,10 +357,10 @@ async function createImageAPIUrls(data) {
 async function getContent(url) {
   let content;
   await fetch(url, {method: 'GET'})
-    .then((response) => response.json())
-    .then((json) => content = json)
-    .catch((error) => {
-      console.log(error.message);
-    });
+      .then((response) => response.json())
+      .then((json) => content = json)
+      .catch((error) => {
+        console.log(error.message);
+      });
   return content;
 }

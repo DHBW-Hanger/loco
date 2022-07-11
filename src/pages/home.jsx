@@ -61,6 +61,7 @@ class App extends Component {
 
   /**
    * handle the marker click
+   * @param {object} location - location of the marker
    */
   markerClickHandler(location) {
     this.triggerModalSheet('', location);
@@ -69,7 +70,7 @@ class App extends Component {
   /**
    * trigger the modal sheet and get the data from wikipedia
    * @param {string} town - town name
-   * @param {{}} location
+   * @param {object} location - location of the marker
    */
   triggerModalSheet = (town, location) => {
     handleSearch(town, location).then((r) => {
