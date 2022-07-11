@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {BiLocationPlus} from 'react-icons/Bi';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
-import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
+import {IoIosArrowDown} from 'react-icons/Io';
 import {geocodeTown} from '../js/wikipediaCall';
-import '../css/modalsheet.css';
+import '../css/modalSheet.css';
 
 import {
   Button,
@@ -12,9 +11,6 @@ import {
   List,
   ListItem,
 } from 'framework7-react';
-
-
-// https://v4.framework7.io/react/sheet-modal
 
 
 /**
@@ -59,47 +55,38 @@ class ModalSheet extends Component {
         backdrop
       >
         <div className="sheet-modal-swipe-step">
-          <div className="display-flex padding justify-content-space-between align-items-center">
+          <div className="display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
               alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
-              <div>
+              <div className="city-text">
                 <b className="sheet-text-main">{this.props.townName}</b>
                 <div>
                   <b className="sheet-text-secondary">{this.props.townDescription}</b>
                 </div>
               </div>
             </div>
-
-            <Button fill round align-items-center onClick={
-              () => {
-                geocodeTown(this.props.townName).then((response) => {
-                  const lat = response[0].lat;
-                  const lon = response[0].lon;
-                  this.setState({
-                    targetMarkerLocation: {lat, lon},
-                  }, () => {
-                    console.log(this.state.targetMarkerLocation);
-                  });
-                });
-              }
-            }>
-              <div style={{fontSize: '24px', paddingTop: 7}}>
-                <BiLocationPlus/>
-              </div>
-            </Button>
           </div>
 
           <div className="padding-horizontal padding-bottom">
-            <Button large fill round>
+            <Button large fill round onClick={() => {
+              geocodeTown(this.props.townName).then((response) => {
+                const lat = response[0].lat;
+                const lon = response[0].lon;
+                this.setState({
+                  targetMarkerLocation: {lat, lon},
+                }, () => {
+                  console.log(this.state.targetMarkerLocation);
+                });
+              });
+            }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
               </div>
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {/* TODO turn arrow on step */}
-              {true ? <IoIosArrowDown/> : <IoIosArrowUp/>}
+              <IoIosArrowDown/>
             </div>
           </div>
         </div>
