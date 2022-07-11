@@ -42,6 +42,7 @@ class App extends Component {
     };
 
     this.helpHandler = this.helpHandler.bind(this);
+    this.markerClickHandler = this.markerClickHandler.bind(this);
   }
 
   /**
@@ -51,6 +52,13 @@ class App extends Component {
     this.setState({
       showModalPopup: true,
     });
+  }
+
+  /**
+   * handle the marker click
+   */
+  markerClickHandler(location) {
+    console.log(location);
   }
 
   isShowPopup = (status) => {
@@ -97,7 +105,7 @@ class App extends Component {
                   postCode: r.postCode,
                   population: r.population,
                 });
-                // if r is not empty open modalsheet
+                // if r is not empty open modal sheet
                 if (Object.keys(r).length !== 0) {
                   const submitButton = document.getElementsByClassName('submit-button')[0];
                   submitButton.click();
@@ -115,6 +123,7 @@ class App extends Component {
         <MyMap
           targetMarkerLocation={this.state.targetMarkerLocation}
           helpHandler={this.helpHandler}
+          markerClickHandler={this.markerClickHandler}
         />
 
         <ModalSheet

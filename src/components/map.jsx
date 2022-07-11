@@ -168,6 +168,10 @@ export default function MyMap(props) {
       console.log('target marker moved');
     });
 
+    targetMarker.on('click', (e) => {
+      props.markerClickHandler(e.target.getLatLng());
+    });
+
     /**
      * Start navigation
      *
