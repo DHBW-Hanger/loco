@@ -1,5 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
+import '../css/modalPopup.css';
+import '../css/index.css';
 
 /**
  * modalPopup component
@@ -32,29 +34,68 @@ class ModalPopup extends Component {
    */
   render() {
     return (
-      <Fragment>
-        <Modal show={this.props.showModalPopup} onHide={this.handleClose}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
+      <div id="modal-backdrop">
+        <Modal
+          className="modal-popup"
+          show={this.props.showModalPopup}
         >
-          <Modal.Header closeButton>
-            <Modal.Title id="sign-in-title">
-              React Modal Pop up Example
+          <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/close.svg" alt="close"/>
+          <Modal.Header>
+            <Modal.Title className="modal-title">
+              loco help page
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <hr/>
-            <div className="signUp">
-              <p>Want to close the pop up?
-                <button type="button" className="link-button" onClick={() => this.isShowModal(true)}> Close</button>
-              </p>
+            <div className="help-content">
+              <div className="help-section">
+                <img src="/icons/logo.svg" alt="logo"/>
+                <p className="help-text"> Loco ist eine Location-based Progressive Web App (PWA), welche dich bei deinen Reisen mit Routing Services
+                  und grundlegenden Daten zu deinem Ziel unterstützt.<br/>
+                  Loco bietet dir diese Dienste auch offline an, wenn du es vor der Offline-Nutzung auf Ihrem Gerät installieren<br/>
+                <br/>
+                  Loco is a location-based progressive web app (PWA), which supports you in finding and providing basic information for your
+                  destination. <br/>
+                  Loco also provides you this services offline, if you install it on your device before your offline usage.
+                </p>
+              </div>
+              <div className="help-section">
+                <p className="help-text"> Mit der Stecknadel signalisierst du unseren Routing Services dein Ziel,
+                  verschiebe sie einfach an den Ort wo du hin willst und die optimale Route wird für dich auf der Karte angezeigt.
+                  Falsches Ziel? Kein Problem, einfach nochmal verschieben!<br/>
+                <br/>
+                  By moving the pin where you want to go you&apos;re signaling our routing services your destination, so move it and the optimal route
+                  will be displayed for you.
+                  Wrong location? No problem at all, just move it again!
+                </p>
+                <img src="/icons/marker_darkm.svg" alt="logo"/>
+              </div>
+              <div className="help-section">
+                <img src="/icons/recenter.svg" alt="logo"/>
+                <p className="help-text"> Der Recenter Button ist für dich da, wenn du nach deiner Suche auf der Karte
+                  wieder auf deinen Standort und deine Route zurück möchtest. Der Button wird allerdings nur angezeigt,
+                  wenn dein Standort nicht in der Mitte der Karte ist.<br/>
+                <br/>
+                  The recenter button is there for you, if you want to return to your location after a search. However, the recenter button will only
+                  appear when you&apos;re not centered. So no need to worry!
+                </p>
+              </div>
+              <div className="help-section">
+                <p className="help-text"> Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls etwas nachschauen möchtest.<br/>
+                  <br/>
+                  By clicking the help button, this popup will be opened, if at any point in time you&apos;re lost again.
+                </p>
+                <img src="/icons/help.svg" alt="logo"/>
+              </div>
+              <div className="help-section">
+                <p className="help-text"> Hilfe für die Suche
+
+                </p>
+                <img src=""/>
+              </div>
             </div>
           </Modal.Body>
-
         </Modal>
-      </Fragment>
-
+      </div>
     );
   }
 }

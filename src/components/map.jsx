@@ -296,7 +296,7 @@ export default function MyMap(props) {
     info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
-        '<label for="recenter-button"><img src="/icons/recenter.svg" height="30" width="30"/></label>' + '</div>';
+        '<label for="recenter-button"><img src="/icons/recenter.svg" height="30" width="30" alt="update"/></label>' + '</div>';
     };
 
     info.addTo(map);
@@ -311,11 +311,16 @@ export default function MyMap(props) {
     help.update = function() {
       this._div.innerHTML = '<div class="help-button-field">' +
           '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
-          '<label for="help-button"><img src="/icons/help.svg" height="30" width="30"/></label>' + '</div>';
+          '<label for="help-button"><img src="/icons/help.svg" height="30" width="30" alt="help"/></label>' + '</div>';
     };
     help.addTo(map);
-  }, []);
 
+    const helpButton = document.querySelector('input.help-button');
+
+    helpButton.addEventListener('click', () => {
+      props.helpHandler();
+    });
+  }, []);
 
   return <div id="map" className="map"/>;
 }

@@ -1,0 +1,84 @@
+.modal-popup {
+  position: fixed;
+  overflow-y: scroll;
+  top: 8%;
+  left: 12%;
+  width: 70%;
+  height: 80%;
+  z-index: 99999;
+  background: rgb(247 247 248);
+  color: #000;
+  padding: 50px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.modal-popup .close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modal-title {
+  margin: 36px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.help-content {
+  font-size: 18px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(10 10 10 / 80%);
+  z-index: 9999;
+}
+
+.help-section {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .help-section {
+    flex-direction: column;
+  }
+
+  .help-section:nth-child(2n) {
+    flex-direction: column-reverse;
+  }
+}
+
+.help-section img {
+  height: 25%;
+  width: 25%;
+}
+
+.help-section .help-text {
+  padding: 0 25px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal-popup {
+    background: #222;
+    color: #fff;
+  }
+}

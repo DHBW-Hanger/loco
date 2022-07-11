@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MyMap from '../components/map';
 import ModalPopup from '../components/modalPopup';
 import ModalSheet from '../components/modalSheet';
-import {handleSearch1} from '../js/wikipediaCall';
+import {handleSearch} from '../js/wikipediaCall';
 import '../css/index.css';
 
 import {
@@ -22,14 +22,16 @@ import {
 class App extends Component {
   /**
    * initialize the component
+   * @param {object} props - properties
    *
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showModalPopup: false,
       sheet: null,
       search: '',
+      countryName: '',
       townName: '',
       townDescription: '',
       townImage: '',
@@ -38,6 +40,17 @@ class App extends Component {
       population: 0,
       targetMarkerLocation: {lat: 47.66, lon: 9.49},
     };
+
+    this.helpHandler = this.helpHandler.bind(this);
+  }
+
+  /**
+   * handle the help button click
+   */
+  helpHandler() {
+    this.setState({
+      showModalPopup: true,
+    });
   }
 
   isShowPopup = (status) => {
@@ -70,13 +83,13 @@ class App extends Component {
             searchContainer=".search-list"
             searchIn=".item-title"
             disableButton={!theme.aurora}
-            value={this.search}
             onChange={(e) => {
               this.search = (e.target.value);
             }}
             onSubmit={() => {
-              handleSearch1(this.search).then((r) => {
+              handleSearch(this.search).then((r) => {
                 this.setState({
+                  countryName: r.country,
                   townName: r.city,
                   townDescription: r.townInfo,
                   townImage: r.image,
@@ -84,8 +97,11 @@ class App extends Component {
                   postCode: r.postCode,
                   population: r.population,
                 });
-                const submitButton = document.getElementsByClassName('submit-button')[0];
-                submitButton.click();
+                // if r is not empty open modalsheet
+                if (Object.keys(r).length !== 0) {
+                  const submitButton = document.getElementsByClassName('submit-button')[0];
+                  submitButton.click();
+                }
               });
             }}
           />
@@ -98,9 +114,11 @@ class App extends Component {
 
         <MyMap
           targetMarkerLocation={this.state.targetMarkerLocation}
+          helpHandler={this.helpHandler}
         />
 
         <ModalSheet
+          countryName={this.state.countryName}
           townName={this.state.townName}
           townDescription={this.state.townDescription}
           townImage={this.state.townImage}
