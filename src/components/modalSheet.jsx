@@ -34,6 +34,7 @@ class ModalSheet extends Component {
       markedAddress: props.markedAddress,
       townName: props.townName,
       townDescription: props.townDescription,
+      townInfo2: props.townInfo2,
       townImage: props.townImage,
       federalState: props.federalState,
       postCode: props.postCode,
@@ -47,6 +48,7 @@ class ModalSheet extends Component {
    * @return {JSX.Element}
    */
   render() {
+    let showCompleteInfo = false;
     return (
       <Sheet
         className="demo-sheet-swipe-to-step"
@@ -57,12 +59,19 @@ class ModalSheet extends Component {
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
-              alt="city image" className="wiki-pic"/>
+                 alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div className="city-text">
                 <b className="sheet-text-main">{this.props.townName}</b>
                 <div>
-                  <b className="sheet-text-secondary">{this.props.townDescription}</b>
+                  <b className="sheet-text-secondary">{this.props.townDescription} </b>
+                  {(showCompleteInfo) ?
+                    <div>{this.props.townInfo2}</div> : true}
+                  <Button className="button-test" onClick={() => {
+                    showCompleteInfo = !showCompleteInfo;
+                  }}>
+                    {showCompleteInfo === true ? "Hide" : "Show"}
+                  </Button>
                 </div>
               </div>
             </div>

@@ -11,6 +11,7 @@ export async function handleSearch(input, reverse = {}) {
   const result = {};
   let completeAddress = '';
   let latitude; let longitute;
+  let towninfopart2;
   // check if function is called via marker or submit
   if (Object.keys(reverse).length !== 0) {
     let infos = await reverseGeocoding(reverse.lng, reverse.lat);
@@ -35,7 +36,8 @@ export async function handleSearch(input, reverse = {}) {
         if (laenge > 150) {
           laenge = towninfo.indexOf(' ', 150);
           if (laenge < towninfo.length && laenge > 0) {
-            towninfo = towninfo.substring(0, laenge) + '...';
+            towninfopart2 = towninfo.substring(laenge + 1);
+            towninfo = towninfo.substring(0, laenge);
           }
         }
       } else {
@@ -74,6 +76,7 @@ export async function handleSearch(input, reverse = {}) {
       result.postCode = postcode;
       result.completeAddress = completeAddress;
       result.locationMarker = {lat: longitute, lon: latitude};
+      result.townInfoPart2 = towninfopart2;
     }
   } else {
     console.log('invalid input');
@@ -158,10 +161,10 @@ async function getCityInfosWikidata(town, country) {
   let data = await getContent(`https://de.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${town}&rvsection=0&origin=*`);
   try {
     if (['pages'] in data['query']) {
-      data = data.query.pages;
+      data = data['query']['pages'];
       const [id] = Object.keys(data);
-      if (['*'] in data[id].revisions[0]) {
-        data = data[id].revisions[0]['*'];
+      if (['*'] in data[id]['revisions'][0]) {
+        data = data[id]['revisions'][0]['*'];
         // only parse Infobox
         let anfang = data.indexOf('{{Infobox');
         if (anfang !== -1) {
@@ -270,7 +273,6 @@ async function townInfoWiki(location) {
   let data = await getContent(url);
   try {
     data = data['query']['pages'];
-
     // gets first key from data
     const [id] = Object.keys(data);
     data = data[id]['extract'];
@@ -330,9 +332,9 @@ async function getImages(location) {
 async function createImageAPIUrls(data) {
   const urls = [];
   try {
-    if (['pages'] in data.query.pages) {
-      const pageId = Object.keys(data.query.pages)[0];
-      const images = data.query.pages[pageId]['images'];
+    if (['pages'] in data['query']) {
+      const pageId = Object.keys(data['query']['pages'])[0];
+      const images = data['query']['pages'][pageId]['images'];
       let count = 0;
       for (let i = 0; i < images.length; i++) {
         if ((images[i]['title']).includes('.jpg') && (count < 1)) {

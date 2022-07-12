@@ -84,6 +84,7 @@ class App extends Component {
         population: r.population,
         markedAddress: r.completeAddress,
         targetMarkerLocation: r.locationMarker,
+        townInfo2: r.townInfoPart2,
       });
       // if r is not empty and completeAddress excluded: open modal sheet
       if (Object.keys(r).length > 1) {
