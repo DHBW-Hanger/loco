@@ -31,6 +31,16 @@
   display: none;
 }
 
+@media only screen and (max-width: 900px) {
+  .leaflet-routing-container {
+    display: flex;
+    top: -80px;
+    right: -14px;
+    width: 92vw;
+    max-height: 360px;
+  }
+}
+
 .leaflet-control-layers-toggle {
   background-color: var(--background-color);
   color: var(--text-color);
