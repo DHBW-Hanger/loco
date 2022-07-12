@@ -70,13 +70,13 @@ export async function handleSearch(input, reverse = {}) {
       // set states
       result.country = cityInfos.address.country;
       result.city = stadt;
-      result.townInfo = towninfo;
+      result.townDescription = towninfo;
       result.image = imageurls[0];
       result.state = cityInfos.address.state;
       result.postCode = postcode;
-      result.completeAddress = completeAddress;
+      result.markedAddress = completeAddress;
       result.locationMarker = {lat: longitute, lon: latitude};
-      result.townInfoPart2 = towninfopart2;
+      result.townDescription2 = towninfopart2;
     }
   } else {
     console.log('invalid input');

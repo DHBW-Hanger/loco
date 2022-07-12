@@ -34,12 +34,13 @@ class App extends Component {
       countryName: '',
       townName: '',
       townDescription: '',
+      townDescription2: '',
       townImage: '',
       federalState: '',
       postCode: 0,
       population: 0,
       targetMarkerLocation: {lat: 47.6652, lon: 9.4902},
-      markedAddress: '',
+      completeAddress: '',
     };
 
     this.helpHandler = this.helpHandler.bind(this);
@@ -77,15 +78,17 @@ class App extends Component {
       this.setState({
         countryName: r.country,
         townName: r.city,
-        townDescription: r.townInfo,
+        townDescription: r.townDescription,
         townImage: r.image,
         federalState: r.state,
         postCode: r.postCode,
         population: r.population,
-        markedAddress: r.completeAddress,
+        completeAddress: r.markedAddress,
         targetMarkerLocation: r.locationMarker,
-        townInfo2: r.townInfoPart2,
+        townDescription2: r.townDescription2,
       });
+
+
       // if r is not empty and completeAddress excluded: open modal sheet
       if (Object.keys(r).length > 1) {
         const submitButton = document.getElementsByClassName('submit-button')[0];
@@ -143,7 +146,9 @@ class App extends Component {
         <ModalSheet
           countryName={this.state.countryName}
           townName={this.state.townName}
+          completeAddress={this.state.completeAddress}
           townDescription={this.state.townDescription}
+          townDescription2={this.state.townDescription2}
           townImage={this.state.townImage}
           federalState={this.state.federalState}
           postCode={this.state.postCode}

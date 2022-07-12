@@ -31,10 +31,10 @@ class ModalSheet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markedAddress: props.markedAddress,
+      completeAddress: props.completeAddress,
       townName: props.townName,
       townDescription: props.townDescription,
-      townInfo2: props.townInfo2,
+      townDescription2: props.townDescription2,
       townImage: props.townImage,
       federalState: props.federalState,
       postCode: props.postCode,
@@ -50,7 +50,6 @@ class ModalSheet extends Component {
    * @return {JSX.Element}
    */
   render() {
-    let showCompleteInfo = false;
     return (
       <Sheet
         className="demo-sheet-swipe-to-step"
@@ -73,15 +72,13 @@ class ModalSheet extends Component {
                 <b className="sheet-text-main">{this.props.townName}</b>
                 <div>
                   <b className="sheet-text-secondary">{this.props.townDescription} </b>
-                  {(showCompleteInfo) ?
-                    <div>{this.props.townInfo2}</div> : true}
+                  {(this.state.showMoreInfo === true) ?
+                    <b>{this.props.townDescription2}</b> : ''}
                   <Button className="button-test" onClick={() => {
                     this.setState({showMoreInfo: !this.state.showMoreInfo});
                   }}>
-                    {showCompleteInfo === true ? "Hide" : "Show"}
+                    {this.state.showMoreInfo === true ? "Hide" : "Show"}
                   </Button>
-                  {(this.state.showMoreInfo == true) ?
-                  <p>Andi ist lost</p> : '' }
                 </div>
               </div>
             </div>
@@ -105,8 +102,8 @@ class ModalSheet extends Component {
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-            {(this.state.sheetOpened == false) ?
-              <IoIosArrowDown/> : <IoIosArrowUp/> }
+              {(this.state.sheetOpened == false) ?
+                <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
         </div>
@@ -117,35 +114,35 @@ class ModalSheet extends Component {
 
         <List noHairlines className="sheet-container">
           {(this.props.completeAddress) ?
-          <ListItem title="Addresse:" className="sheet-text-tertiary">
-            <b slot="after" className="sheet-text-tertiary-bold">
-              {this.props.completeAddress}
-            </b>
-          </ListItem> : ''}
+            <ListItem title="Addresse:" className="sheet-text-tertiary">
+              <b slot="after" className="sheet-text-tertiary-bold">
+                {this.props.completeAddress}
+              </b>
+            </ListItem> : ''}
           {(this.props.federalState) ?
-          <ListItem title="Land:" className="sheet-text-tertiary">
-            <b slot="after" className="sheet-text-tertiary-bold">
-              {this.props.countryName}
-            </b>
-          </ListItem> : ''}
+            <ListItem title="Land:" className="sheet-text-tertiary">
+              <b slot="after" className="sheet-text-tertiary-bold">
+                {this.props.countryName}
+              </b>
+            </ListItem> : ''}
           {(this.props.federalState) ?
-          <ListItem title="Bundesland:" className="sheet-text-tertiary">
-            <b slot="after" className="sheet-text-tertiary-bold">
-              {this.props.federalState}
-            </b>
-          </ListItem> : ''}
+            <ListItem title="Bundesland:" className="sheet-text-tertiary">
+              <b slot="after" className="sheet-text-tertiary-bold">
+                {this.props.federalState}
+              </b>
+            </ListItem> : ''}
           {(this.props.postCode) ?
-          <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
-            <b slot="after" className="sheet-text-tertiary-bold">
-              {this.props.postCode}
-            </b>
-          </ListItem> : ''}
+            <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
+              <b slot="after" className="sheet-text-tertiary-bold">
+                {this.props.postCode}
+              </b>
+            </ListItem> : ''}
           {(this.props.population) ?
-          <ListItem title="Einwohner:" className="sheet-text-tertiary">
-            <b slot="after" className="sheet-text-tertiary-bold">
-              {this.props.population}
-            </b>
-          </ListItem> : ''}
+            <ListItem title="Einwohner:" className="sheet-text-tertiary">
+              <b slot="after" className="sheet-text-tertiary-bold">
+                {this.props.population}
+              </b>
+            </ListItem> : ''}
         </List>
       </Sheet>
     );
