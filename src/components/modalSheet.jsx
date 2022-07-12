@@ -74,11 +74,13 @@ class ModalSheet extends Component {
                   <b className="sheet-text-secondary">{this.props.townDescription} </b>
                   {(this.state.showMoreInfo === true) ?
                     <b>{this.props.townDescription2}</b> : ''}
+
+                  {(this.props.townDescription2) ?
                   <Button className="button-test" onClick={() => {
                     this.setState({showMoreInfo: !this.state.showMoreInfo});
                   }}>
                     {this.state.showMoreInfo === true ? "Hide" : "Show"}
-                  </Button>
+                  </Button> : ''}
                 </div>
               </div>
             </div>
