@@ -96,35 +96,38 @@ class ModalSheet extends Component {
         </BlockTitle>
 
         <List noHairlines className="sheet-container">
+          {(this.props.completeAddress) ?
           <ListItem title="Addresse:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.completeAddress}
             </b>
-          </ListItem>
-
+          </ListItem> : ''}
+          {(this.props.federalState) ?
           <ListItem title="Land:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.countryName}
             </b>
-          </ListItem>
-
+          </ListItem> : '' }
+          {(this.props.federalState) ?
           <ListItem title="Bundesland:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.federalState}
             </b>
-          </ListItem>
-
+          </ListItem> : ''}
+          {(this.props.postCode) ?
           <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.postCode}
             </b>
-          </ListItem>
-
+          </ListItem> : ''
+          }
+          {(this.props.population) ?
           <ListItem title="Einwohner:" className="sheet-text-tertiary">
             <b slot="after" className="sheet-text-tertiary-bold">
               {this.props.population}
             </b>
-          </ListItem>
+          </ListItem> : ''
+          }
         </List>
       </Sheet>
     );
