@@ -9,12 +9,22 @@
 }
 
 .leaflet-routing-container {
-  display: none;
-  background-color: var(--background-color);
+  position: absolute;
+  margin: 0;
+  top: -60px;
+  right: -14px;
+  width: 440px;
+  max-height: 620px;
+  padding: 20px;
+  color: var(--text-color);
+  background: var(--background-color);
   border-radius: 5px;
   box-shadow: 0 0 20px rgb(0 0 0 / 20%);
-  padding: 10px;
-  margin-bottom: 10px;
+  overflow-y: scroll;
+}
+
+.leaflet-routing-alt-minimized {
+  display: none;
 }
 
 .leaflet-control-attribution {

@@ -217,17 +217,23 @@ export default function MyMap(props) {
      */
     function startNavigation(startLocation, targetLocation) {
       navigation = L.Routing.control({
-        waypoints: [startLocation, targetLocation], routeWhileDragging: false,
-        // TODO discuss if this is needed
-        /* router: new Routing.OSRMv1({
-          serviceUrl: 'https://router.project-osrm.org/route/v1',
-        }),*/
-        draggable: false, show: false, addWaypoints: false, collapsible: false, draggableWaypoints: false, lineOptions: {
-          styles: [{color: 'black', opacity: 0.2, weight: 9}, {color: '#fc2c54', opacity: 1, weight: 6}],
+        waypoints: [startLocation, targetLocation],
+        routeWhileDragging: false,
+        draggable: false,
+        show: false,
+        addWaypoints: false,
+        collapsible: false,
+        draggableWaypoints: false,
+        lineOptions: {
+          styles: [
+            {color: 'black', opacity: 0.2, weight: 9},
+            {color: '#fc2c54', opacity: 1, weight: 6},
+          ],
         }, createMarker: () => {
           // display wikipedia api info
           return null;
-        }, fitSelectedRoutes: true,
+        },
+        fitSelectedRoutes: true,
       });
 
       navigation.addTo(map);
