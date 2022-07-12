@@ -294,6 +294,22 @@ export default function MyMap(props) {
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
 
+    const routingInfo = L.control({position: 'bottomright'});
+    routingInfo.onAdd = function() {
+      this._div = L.DomUtil.create('div', 'routing-info');
+      this.update();
+      return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    routingInfo.update = function() {
+      this._div.innerHTML = '<div class="routing-info-button-field">' +
+        '<input type="radio" id="routing-info-button" class="routing-info-button" name="switch-one" value="no" />' +
+        '<label for="routing-info-button"><img src="/icons/help.svg" height="30" width="30" alt="routing-info"/></label>' + '</div>';
+    };
+
+    routingInfo.addTo(map);
+
     const info = L.control({position: 'bottomright'});
     info.onAdd = function() {
       this._div = L.DomUtil.create('div', 'slider');

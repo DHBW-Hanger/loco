@@ -104,6 +104,37 @@
   box-shadow: none;
 }
 
+.routing-info-button-field {
+  display: flex;
+}
+
+.routing-info-button-field input {
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  border: 0;
+  overflow: hidden;
+}
+
+.routing-info-button-field label {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  border-radius: 4px;
+  padding: 6px 8px;
+  margin-right: -10px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 30%), 0 1px rgb(255 255 255 / 10%);
+  transition: all 0.1s ease-in-out;
+}
+
+.routing-info-button-field label:hover {
+  cursor: pointer;
+}
+
 .reset-button-field label:last-of-type {
   border-radius: 0 4px 4px 0;
 }
