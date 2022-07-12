@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
-import {IoIosArrowDown} from 'react-icons/Io';
+import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
 import {geocodeTown} from '../js/wikipediaCall';
 import '../css/modalSheet.css';
 
@@ -40,6 +40,7 @@ class ModalSheet extends Component {
       postCode: props.postCode,
       population: props.population,
       targetMarkerLocation: props.targetMarkerLocation,
+      sheetOpened: true,
     };
   }
 
@@ -55,6 +56,12 @@ class ModalSheet extends Component {
         swipeToClose
         swipeToStep
         backdrop
+        onSheetStepClose={() => {
+          this.setState({sheetOpened: !this.state.sheetOpened});
+        }}
+        onSheetStepOpen={() => {
+          this.setState({sheetOpened: !this.state.sheetOpened});
+        }}
       >
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-left align-items-center">
@@ -95,7 +102,8 @@ class ModalSheet extends Component {
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              <IoIosArrowDown/>
+            {(this.state.sheetOpened == false) ?
+              <IoIosArrowDown/> : <IoIosArrowUp/> }
             </div>
           </div>
         </div>
