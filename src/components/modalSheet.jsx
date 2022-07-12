@@ -24,6 +24,7 @@ import {
  * @param {number} postCode - post code of the town
  * @param {number} population - population of the town
  */
+
 class ModalSheet extends Component {
   /**
    * @param {object} props
@@ -73,14 +74,13 @@ class ModalSheet extends Component {
                 <div>
                   <b className="sheet-text-secondary">{this.props.townDescription} </b>
                   {(this.state.showMoreInfo === true) ?
-                    <b>{this.props.townDescription2}</b> : ''}
-
+                    <b className="sheet-text-secondary">{this.props.townDescription2}</b> : ''}
                   {(this.props.townDescription2) ?
-                  <Button className="button-test" onClick={() => {
-                    this.setState({showMoreInfo: !this.state.showMoreInfo});
-                  }}>
-                    {this.state.showMoreInfo === true ? "Hide" : "Show"}
-                  </Button> : ''}
+                    <Button className="button-more-description" onClick={() => {
+                      this.setState({showMoreInfo: !this.state.showMoreInfo});
+                    }}>
+                      {this.state.showMoreInfo === true ? "Hide" : "More"}
+                    </Button> : ''}
                 </div>
               </div>
             </div>
