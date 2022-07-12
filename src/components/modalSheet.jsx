@@ -24,7 +24,6 @@ import {
  * @param {number} postCode - post code of the town
  * @param {number} population - population of the town
  */
-
 class ModalSheet extends Component {
   /**
    * @param {object} props
@@ -67,7 +66,7 @@ class ModalSheet extends Component {
         <div className="sheet-modal-swipe-step">
           <div className="display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
-                 alt="city image" className="wiki-pic"/>
+              alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div className="city-text">
                 <b className="sheet-text-main">{this.props.townName}</b>
@@ -79,7 +78,7 @@ class ModalSheet extends Component {
                     <Button className="button-more-description" onClick={() => {
                       this.setState({showMoreInfo: !this.state.showMoreInfo});
                     }}>
-                      {this.state.showMoreInfo === true ? "Hide" : "More"}
+                      {this.state.showMoreInfo === true ? 'Hide' : 'More'}
                     </Button> : ''}
                 </div>
               </div>

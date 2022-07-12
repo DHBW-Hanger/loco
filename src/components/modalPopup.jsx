@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import '../css/modalPopup.css';
 import '../css/index.css';
+import HelpSection from './helpSection';
 
 /**
  * modalPopup component
@@ -42,73 +43,55 @@ class ModalPopup extends Component {
           alt="close"/>
         <Modal.Header>
           <Modal.Title className="modal-title">
-                loco help page
+            loco help page
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="help-content">
+          <HelpSection
+            even={false}
+            image="logo"
+            textDe="Loco ist eine Location-based Progressive Web App (PWA), welche dich bei deinen Reisen mit Routing Services und grundlegenden
+                    Daten zu deinem Ziel unterstützt. Loco bietet dir diese Dienste auch offline an, wenn du es vor der Offline-Nutzung auf Ihrem
+                    Gerät installieren."
+            textEn="Loco is a location-based progressive web app (PWA), which supports you in finding and providing basic information for your
+                    destination. Loco also provides you this services offline, if you install it on your device before your offline usage."
+          />
+          <HelpSection
+            even={true}
+            image="marker_darkm"
+            textDe="Mit der Stecknadel signalisierst du unseren Routing Services dein Ziel, verschiebe sie einfach an den Ort wo du hin willst und
+                    die optimale Route wird für dich auf der Karte angezeigt. Falsches Ziel? Kein Problem, einfach nochmal verschieben!"
+            textEn="You can search for your destination in the search bar, by entering a search term. By moving the pin where you want to go you're
+                    signaling our routing services your destination, so move it and the optimal route will be displayed for you. Wrong location? No
+                    problem at all, just move it again!"
+          />
+          <HelpSection
+            even={false}
+            image="recenter"
+            textDe="Der Recenter Button ist für dich da, wenn du nach deiner Suche auf der Karte wieder auf deinen Standort und deine Route zurück
+                    möchtest. Der Button wird allerdings nur angezeigt, wenn dein Standort nicht in der Mitte der Karte ist."
+            textEn="The recenter button is there for you, if you want to return to your location after a search. However, the recenter button will
+                    only appear when you're not centered. So no need to worry!"
+          />
+          <HelpSection
+            even={true}
+            image="help"
+            textDe="Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls etwas nachschauen möchtest."
+            textEn="By clicking the help button, this popup will be opened, if at any point in time you're lost again."
+          />
+
+          <div className="help-section">
+            <p className="help-text"> Hilfe für die Suche
+
+            </p>
+            <img src=""/>
             <div className="help-section">
-              <img src="/icons/logo.svg" alt="logo"/>
-              <p className="help-text"> Loco ist eine Location-based Progressive Web App (PWA), welche dich bei
-                    deinen Reisen mit Routing Services
-                    und grundlegenden Daten zu deinem Ziel unterstützt.<br/>
-                    Loco bietet dir diese Dienste auch offline an, wenn du es vor der Offline-Nutzung auf Ihrem Gerät
-                    installieren<br/>
-              <br/>
-                    Loco is a location-based progressive web app (PWA), which supports you in finding and providing
-                    basic information for your
-                    destination. <br/>
-                    Loco also provides you this services offline, if you install it on your device before your offline
-                    usage.
-              </p>
-            </div>
-            <div className="help-section">
-              <p className="help-text"> Mit der Stecknadel signalisierst du unseren Routing Services dein Ziel,
-                    verschiebe sie einfach an den Ort wo du hin willst und die optimale Route wird für dich auf der
-                    Karte angezeigt.
-                    Falsches Ziel? Kein Problem, einfach nochmal verschieben!<br/>
-              <br/>
-                    By moving the pin where you want to go you&apos;re signaling our routing services your destination,
-                    so move it and the optimal route
-                    will be displayed for you.
-                    Wrong location? No problem at all, just move it again!
-              </p>
-              <img src="/icons/marker_darkm.svg" alt="logo"/>
-            </div>
-            <div className="help-section">
-              <img src="/icons/recenter.svg" alt="logo"/>
-              <p className="help-text"> Der Recenter Button ist für dich da, wenn du nach deiner Suche auf der Karte
-                    wieder auf deinen Standort und deine Route zurück möchtest. Der Button wird allerdings nur
-                    angezeigt,
-                    wenn dein Standort nicht in der Mitte der Karte ist.<br/>
-              <br/>
-                    The recenter button is there for you, if you want to return to your location after a search.
-                    However, the recenter button will only
-                    appear when you&apos;re not centered. So no need to worry!
-              </p>
-            </div>
-            <div className="help-section">
-              <p className="help-text"> Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls
-                    etwas nachschauen möchtest.<br/>
-              <br/>
-                    By clicking the help button, this popup will be opened, if at any point in time you&apos;re lost
-                    again.
-              </p>
-              <img src="/icons/help.svg" alt="logo"/>
-            </div>
-            <div className="help-section">
-              <p className="help-text"> Hilfe für die Suche
+              <p className="help-text">
+                Kontakt: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> Mail schreiben </a> GitHub <br/> <br/>
+                Contact: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> send mail </a> <br/> GitHub <br/>
 
               </p>
               <img src=""/>
-              <div className="help-section">
-                <p className="help-text">
-                    Kontakt: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> Mail schreiben </a> GitHub <br/> <br/>
-                    Contact: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> send mail </a> <br/> GitHub <br/>
-
-                </p>
-                <img src=""/>
-              </div>
             </div>
           </div>
         </Modal.Body>
