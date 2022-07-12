@@ -310,6 +310,20 @@ export default function MyMap(props) {
 
     routingInfo.addTo(map);
 
+    const routingInfoButton = document.querySelector('input.routing-info-button');
+    const routingInfoContainer = document.getElementsByClassName('leaflet-routing-container');
+    let routingInfoOn = true;
+
+    routingInfoButton.addEventListener('click', () => {
+      if (routingInfoOn) {
+        routingInfoContainer[0].style.display = 'none';
+        routingInfoOn = false;
+      } else {
+        routingInfoContainer[0].style.display = 'block';
+        routingInfoOn = true;
+      }
+    });
+
     const info = L.control({position: 'bottomright'});
     info.onAdd = function() {
       this._div = L.DomUtil.create('div', 'slider');
