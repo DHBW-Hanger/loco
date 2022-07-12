@@ -315,7 +315,7 @@ export default function MyMap(props) {
     routingToggle.update = function() {
       this._div.innerHTML = '<div class="routing-button-field">' +
         '<input type="button" id="routing-button" class="routing-button" name="switch-one" value="no" />' +
-        '<label for="routing-button"><img src="/icons/recenter.svg" height="30" width="30" alt="help"/></label>' + '</div>';
+        '<label for="routing-button"><img src="/icons/route.svg" height="30" width="30" alt="help"/></label>' + '</div>';
     };
     routingToggle.addTo(map);
 
