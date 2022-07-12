@@ -41,6 +41,7 @@ class ModalSheet extends Component {
       population: props.population,
       targetMarkerLocation: props.targetMarkerLocation,
       sheetOpened: true,
+      showMoreInfo: false,
     };
   }
 
@@ -75,10 +76,12 @@ class ModalSheet extends Component {
                   {(showCompleteInfo) ?
                     <div>{this.props.townInfo2}</div> : true}
                   <Button className="button-test" onClick={() => {
-                    showCompleteInfo = !showCompleteInfo;
+                    this.setState({showMoreInfo: !this.state.showMoreInfo});
                   }}>
                     {showCompleteInfo === true ? "Hide" : "Show"}
                   </Button>
+                  {(this.state.showMoreInfo == true) ?
+                  <p>Andi ist lost</p> : '' }
                 </div>
               </div>
             </div>
