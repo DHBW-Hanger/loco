@@ -218,17 +218,23 @@ export default function MyMap(props) {
      */
     function startNavigation(startLocation, targetLocation) {
       navigation = L.Routing.control({
-        waypoints: [startLocation, targetLocation], routeWhileDragging: false,
-        // TODO discuss if this is needed
-        /* router: new Routing.OSRMv1({
-          serviceUrl: 'https://router.project-osrm.org/route/v1',
-        }),*/
-        draggable: false, show: false, addWaypoints: false, collapsible: false, draggableWaypoints: false, lineOptions: {
-          styles: [{color: 'black', opacity: 0.2, weight: 9}, {color: '#fc2c54', opacity: 1, weight: 6}],
+        waypoints: [startLocation, targetLocation],
+        routeWhileDragging: false,
+        draggable: false,
+        show: false,
+        addWaypoints: false,
+        collapsible: false,
+        draggableWaypoints: false,
+        lineOptions: {
+          styles: [
+            {color: 'black', opacity: 0.2, weight: 9},
+            {color: '#fc2c54', opacity: 1, weight: 6},
+          ],
         }, createMarker: () => {
           // display wikipedia api info
           return null;
-        }, fitSelectedRoutes: true,
+        },
+        fitSelectedRoutes: true,
       });
 
       navigation.addTo(map);
@@ -288,6 +294,36 @@ export default function MyMap(props) {
     new L.Control.Zoom({position: 'bottomright'}).addTo(map);
     L.control.scale({imperial: false}).addTo(map);
     L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
+
+    const routingInfo = L.control({position: 'bottomright'});
+    routingInfo.onAdd = function() {
+      this._div = L.DomUtil.create('div', 'routing-info');
+      this.update();
+      return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    routingInfo.update = function() {
+      this._div.innerHTML = '<div class="routing-info-button-field">' +
+        '<input type="radio" id="routing-info-button" class="routing-info-button" name="switch-one" value="no" />' +
+        '<label for="routing-info-button"><img src="/icons/route_infos.svg" height="30" width="30" alt="routing-info"/></label>' + '</div>';
+    };
+
+    routingInfo.addTo(map);
+
+    const routingInfoButton = document.querySelector('input.routing-info-button');
+    const routingInfoContainer = document.getElementsByClassName('leaflet-routing-container');
+    let routingInfoOn = true;
+
+    routingInfoButton.addEventListener('click', () => {
+      if (routingInfoOn) {
+        routingInfoContainer[0].style.display = 'none';
+        routingInfoOn = false;
+      } else {
+        routingInfoContainer[0].style.display = 'block';
+        routingInfoOn = true;
+      }
+    });
 
     const info = L.control({position: 'bottomright'});
     info.onAdd = function() {
