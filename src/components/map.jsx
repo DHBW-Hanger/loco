@@ -305,7 +305,7 @@ export default function MyMap(props) {
     routingInfo.update = function() {
       this._div.innerHTML = '<div class="routing-info-button-field">' +
         '<input type="radio" id="routing-info-button" class="routing-info-button" name="switch-one" value="no" />' +
-        '<label for="routing-info-button"><img src="/icons/help.svg" height="30" width="30" alt="routing-info"/></label>' + '</div>';
+        '<label for="routing-info-button"><img src="/icons/route_infos.svg" height="30" width="30" alt="routing-info"/></label>' + '</div>';
     };
 
     routingInfo.addTo(map);
