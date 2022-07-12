@@ -200,9 +200,10 @@ export default function MyMap(props) {
     // update route when target marker is moved
     targetMarker.on('dragend', (e) => {
       targetLocation = e.target.getLatLng();
-      navigation.remove();
-      startNavigation(currentCoords, targetLocation);
-      console.log('target marker moved');
+      if (routingOn) {
+        navigation.remove();
+        startNavigation(currentCoords, targetLocation);
+      }
     });
 
     targetMarker.on('click', (e) => {
@@ -294,14 +295,43 @@ export default function MyMap(props) {
       this.update();
       return this._div;
     };
+
     // method that we will use to update the control based on feature properties passed
     info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
         '<label for="recenter-button"><img src="/icons/recenter.svg" height="30" width="30" alt="update"/></label>' + '</div>';
     };
-
     info.addTo(map);
+
+    const routingToggle = L.control({position: 'bottomleft'});
+    routingToggle.onAdd = function() {
+      this._div = L.DomUtil.create('div', 'routing-toggle');
+      this.update();
+      return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    routingToggle.update = function() {
+      this._div.innerHTML = '<div class="routing-button-field">' +
+        '<input type="button" id="routing-button" class="routing-button" name="switch-one" value="no" />' +
+        '<label for="routing-button"><img src="/icons/route.svg" height="30" width="30" alt="help"/></label>' + '</div>';
+    };
+    routingToggle.addTo(map);
+
+    const routingButton = document.querySelector('input.routing-button');
+    let routingOn = true;
+
+    routingButton.addEventListener('click', () => {
+      if (routingOn) {
+        navigation.remove();
+        routingOn = false;
+      } else {
+        console.log('navigation button clicked');
+        startNavigation(currentCoords, targetLocation);
+        routingOn = true;
+      }
+    });
 
     const help = L.control({position: 'bottomleft'});
     help.onAdd = function() {
@@ -309,11 +339,12 @@ export default function MyMap(props) {
       this.update();
       return this._div;
     };
+
     // method that we will use to update the control based on feature properties passed
     help.update = function() {
       this._div.innerHTML = '<div class="help-button-field">' +
-          '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
-          '<label for="help-button"><img src="/icons/help.svg" height="30" width="30" alt="help"/></label>' + '</div>';
+        '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
+        '<label for="help-button"><img src="/icons/help.svg" height="30" width="30" alt="help"/></label>' + '</div>';
     };
     help.addTo(map);
 
