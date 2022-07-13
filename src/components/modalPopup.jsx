@@ -75,6 +75,22 @@ class ModalPopup extends Component {
           />
           <HelpSection
             even={true}
+            image="route_infos"
+            textDe="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
+                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+            textEn="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
+                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+          />
+          <HelpSection
+            even={false}
+            image="route"
+            textDe="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
+                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+            textEn="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
+                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+          />
+          <HelpSection
+            even={true}
             image="help"
             textDe="Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls etwas nachschauen möchtest."
             textEn="By clicking the help button, this popup will be opened, if at any point in time you're lost again."
