@@ -113,9 +113,9 @@ export default function MyMap(props) {
   };
 
 
-  function drawRoute(start_lat, start_lon, end_lat, end_lon) {
+  function drawRoute(startLat, startLon, endLat, endLon) {
     // call the rounting api
-    const url = `https://router.project-osrm.org/route/v1/driving/${start_lat},${start_lon};${end_lat},${end_lon}?overview=false&alternatives=true&steps=true&hints=%3B`;
+    const url = `https://router.project-osrm.org/route/v1/driving/${startLat},${startLon};${endLat},${endLon}?overview=false&alternatives=true&steps=true&hints=%3B`;
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
