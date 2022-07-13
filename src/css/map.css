@@ -185,6 +185,14 @@ input:checked + span {
     filter: var(--map-tiles-filter, none);
   }
 
+  .mapboxgl-ctrl-group {
+    background-color: var(--background-color);
+  }
+
+  .mapboxgl-ctrl-group:not(:empty) {
+    box-shadow: 0 0 0 2px rgb(255 255 255 / 10%);
+  }
+
   .mapboxgl-ctrl-attrib {
     background-color: rgb(20 20 20 / 40%) !important;
   }
