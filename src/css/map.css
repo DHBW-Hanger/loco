@@ -18,6 +18,11 @@
   height: 100%;
 }
 
+.mapboxgl-marker img {
+  width: 8vh;
+  height: 8vh;
+}
+
 .reset-button-field {
   display: flex;
 }
