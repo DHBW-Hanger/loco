@@ -91,21 +91,25 @@ class ModalPopup extends Component {
             textDe="Mit dem Help Button wird dieses Popup geöffnet, falls du von den Controls etwas nachschauen möchtest."
             textEn="By clicking the help button, this popup will be opened, if at any point in time you're lost again."
           />
-
-          <div className="help-section">
-            <p className="help-text"> Hilfe für die Suche
-
-            </p>
-            <img src=""/>
-            <div className="help-section">
-              <p className="help-text">
-                Kontakt: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> Mail schreiben </a> GitHub <br/> <br/>
-                Contact: Thomas Schmitz <a href="mailto:thomas.enzo.schmitz@outlook.de"> send mail </a> <br/> GitHub <br/>
-
-              </p>
-              <img src=""/>
-            </div>
-          </div>
+          <HelpSection
+            even={false}
+            image="search_icon"
+            textDe="Bei der Search kann eine Location eingegeben werden und mit Enter bestätigt werden,
+                      daraufhin werden die auf Wikipedia gefundenen Daten angezeigt."
+            textEn="When searching for a location in the searchbar and pressing enter, the matching wikipedia data will be displayed. "
+          />
+          <HelpSection
+            even={true}
+            image=""
+            textDe="Kontakt: Thomas Schmitz  Emailadresse: thomasschmitz814@gmail.com"
+            textEn="Contact: Thomas Schmitz Emailadress: thomasschmitz814@gmail.com"
+          />
+          <HelpSection
+            even={false}
+            image=""
+            textDe="GitHub"
+            textEn="GitHub"
+          />
         </Modal.Body>
       </Modal>
     </div>);
