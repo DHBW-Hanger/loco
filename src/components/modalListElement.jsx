@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {ListItem} from "framework7-react";
+import {ListItem} from 'framework7-react';
+import '../css/modalSheet.css';
 
 
 /**
@@ -28,7 +29,7 @@ class ModalListElement extends Component {
       (this.props.data) ?
         <ListItem title={`${this.props.title}:`} className="sheet-text-tertiary">
           <b slot="after" className="sheet-text-tertiary-bold">
-            {this.props.date}
+            {this.props.data}
           </b>
         </ListItem> : ''
     );

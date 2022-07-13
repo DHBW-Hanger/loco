@@ -40,6 +40,10 @@
   text-align: left;
 }
 
+.sheet-container {
+  list-style-type: none;
+}
+
 .sheet-text-main {
   font-size: 24px;
   opacity: 0.9;
