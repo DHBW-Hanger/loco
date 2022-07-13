@@ -22,6 +22,10 @@
   height: 8vh;
 }
 
+.mapboxgl-marker {
+  transition: opacity 0.5s ease-in-out;
+}
+
 .reset-button-field {
   display: flex;
 }
