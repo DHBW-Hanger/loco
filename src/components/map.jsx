@@ -33,7 +33,7 @@ export default function MyMap(props) {
   const tileSize = '256';
   const scale = '@2x';
   const apiKeyMaptiler = 'zuWv6WszYelAVMVuJZe3';
-  const apiKeyMapbox = 'pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA';
+  const apiKeyMapbox = 'pk.eyJ1IjoiZXJpa2VsbGlsbyIsImEiOiJja3YwdTNmenAyZHFoMnBwNmhsdTExdmpyIn0.EGS0-8E2QVERqMEa2w4aNg';
   const mapRef = useRef();
   const MIN_ZOOM = 3;
 
@@ -101,7 +101,7 @@ export default function MyMap(props) {
     // if dark mode is enabled replace the map tiles with the dark mode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       mapStyles.Streets = L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+          `https://api.mapbox.com/styles/v1/saicode/cl5h2uo72001914payehixo71/tiles/${tileSize}/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
       );
       targetIcon = L.icon({
         iconUrl: '/icons/marker_darkm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
