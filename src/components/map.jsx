@@ -185,7 +185,7 @@ export default function MyMap(props) {
           positionOptions={{enableHighAccuracy: true}}
           trackUserLocation={true}
           showUserHeading={true}
-          showAccuracyCircle={true}
+          showAccuracyCircle={false}
           position='bottom-right'
           onGeolocate={(position) => {
             console.log(position);
