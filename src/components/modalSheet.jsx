@@ -64,7 +64,7 @@ class ModalSheet extends Component {
         }}
       >
         <div className="sheet-modal-swipe-step">
-          <div className="display-flex padding justify-content-left align-items-center">
+          <div className="sheet-header display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
               alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
