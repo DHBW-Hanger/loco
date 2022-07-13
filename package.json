@@ -21,6 +21,7 @@
   "dependencies": {
     "autoprefixer": "10.4.5",
     "bootstrap": "^5.1.3",
+    "deck.gl": "^8.8.4",
     "dom7": "^4.0.4",
     "framework7": "^7.0.2",
     "framework7-icons": "^5.0.5",
@@ -30,6 +31,7 @@
     "leaflet-routing-machine": "^3.2.12",
     "leaflet.locatecontrol": "^0.76.1",
     "madge": "^5.0.1",
+    "mapbox-gl": "^2.9.1",
     "material-icons": "^1.10.11",
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
@@ -37,6 +39,7 @@
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
     "react-leaflet": "^4.0.0",
+    "react-map-gl": "^6.1.19",
     "reactstrap": "^9.0.2",
     "skeleton-elements": "^4.0.0",
     "swiper": "^8.1.4"
