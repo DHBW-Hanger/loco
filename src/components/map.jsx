@@ -1,8 +1,8 @@
 import React from "react";
-import DeckGL from "@deck.gl/react";
 import { LineLayer } from "@deck.gl/layers";
-import {StaticMap, GeolocateControl} from 'react-map-gl';
+import Map, { GeolocateControl , Marker , NavigationControl} from "react-map-gl";
 // makes clean rendering of the map possible without lagging
+import "mapbox-gl/dist/mapbox-gl.css";
 import "../css/map.css";
 
 const MAPBOX_ACCESS_TOKEN =
@@ -34,25 +34,30 @@ export default function MyMap(props) {
 
 
   const layers = [new LineLayer({ id: "line-layer", data })];
-
-  const mapOptions = {
-    projection: "globe",
-    };
-
-  function onMapLoad(map) {
-    map.setFog({});
-  }
   
   return (
-    <DeckGL initialViewState={INITIAL_VIEW_STATE}
-    controller={true}
-    layers={layers}>
-      <StaticMap 
-      mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
-      mapStyle="mapbox://styles/saicode/cl5h2uo72001914payehixo71"
-      mapOptions={mapOptions}
-      onMapLoad={onMapLoad}
-       />
-    </DeckGL>
+    <div className="Map">
+      <Map
+        mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+        initialViewState={INITIAL_VIEW_STATE}
+        mapStyle="mapbox://styles/saicode/cl5h2uo72001914payehixo71"
+        onLoad={() => {console.log("Map Loaded");}}
+      >
+        <GeolocateControl
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
+          showUserHeading={true}
+          showAccuracyCircle={true}
+          position='bottom-right'
+          onGeolocate={(position) => {
+            console.log(position);
+          }
+          }
+        />
+        <NavigationControl 
+        visualizePitch={true}
+        />
+      </Map>
+    </div>
   );
 }

@@ -8,53 +8,14 @@
   --accent-color: #fc2c54;
 }
 
+
 .mapboxgl-ctrl-logo {
   display: none !important;
 }
 
-.leaflet-routing-container {
-  display: none;
-  background-color: var(--background-color);
-  border-radius: 5px;
-  box-shadow: 0 0 20px rgb(0 0 0 / 20%);
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.leaflet-control-attribution {
-  display: none;
-}
-
-.leaflet-control-layers-toggle {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-.leaflet-control-layers-expanded {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-.leaflet-bar a {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-.leaflet-bar a:hover {
-  background-color: rgb(99 99 99);
-}
-
-.leaflet-bar a.leaflet-disabled {
-  background-color: var(--background-color-disabled);
-  color: var(--text-color-disabled);
-}
-
-.leaflet-top {
-  margin-top: 60px;
-}
-
-.map {
-  background-color: #000;
+.Map {
+  background-color: rgb(17, 17, 17);
+  height: 100%;
 }
 
 .reset-button-field {
