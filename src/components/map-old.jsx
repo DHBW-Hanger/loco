@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useRef } from 'react';
+import React, {useEffect} from 'react';
+import {useRef} from 'react';
 import L from 'leaflet';
 import Routing from 'leaflet-routing-machine' // eslint-disable-line
 
@@ -7,7 +7,7 @@ import Routing from 'leaflet-routing-machine' // eslint-disable-line
 import 'leaflet/dist/leaflet.css';
 import '../css/map.css';
 import 'leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js';
-import { func } from 'prop-types';
+import {func} from 'prop-types';
 
 // icon for current position
 const icon = L.icon({
@@ -29,7 +29,7 @@ let targetIcon = L.icon({
  */
 export default function MyMap(props) {
   // default map props
-  const center = { lat: 47.67, lng: 9.46 };
+  const center = {lat: 47.67, lng: 9.46};
   const ZOOM_LEVEL = 13;
   const tileSize = '256';
   const scale = '@2x';
@@ -48,21 +48,21 @@ export default function MyMap(props) {
     const mapStyles = {
       // the mapbox maps
       Streets: L.tileLayer(
-        `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
-        { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
+          {className: 'map-tiles'},
       ),
       Satellite: L.tileLayer(
-        `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`),
+          `https://api.mapbox.com/styles/v1/saicode/cl3vlmr9q000l15olo7qu7mh0/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`),
       Outdoor: L.tileLayer(
-        `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
-        { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/outdoor/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
+          {className: 'map-tiles'},
       ),
       OpenStreetMap: L.tileLayer(
-        `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
-        { className: 'map-tiles' },
+          `https://api.maptiler.com/maps/openstreetmap/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
+          {className: 'map-tiles'},
       ),
       Streets2: L.tileLayer(
-        `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
+          `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
       ), /*
       TODO Unused map layers, replaced with mapbox
 
@@ -75,7 +75,7 @@ export default function MyMap(props) {
     // if dark mode is enabled replace the map tiles with the dark mode tiles
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       mapStyles.Streets = L.tileLayer(
-        `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
       );
       targetIcon = L.icon({
         iconUrl: '/icons/marker_darkm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
@@ -87,14 +87,14 @@ export default function MyMap(props) {
       console.log('Darkmode changed to ' + e.matches);
       if (e.matches) {
         mapStyles.Streets = L.tileLayer(
-          `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
+            `https://api.mapbox.com/styles/v1/saicode/cl3vmc8mn000n15tjzpdykchq/tiles/256/{z}/{x}/{y}@2x?access_token=${apiKeyMapbox}`,
         );
         targetIcon = L.icon({
           iconUrl: '/icons/marker_darkm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
         });
       } else {
         mapStyles.Streets = L.tileLayer(
-          `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
+            `https://api.maptiler.com/maps/streets/${tileSize}/{z}/{x}/{y}${scale}.png?key=${apiKeyMaptiler}`,
         );
         targetIcon = L.icon({
           iconUrl: '/icons/marker_lightm.svg', iconSize: [32, 32], iconAnchor: [13, 28],
@@ -117,7 +117,7 @@ export default function MyMap(props) {
     let followLocation = false;
 
     let currentCoords = null;
-    map.locate({ watch: true });
+    map.locate({watch: true});
 
     /**
      * Add location marker to map if location found
@@ -129,7 +129,7 @@ export default function MyMap(props) {
 
       // if no marker exists yet, create one
       if (locationMarker == null) {
-        locationMarker = L.marker(currentCoords, { icon }).addTo(map);
+        locationMarker = L.marker(currentCoords, {icon}).addTo(map);
 
         if (navigation == null) {
           startNavigation(currentCoords, targetLocation);
@@ -159,7 +159,7 @@ export default function MyMap(props) {
     });
 
     let targetLocation = L.latLng(props.targetMarkerLocation.lat, props.targetMarkerLocation.lon);
-    const targetMarker = L.marker(targetLocation, { icon: targetIcon, draggable: true, autoPan: true }).addTo(map);
+    const targetMarker = L.marker(targetLocation, {icon: targetIcon, draggable: true, autoPan: true}).addTo(map);
 
     // update route when target marker is moved
     targetMarker.on('dragend', (e) => {
@@ -183,7 +183,7 @@ export default function MyMap(props) {
           serviceUrl: 'https://router.project-osrm.org/route/v1',
         }),*/
         draggable: false, show: false, addWaypoints: false, collapsible: false, draggableWaypoints: false, lineOptions: {
-          styles: [{ color: 'black', opacity: 0.2, weight: 9 }, { color: '#fc2c54', opacity: 1, weight: 6 }],
+          styles: [{color: 'black', opacity: 0.2, weight: 9}, {color: '#fc2c54', opacity: 1, weight: 6}],
         }, createMarker: () => {
           // display wikipedia api info
           return null;
@@ -195,13 +195,11 @@ export default function MyMap(props) {
     }
 
     map.addEventListener('addMarker', (e) => {
-      const thing = L.marker([e.detail.lat, e.detail.lon], { icon }).addTo(map);
+      const thing = L.marker([e.detail.lat, e.detail.lon], {icon}).addTo(map);
       marker.on('click', (e) => {
         console.log('marker clicked');
       });
     });
-
-
 
 
     /**
@@ -254,18 +252,18 @@ export default function MyMap(props) {
     });
 
     // add map controls
-    new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
-    L.control.scale({ imperial: false }).addTo(map);
-    L.control.groupedLayers(mapStyles, {}, { position: 'bottomleft' }).addTo(map);
+    new L.Control.Zoom({position: 'bottomright'}).addTo(map);
+    L.control.scale({imperial: false}).addTo(map);
+    L.control.groupedLayers(mapStyles, {}, {position: 'bottomleft'}).addTo(map);
 
-    const info = L.control({ position: 'bottomright' });
-    info.onAdd = function () {
+    const info = L.control({position: 'bottomright'});
+    info.onAdd = function() {
       this._div = L.DomUtil.create('div', 'slider');
       this.update();
       return this._div;
     };
     // method that we will use to update the control based on feature properties passed
-    info.update = function () {
+    info.update = function() {
       this._div.innerHTML = '<div class="reset-button-field slide-out">' +
         '<input type="radio" id="recenter-button" class="recenter-button" name="switch-one" value="no" />' +
         '<label for="recenter-button"><img src="/icons/recenter.svg" height="30" width="30" alt="update"/></label>' + '</div>';
@@ -273,14 +271,14 @@ export default function MyMap(props) {
 
     info.addTo(map);
 
-    const help = L.control({ position: 'bottomleft' });
-    help.onAdd = function () {
+    const help = L.control({position: 'bottomleft'});
+    help.onAdd = function() {
       this._div = L.DomUtil.create('div', 'help');
       this.update();
       return this._div;
     };
     // method that we will use to update the control based on feature properties passed
-    help.update = function () {
+    help.update = function() {
       this._div.innerHTML = '<div class="help-button-field">' +
         '<input type="radio" id="help-button" class="help-button" name="switch-one" value="no" />' +
         '<label for="help-button"><img src="/icons/help.svg" height="30" width="30" alt="help"/></label>' + '</div>';
@@ -295,11 +293,10 @@ export default function MyMap(props) {
   }, []);
 
 
-
   return <div id="map" className="map" />;
 }
 
-/*A function to add a marker to the map
+/* A function to add a marker to the map
 function addMarker(map, lat, lng, icon, popupText) {
   const marker = L.marker([lat, lng], {icon: icon, draggable: true, autoPan: true}).addTo(map);
   marker.bindPopup(popupText);

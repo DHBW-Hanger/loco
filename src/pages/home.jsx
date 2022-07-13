@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import MyMap from '../components/map';
 import ModalPopup from '../components/modalPopup';
 import ModalSheet from '../components/modalSheet';
-import { handleSearch } from '../js/wikipediaCall';
+import {handleSearch} from '../js/wikipediaCall';
 import '../css/index.css';
 
 import {
@@ -38,7 +38,7 @@ class App extends Component {
       federalState: '',
       postCode: 0,
       population: 0,
-      targetMarkerLocation: { lat: 47.66, lon: 9.49 },
+      targetMarkerLocation: {lat: 47.66, lon: 9.49},
     };
 
     this.helpHandler = this.helpHandler.bind(this);
@@ -51,18 +51,18 @@ class App extends Component {
     this.setState({
       showModalPopup: true,
     });
-    
+
     const event = new CustomEvent('addMarker', {
       detail: {
         lat: 47.67,
         lon: 9.50,
-      }
+      },
     });
     document.dispatchEvent(event);
   }
 
   isShowPopup = (status) => {
-    this.setState({ showModalPopup: status });
+    this.setState({showModalPopup: status});
   };
 
   /**

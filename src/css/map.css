@@ -8,13 +8,12 @@
   --accent-color: #fc2c54;
 }
 
-
 .mapboxgl-ctrl-logo {
   display: none !important;
 }
-
+/* stylelint-disable-next-line selector-class-pattern -- Its not my fault! */
 .Map {
-  background-color: rgb(17, 17, 17);
+  background-color: rgb(17 17 17);
   height: 100%;
 }
 
@@ -163,8 +162,6 @@
   transition: all 0.1s ease-in-out;
 }
 
-
-
 input:checked + span {
   background-color: var(--accent-color) !important;
   color: var(--text-color);
@@ -187,8 +184,8 @@ input:checked + span {
   .mapboxgl-ctrl-attrib {
     background-color: rgb(20 20 20 / 40%) !important;
   }
+
   .mapboxgl-ctrl-attrib a {
     color: rgb(255 255 255 / 75%) !important;
   }
-
 }
