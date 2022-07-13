@@ -17,12 +17,6 @@ const INITIAL_VIEW_STATE = {
   projection: 'globe',
 
 };
-const data = [
-  {
-    sourcePosition: [-122.41669, 37.7853],
-    targetPosition: [-122.41669, 37.781],
-  },
-];
 
 let map;
 
@@ -183,8 +177,10 @@ export default function MyMap(props) {
           position='bottom-right'
           onGeolocate={(position) => {
             console.log(position);
+            if (!gps) {
+              drawRoute(position.coords.latitude, position.coords.longitude, 47.67, 9.50);
+            }
             gps = true;
-            drawRoute(position.coords.latitude, position.coords.longitude, 47.67, 9.50);
           }
           }
         />
