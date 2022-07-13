@@ -105,7 +105,7 @@ class ModalPopup extends Component {
               textEn="Contact: Thomas Schmitz Emailadress: thomasschmitz814@gmail.com"
           />
           <HelpSection
-              even={}
+              even={false}
               image=""
               textDe="GitHub"
               textEn="GitHub"
