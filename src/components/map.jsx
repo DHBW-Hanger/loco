@@ -17,7 +17,7 @@ const INITIAL_VIEW_STATE = {
   projection: 'globe',
 
 };
-
+/* eslint-disable-next-line */
 let map;
 
 /**
@@ -64,6 +64,12 @@ export default function MyMap(props) {
   }),
   ];
 
+  /**
+   *
+   * @param {string} str
+   * @param {number} precision
+   * @return {array} Arrray of lat/lon coordinates
+   */
   function decodePolyline(str, precision) {
     let index = 0;
     let lat = 0;
@@ -112,7 +118,13 @@ export default function MyMap(props) {
     return coordinates;
   };
 
-
+  /**
+ *
+ * @param {num} startLat
+ * @param {num} startLon
+ * @param {num} endLat
+ * @param {num} endLon
+ */
   function drawRoute(startLat, startLon, endLat, endLon) {
     // call the rounting api
     const url = `https://router.project-osrm.org/route/v1/driving/${startLat},${startLon};${endLat},${endLon}?overview=false&alternatives=true&steps=true&hints=%3B`;
