@@ -8,6 +8,10 @@
   --accent-color: #fc2c54;
 }
 
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+
 .leaflet-routing-container {
   display: none;
   background-color: var(--background-color);
@@ -193,23 +197,12 @@
   transition: all 0.1s ease-in-out;
 }
 
-.leaflet-control-layers-base label:hover {
-  cursor: pointer;
-  background-color: var(--background-color-disabled);
-}
+
 
 input:checked + span {
   background-color: var(--accent-color) !important;
   color: var(--text-color);
   box-shadow: none;
-}
-
-.leaflet-control-layers-base label:first-of-type {
-  border-radius: 4px 4px 0 0;
-}
-
-.leaflet-control-layers-base label:last-of-type {
-  border-radius: 0 0 4px 4px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -225,14 +218,11 @@ input:checked + span {
     filter: var(--map-tiles-filter, none);
   }
 
-  .leaflet-control-attribution {
+  .mapboxgl-ctrl-attrib {
     background-color: rgb(20 20 20 / 40%) !important;
-    color: var(--text-color);
+  }
+  .mapboxgl-ctrl-attrib a {
+    color: rgb(255 255 255 / 75%) !important;
   }
 
-  .leaflet-control-scale-line {
-    background-color: rgb(20 20 20 / 0%) !important;
-    color: var(--text-color);
-    border-color: rgb(255 255 255 / 80%);
-  }
 }
