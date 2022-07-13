@@ -72,8 +72,8 @@ export default function MyMap(props) {
     let shift = 0;
     let result = 0;
     let byte = null;
-    let latitude_change;
-    let longitude_change;
+    let latitudeChange;
+    let longitudeChange;
     const factor = Math.pow(10, Number.isInteger(precision) ? precision : 5);
 
     // Coordinates have variable length when encoded, so just keep
@@ -91,7 +91,7 @@ export default function MyMap(props) {
         shift += 5;
       } while (byte >= 0x20);
 
-      latitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+      latitudeChange = ((result & 1) ? ~(result >> 1) : (result >> 1));
 
       shift = result = 0;
 
@@ -101,10 +101,10 @@ export default function MyMap(props) {
         shift += 5;
       } while (byte >= 0x20);
 
-      longitude_change = ((result & 1) ? ~(result >> 1) : (result >> 1));
+      longitudeChange = ((result & 1) ? ~(result >> 1) : (result >> 1));
 
-      lat += latitude_change;
-      lng += longitude_change;
+      lat += latitudeChange;
+      lng += longitudeChange;
 
       coordinates.push([lat / factor, lng / factor]);
     }
