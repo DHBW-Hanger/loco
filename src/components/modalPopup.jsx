@@ -76,18 +76,14 @@ class ModalPopup extends Component {
           <HelpSection
             even={true}
             image="route_infos"
-            textDe="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
-                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
-            textEn="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
-                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+            textDe="Über diesen Button kannst du die Navigationsanweisungen aus- und einblenden."
+            textEn="By clicking this button you can toggle the directions tab."
           />
           <HelpSection
             even={false}
             image="route"
-            textDe="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
-                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
-            textEn="Adipisicing irure elit reprehenderit adipisicing sunt sint ipsum. Sunt incididunt dolore ex officia. In quis consectetur commodo
-                    officia tempor sit tempor velit. Quis cupidatat ea in excepteur enim adipisicing est officia. Fugiat cillum velit duis."
+            textDe="Der Route Toggle Button blendet die Route auf der Karte aus oder ein, wenn du mal die Karte ohne Route betrachten möchtest."
+            textEn="When you want to see the map without the route, you can toggle the route by clicking this button."
           />
           <HelpSection
             even={true}
