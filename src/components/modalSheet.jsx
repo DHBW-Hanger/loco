@@ -9,8 +9,8 @@ import {
   Sheet,
   BlockTitle,
   List,
-  ListItem,
 } from 'framework7-react';
+import ModalListElement from './modalListElement';
 
 
 /**
@@ -64,7 +64,7 @@ class ModalSheet extends Component {
         }}
       >
         <div className="sheet-modal-swipe-step">
-          <div className="display-flex padding justify-content-left align-items-center">
+          <div className="sheet-header display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
               alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
@@ -103,7 +103,7 @@ class ModalSheet extends Component {
               Route
             </Button>
             <div className="margin-top text-align-center icon-color">
-              {(this.state.sheetOpened == false) ?
+              {(this.state.sheetOpened === false) ?
                 <IoIosArrowDown/> : <IoIosArrowUp/>}
             </div>
           </div>
@@ -114,36 +114,11 @@ class ModalSheet extends Component {
         </BlockTitle>
 
         <List noHairlines className="sheet-container">
-          {(this.props.completeAddress) ?
-            <ListItem title="Addresse:" className="sheet-text-tertiary">
-              <b slot="after" className="sheet-text-tertiary-bold">
-                {this.props.completeAddress}
-              </b>
-            </ListItem> : ''}
-          {(this.props.federalState) ?
-            <ListItem title="Land:" className="sheet-text-tertiary">
-              <b slot="after" className="sheet-text-tertiary-bold">
-                {this.props.countryName}
-              </b>
-            </ListItem> : ''}
-          {(this.props.federalState) ?
-            <ListItem title="Bundesland:" className="sheet-text-tertiary">
-              <b slot="after" className="sheet-text-tertiary-bold">
-                {this.props.federalState}
-              </b>
-            </ListItem> : ''}
-          {(this.props.postCode) ?
-            <ListItem title="Postleitzahlen:" className="sheet-text-tertiary">
-              <b slot="after" className="sheet-text-tertiary-bold">
-                {this.props.postCode}
-              </b>
-            </ListItem> : ''}
-          {(this.props.population) ?
-            <ListItem title="Einwohner:" className="sheet-text-tertiary">
-              <b slot="after" className="sheet-text-tertiary-bold">
-                {this.props.population}
-              </b>
-            </ListItem> : ''}
+          <ModalListElement title="Adresse" data={this.props.completeAddress}/>
+          <ModalListElement title="Land" data={this.props.countryName}/>
+          <ModalListElement title="Bundesland" data={this.props.federalState}/>
+          <ModalListElement title="Postleitzahlen" data={this.props.postCode}/>
+          <ModalListElement title="Einwohner" data={this.props.population}/>
         </List>
       </Sheet>
     );

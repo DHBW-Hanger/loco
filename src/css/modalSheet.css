@@ -35,9 +35,33 @@
   --f7-sheet-border-color: transparent;
 }
 
+/* Wikipedia picture */
+.wiki-pic {
+  vertical-align: middle;
+  width: 200px;
+  height: 200px;
+  border-radius: 20%;
+}
+
+@media only screen and (max-width: 900px) {
+  .sheet-header {
+    flex-direction: column;
+  }
+
+  .wiki-pic {
+    width: 100px;
+    height: 100px;
+    padding-bottom: 10px;
+  }
+}
+
 .city-text {
   padding-left: 20px;
   text-align: left;
+}
+
+.sheet-container {
+  list-style-type: none;
 }
 
 .sheet-text-main {
@@ -50,6 +74,7 @@
   font-size: 16px;
   opacity: 0.75;
   color: rgb(0 0 0);
+  overflow-y: scroll;
 }
 
 .sheet-text-tertiary {
