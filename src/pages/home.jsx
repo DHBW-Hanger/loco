@@ -153,6 +153,7 @@ class App extends Component {
           federalState={this.state.federalState}
           postCode={this.state.postCode}
           population={this.state.population}
+          targetMarkerLocation={this.state.targetMarkerLocation}
         />
 
       </Page>

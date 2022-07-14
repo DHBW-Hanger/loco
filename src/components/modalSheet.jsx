@@ -87,15 +87,12 @@ class ModalSheet extends Component {
 
           <div className="padding-horizontal padding-bottom">
             <Button large fill round onClick={() => {
-              geocodeTown(this.props.townName).then((response) => {
-                const lat = response[0].lat;
-                const lon = response[0].lon;
-                this.setState({
-                  targetMarkerLocation: {lat, lon},
-                }, () => {
-                  console.log(this.state.targetMarkerLocation);
-                });
-              });
+
+
+
+              console.log(this.props.targetMarkerLocation);
+
+
             }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
