@@ -100,16 +100,11 @@ class ModalPopup extends Component {
           />
           <HelpSection
             even={true}
-            image=""
-            textDe="Kontakt: Thomas Schmitz  Emailadresse: thomasschmitz814@gmail.com"
-            textEn="Contact: Thomas Schmitz Emailadress: thomasschmitz814@gmail.com"
+            image="contact"
+            textDe="Kontakt: Thomas Schmitz E-Mail: thomasschmitz814@gmail.com"
+            textEn="Contact: Thomas Schmitz E-mail: thomasschmitz814@gmail.com"
           />
-          <HelpSection
-            even={false}
-            image=""
-            textDe="GitHub"
-            textEn="GitHub"
-          />
+          <img alt="github" src={'https://en.m.wikipedia.org/wiki/File:Octicons-mark-github.svg'}/>
         </Modal.Body>
       </Modal>
     </div>);

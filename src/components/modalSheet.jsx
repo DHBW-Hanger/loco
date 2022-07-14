@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {TiLocationArrowOutline} from 'react-icons/Ti';
 import {IoIosArrowDown, IoIosArrowUp} from 'react-icons/Io';
-import {geocodeTown} from '../js/wikipediaCall';
 import '../css/modalSheet.css';
 
 import {
@@ -87,12 +86,7 @@ class ModalSheet extends Component {
 
           <div className="padding-horizontal padding-bottom">
             <Button large fill round onClick={() => {
-
-
-
               console.log(this.props.targetMarkerLocation);
-
-
             }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>

@@ -32,13 +32,11 @@ export async function handleSearch(input, reverse = {}) {
 
   // check if input (stadt) is not empty
   if (input !== '') {
-
     // cityInfos from nominatim
     const cityInfos = await getCityInfosNominatim(input);
 
     // if input is valid
     if (cityInfos !== undefined) {
-
       // get stadt
       const stadt = cityInfos['address']['stadt'];
 
@@ -60,7 +58,7 @@ export async function handleSearch(input, reverse = {}) {
 
       // get population from wikidata
       const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos['address']['country']);
-      const populationData = getPopulation(cityInfosWikidata)
+      const populationData = getPopulation(cityInfosWikidata);
 
       // get postcode
       if (postcode == null) postcode = cityInfos['address']['postcode'];
@@ -95,7 +93,6 @@ export async function handleSearch(input, reverse = {}) {
   }
   return result;
 }
-
 
 
 /* eslint-enable */
@@ -136,7 +133,6 @@ async function getCityInfosNominatim(input) {
   let data = await getContent(`https://nominatim.openstreetmap.org/search?q=${input}&format=json&polygon=1&addressdetails=1`);
   data = getTown(data[0], input);
   return data;
-
 }
 
 /**
@@ -427,10 +423,10 @@ function getPopulation(cityInfosWikidata) {
 async function getContent(url) {
   let content;
   await fetch(url, {method: 'GET'})
-    .then((response) => response.json())
-    .then((json) => content = json)
-    .catch((error) => {
-      console.log(error.message);
-    });
+      .then((response) => response.json())
+      .then((json) => content = json)
+      .catch((error) => {
+        console.log(error.message);
+      });
   return content;
 }
