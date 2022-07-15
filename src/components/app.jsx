@@ -8,7 +8,7 @@ import {
 } from 'framework7-react';
 
 
-import routes from '../js/routes';
+import HomePage from "../pages/home";
 
 const MyApp = () => {
 
@@ -17,7 +17,10 @@ const MyApp = () => {
     name: 'Loco', // App name
     theme: 'auto', // Automatic theme detection
     // App routes
-    routes: routes,
+    routes: {
+      path: '/',
+      component: HomePage,
+    },
     // Register service worker (only on production build)
     serviceWorker: process.env.NODE_ENV === 'production' ? {
       path: '/service-worker.js',
