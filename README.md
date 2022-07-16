@@ -12,6 +12,14 @@ Hosted PWA:
 
 [locomap.de](https://locomap.de)
 
+Hosted new-beta Version:
+
+[beta.locomap.de](https://beta.locomap.de)
+
+Status Website:
+
+[status.locomap.de](https://status.locomap.de)
+
 Our Jira Board:
 
 [Jira](https://projectxtasks.atlassian.net/jira/software/projects/PD/pages)
