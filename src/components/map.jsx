@@ -1,12 +1,18 @@
-import React from 'react';
-import {GeoJsonLayer} from '@deck.gl/layers';
-import Map, {GeolocateControl, Marker, NavigationControl} from 'react-map-gl';
+import React ,{useEffect, useState} from "react";
+import Map, {
+  Source,
+  GeolocateControl,
+  Marker,
+  NavigationControl,
+  Layer,
+} from "react-map-gl";
+import {render} from 'react-dom';
 // makes clean rendering of the map possible without lagging
-import 'mapbox-gl/dist/mapbox-gl.css';
-import '../css/map.css';
+import "mapbox-gl/dist/mapbox-gl.css";
+import "../css/map.css";
 
 const MAPBOX_ACCESS_TOKEN =
-  'pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA';
+  "pk.eyJ1Ijoic2FpY29kZSIsImEiOiJjbDN2bGZvdWEwMHlrM2ptbWkxZ3NzNzR3In0.KfvayvxbFTIVWeR6yH0rxA";
 
 const INITIAL_VIEW_STATE = {
   longitude: 9.49,
@@ -14,11 +20,19 @@ const INITIAL_VIEW_STATE = {
   zoom: 13,
   pitch: 0,
   bearing: 0,
-  projection: 'globe',
-
+  projection: "globe",
 };
 /* eslint-disable-next-line */
 let map;
+
+var navigationRoute = {
+  type: 'FeatureCollection',
+  features: [
+    {type: 'Route', geometry: {type: 'LineString', coordinates: []}}
+  ]
+};
+
+
 
 /**
  *
@@ -27,42 +41,40 @@ let map;
  * @constructor
  */
 export default function MyMap(props) {
+  const [navJson, setNavJson] = useState(null);
+
+  useEffect(() => {
+    const animation = window.requestAnimationFrame(() => {
+      setNavJson(navigationRoute);
+    }
+    );
+    return () => {
+      window.cancelAnimationFrame(animation);
+    }
+  }
+  );
+  
+
+  
+
   let gps = false;
+/*
+  var navJson = {
+    type: 'FeatureCollection',
+    features: [
+      {type: 'Route', geometry: {type: 'LineString', coordinates: [[9.49, 47.66], [9.50, 47.66], [9.50, 47.67]]}}
+    ]
+  };*/
 
-
-  const layers = [new GeoJsonLayer({
-    id: 'GeoJsonLayer',
-    data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json',
-
-    /* props from GeoJsonLayer class */
-
-    // elevationScale: 1,
-    extruded: true,
-    filled: true,
-    getElevation: 30,
-    getFillColor: [160, 160, 180, 200],
-    // getIconAngle: 0,
-    // getIconColor: [0, 0, 0, 255],
-    // getIconPixelOffset: [0, 0],
-    // getIconSize: 1,
-    getLineColor: (f) => {
-      const hex = f.properties.color;
-      // convert to RGB
-      return hex ? hex.match(/[0-9a-f]{2}/g).map((x) => parseInt(x, 16)) : [0, 0, 0];
+  const layerStyle = {
+    id: "point",
+    type: "line",
+    paint: {
+      "line-color": "#ff2d55",
+      "line-width": 5,
     },
-    getLineWidth: 20,
-    getPointRadius: 4,
-    getText: (f) => f.properties.name,
-    getTextSize: 12,
-    lineWidthMinPixels: 2,
-    pointRadiusUnits: 'pixels',
-    pointType: 'circle+text',
-    stroked: false,
-    pickable: true,
-    // visible: true,
-    // wrapLongitude: false,
-  }),
-  ];
+    
+  };
 
   /**
    *
@@ -82,6 +94,7 @@ export default function MyMap(props) {
     let longitudeChange;
     const factor = Math.pow(10, Number.isInteger(precision) ? precision : 5);
 
+
     // Coordinates have variable length when encoded, so just keep
     // track of whether we've hit the end of the string. In each
     // loop iteration, a single coordinate is decoded.
@@ -92,12 +105,13 @@ export default function MyMap(props) {
       result = 0;
 
       do {
-        byte = str.charCodeAt(index++) - 63; 1;
+        byte = str.charCodeAt(index++) - 63;
+        1;
         result |= (byte & 0x1f) << shift;
         shift += 5;
       } while (byte >= 0x20);
 
-      latitudeChange = ((result & 1) ? ~(result >> 1) : (result >> 1));
+      latitudeChange = result & 1 ? ~(result >> 1) : result >> 1;
 
       shift = result = 0;
 
@@ -107,7 +121,7 @@ export default function MyMap(props) {
         shift += 5;
       } while (byte >= 0x20);
 
-      longitudeChange = ((result & 1) ? ~(result >> 1) : (result >> 1));
+      longitudeChange = result & 1 ? ~(result >> 1) : result >> 1;
 
       lat += latitudeChange;
       lng += longitudeChange;
@@ -116,58 +130,41 @@ export default function MyMap(props) {
     }
 
     return coordinates;
-  };
+  }
 
   /**
- *
- * @param {num} startLat
- * @param {num} startLon
- * @param {num} endLat
- * @param {num} endLon
- */
+   *
+   * @param {num} startLat
+   * @param {num} startLon
+   * @param {num} endLat
+   * @param {num} endLon
+   */
   function drawRoute(startLat, startLon, endLat, endLon) {
     // call the rounting api
     const url = `https://router.project-osrm.org/route/v1/driving/${startLat},${startLon};${endLat},${endLon}?overview=false&alternatives=true&steps=true&hints=%3B`;
     fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
+      .then((response) => response.json())
+      .then((data) => {
         // and draw a spline of the route on the map
-          const steps = data.routes[0].legs[0].steps;
-          for (let i = 0; i < steps.length; i++) {
-            const coords = steps[i].intersections.map((intersection) => intersection.location);
-            const line = {
-              sourcePosition: coords[0],
-              targetPosition: coords[1],
-              polyline: decodePolyline(steps[i].geometry, 5),
-            };
-            steps[i] = line;
-          }
-          // turn the stepts into a geojson object
-          const geojson = {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {
-                  color: '#fc2c54',
-                },
-                geometry: {
-                  type: 'LineString',
-                  coordinates: steps.map((step) => step.polyline),
-                },
-              },
-            ],
+        const steps = data.routes[0].legs[0].steps;
+        for (let i = 0; i < steps.length; i++) {
+          const coords = steps[i].intersections.map(
+            (intersection) => intersection.location
+          );
+          const line = {
+            sourcePosition: coords[0],
+            targetPosition: coords[1],
+            polyline: decodePolyline(steps[i].geometry, 5),
           };
+          steps[i] = line;
+          for (let j = 0; j < line.polyline.length; j++) {
+            navigationRoute.features[0].geometry.coordinates.push(line.polyline[j]);
+          }
+        }
+      });
 
-
-          layers[0] = new GeoJsonLayer({
-            id: 'route',
-            data: geojson,
-            getLineColor: [255, 0, 0],
-            getLineWidth: 5,
-          });
-        });
   }
+
 
 
   return (
@@ -179,34 +176,42 @@ export default function MyMap(props) {
         onLoad={(loadedmap) => {
           map = loadedmap;
         }}
-        layers={layers}
       >
         <GeolocateControl
-          positionOptions={{enableHighAccuracy: true}}
+          positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
           showUserHeading={true}
           showAccuracyCircle={false}
-          position='bottom-right'
+          position="bottom-right"
           onGeolocate={(position) => {
             console.log(position);
             if (!gps) {
-              drawRoute(position.coords.latitude, position.coords.longitude, 47.67, 9.50);
+              drawRoute(
+                position.coords.latitude,
+                position.coords.longitude,
+                47.67,
+                9.5
+              );
             }
             gps = true;
-          }
-          }
+          }}
         />
-        <NavigationControl
-          visualizePitch={true}
-        />
-        <Marker
-          latitude={47.66}
-          longitude={9.49}
-          anchor="bottom">
+        <NavigationControl visualizePitch={true} />
+        {
+        navJson && (
+        <Source id="navigation" type="geojson" data={navJson}>
+          <Layer {...layerStyle} sourceId="navigation" />
+        </Source>
+        )}
+        <Marker latitude={47.66} longitude={9.49} anchor="bottom">
           <img src="/icons/marker_darkm.svg" />
         </Marker>
-
       </Map>
     </div>
   );
+}
+
+
+export function renderToDom(container) {
+  render(<MyMap />, container);
 }
