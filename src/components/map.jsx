@@ -380,7 +380,6 @@ export default function MyMap(props) {
     });
 
 
-
     const help = L.control({position: 'bottomleft'});
     help.onAdd = function() {
       this._div = L.DomUtil.create('div', 'help');

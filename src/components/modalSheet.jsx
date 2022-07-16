@@ -89,9 +89,9 @@ class ModalSheet extends Component {
               console.log(this.props.targetMarkerLocation);
               const event = new CustomEvent('updateLocation', {
                 detail: {
-                  lat : this.props.targetMarkerLocation.lat,
-                  lng : this.props.targetMarkerLocation.lng,
-                  }});
+                  lat: this.props.targetMarkerLocation.lat,
+                  lng: this.props.targetMarkerLocation.lng,
+                }});
               window.dispatchEvent(event);
             }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
