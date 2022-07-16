@@ -1,17 +1,12 @@
 import React from 'react';
 import '../css/index.css';
 
-import {
-  App,
-  Views,
-  View,
-} from 'framework7-react';
+import {App, Views, View} from 'framework7-react';
 
 
-import HomePage from "../pages/home";
+import HomePage from './home';
 
 const MyApp = () => {
-
   // Framework7 Parameters
   const f7params = {
     name: 'Loco', // App name
