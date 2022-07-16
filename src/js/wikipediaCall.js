@@ -87,6 +87,7 @@ export async function handleSearch(input, reverse = {}) {
       result.postCode = postcode;
       result.locationMarker = {lat: latitude, lng: longitude};
       result.population = populationData;
+      console.log(imageUrl);
     }
   } else {
     console.log('invalid input');
@@ -358,7 +359,7 @@ async function getImages(location) {
       }
     }
     // if no image was found in wikipedia use custom svg
-    if (content[0] === undefined) content[0] = '../icons/altimage.svg';
+    if (content[0] === undefined || content[0] === '') content[0] = '../icons/altimage.svg';
   } catch (error) {
     console.log(error.message);
   }
