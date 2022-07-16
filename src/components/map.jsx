@@ -210,6 +210,16 @@ export default function MyMap(props) {
       props.markerClickHandler(e.target.getLatLng());
     });
 
+    addEventListener('updateLocation', (e) => {
+      targetLocation = L.latLng(e.detail.lat, e.detail.lng);
+      targetMarker.setLatLng(targetLocation);
+      console.log('updateLocation'+targetLocation);
+      if (routingOn) {
+        navigation.remove();
+        startNavigation(currentCoords, targetLocation);
+      }
+    });
+
     /**
      * Start navigation
      *
@@ -368,6 +378,8 @@ export default function MyMap(props) {
         routingOn = true;
       }
     });
+
+
 
     const help = L.control({position: 'bottomleft'});
     help.onAdd = function() {

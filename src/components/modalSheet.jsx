@@ -87,6 +87,12 @@ class ModalSheet extends Component {
           <div className="padding-horizontal padding-bottom">
             <Button large fill round onClick={() => {
               console.log(this.props.targetMarkerLocation);
+              const event = new CustomEvent('updateLocation', {
+                detail: {
+                  lat : this.props.targetMarkerLocation.lat,
+                  lng : this.props.targetMarkerLocation.lng,
+                  }});
+              window.dispatchEvent(event);
             }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
                 <TiLocationArrowOutline/>
