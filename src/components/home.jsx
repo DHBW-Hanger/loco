@@ -127,22 +127,7 @@ class App extends Component {
               this.search = (e.target.value);
             }}
             onSubmit={() => {
-              handleSearch(this.search).then((r) => {
-                this.setState({
-                  countryName: r.country,
-                  townName: r.city,
-                  townDescription: r.townInfo,
-                  townImage: r.image,
-                  federalState: r.state,
-                  postCode: r.postCode,
-                  population: r.population,
-                });
-                // if r is not empty open modalsheet
-                if (Object.keys(r).length !== 0) {
-                  const submitButton = document.getElementsByClassName('submit-button')[0];
-                  submitButton.click();
-                }
-              });
+              this.triggerModalSheet(this.search, {});
             }}
           />
         </Navbar>
