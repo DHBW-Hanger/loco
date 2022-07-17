@@ -40,7 +40,7 @@ class ModalPopup extends Component {
         show={this.props.showModalPopup}
       >
         <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/close.svg"
-             alt="close"/>
+          alt="close"/>
         <Modal.Header>
           <Modal.Title className="modal-title">
             loco help page
@@ -100,12 +100,12 @@ class ModalPopup extends Component {
           />
           <div className="help-section">
             <div className="help-text">
-              <p>{'Über das Icon wirst du zur Beta-Version der App weitergeleitet. Dabei handelt es sich um eine Version mit 3D-Maps von Deck.gl.'}</p>
-              <p>{"Via the icon you will be redirected to the beta version of the app. It's a version with 3D-Maps from Deck.gl."}</p>
+              <p>Über das Icon wirst du zur Beta-Version der App weitergeleitet. Dabei handelt es sich um eine Version mit 3D-Maps von Deck.gl.</p>
+              <p>Via the icon you will be redirected to the beta version of the app. It&apos;s a version with 3D-Maps from Deck.gl.</p>
             </div>
             <img className="beta" src={'/icons/beta.svg'} alt="logo" onClick={
               () => {
-                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+                window.open('https://beta.locomap.de/');
               }
             }/>
           </div>

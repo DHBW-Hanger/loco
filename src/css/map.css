@@ -9,6 +9,7 @@
 }
 
 .leaflet-routing-container {
+  display: none;
   position: absolute;
   margin: 0;
   top: -60px;

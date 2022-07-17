@@ -317,7 +317,7 @@ export default function MyMap(props) {
 
     const routingInfoButton = document.querySelector('input.routing-info-button');
     const routingInfoContainer = document.getElementsByClassName('leaflet-routing-container');
-    let routingInfoOn = true;
+    let routingInfoOn = false;
 
     routingInfoButton.addEventListener('click', () => {
       if (routingInfoOn) {
@@ -367,7 +367,6 @@ export default function MyMap(props) {
         navigation.remove();
         routingOn = false;
       } else {
-        console.log('navigation button clicked');
         startNavigation(currentCoords, targetLocation);
         routingOn = true;
       }
