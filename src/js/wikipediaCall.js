@@ -55,6 +55,9 @@ export async function handleSearch(input, reverse = {}) {
       } else {
         townInfoPart1 = '';
       }
+      if (townInfoPart2 === undefined) {
+        townInfoPart2 = '';
+      }
 
       // get population from wikidata
       const cityInfosWikidata = await getCityInfosWikidata(stadt, cityInfos['address']['country']);
@@ -87,7 +90,6 @@ export async function handleSearch(input, reverse = {}) {
       result.postCode = postcode;
       result.locationMarker = {lat: latitude, lng: longitude};
       result.population = populationData;
-      console.log(imageUrl);
     }
   } else {
     console.log('invalid input');

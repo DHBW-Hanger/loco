@@ -71,6 +71,11 @@ class ModalSheet extends Component {
                 <b className="sheet-text-main">{this.props.townName}</b>
                 <div>
                   <b className="sheet-text-secondary">{this.props.townDescription} </b>
+                  {(this.state.showMoreInfo === false) ?
+                    <b>
+                      {(this.props.townDescription2 !== '') ?
+                        <b className="sheet-text-secondary">... </b> : ''}
+                    </b> : ''}
                   {(this.state.showMoreInfo === true) ?
                     <b className="sheet-text-secondary">{this.props.townDescription2}</b> : ''}
                   {(this.props.townDescription2) ?
@@ -86,7 +91,6 @@ class ModalSheet extends Component {
 
           <div className="padding-horizontal padding-bottom">
             <Button large fill round onClick={() => {
-              console.log(this.props.targetMarkerLocation);
               const event = new CustomEvent('updateLocation', {
                 detail: {
                   lat: this.props.targetMarkerLocation.lat,
