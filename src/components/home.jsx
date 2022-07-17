@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import MyMap from './map';
 import ModalPopup from './modalPopup';
 import ModalSheet from './modalSheet';
-import {handleSearch} from '../js/wikipediaCall';
+import { handleSearch } from '../js/wikipediaCall';
 import '../css/index.css';
 
 import {
@@ -25,7 +25,7 @@ class App extends Component {
    * @param {object} props - properties
    *
    */
-   constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       showModalPopup: false,
@@ -39,7 +39,7 @@ class App extends Component {
       federalState: '',
       postCode: 0,
       population: 0,
-      targetMarkerLocation: {lat: 47.6652, lon: 9.4902},
+      targetMarkerLocation: { lat: 47.6652, lon: 9.4902 },
       completeAddress: '',
     };
 
@@ -57,14 +57,14 @@ class App extends Component {
   }
 
   isShowPopup = (status) => {
-    this.setState({showModalPopup: status});
+    this.setState({ showModalPopup: status });
   };
 
   /**
    * handle the marker click
    * @param {object} location - location of the marker
    */
-   markerClickHandler(location) {
+  markerClickHandler(location) {
     this.triggerModalSheet('', location);
   }
 
@@ -140,16 +140,20 @@ class App extends Component {
         <MyMap
           targetMarkerLocation={this.state.targetMarkerLocation}
           helpHandler={this.helpHandler}
+          markerClickHandler={this.markerClickHandler}
         />
 
         <ModalSheet
           countryName={this.state.countryName}
           townName={this.state.townName}
+          completeAddress={this.state.completeAddress}
           townDescription={this.state.townDescription}
+          townDescription2={this.state.townDescription2}
           townImage={this.state.townImage}
           federalState={this.state.federalState}
           postCode={this.state.postCode}
           population={this.state.population}
+          targetMarkerLocation={this.state.targetMarkerLocation}
         />
 
       </Page>
