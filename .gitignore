@@ -27,4 +27,5 @@ yarn-debug.log*
 yarn-error.log*
 .env
 fonts/**
-www/**
+# Exported files for nginx
+# www/**
