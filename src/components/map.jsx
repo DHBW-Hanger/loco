@@ -41,6 +41,7 @@ export default function MyMap(props) {
   const SOUTHWEST = L.latLng(-89.98155760646617, -180);
   const NORTHEAST = L.latLng(89.99346179538875, 180);
   const BOUNDS = L.latLngBounds(SOUTHWEST, NORTHEAST);
+
   /*
   function isOnline(){
     var url = {
@@ -69,6 +70,7 @@ export default function MyMap(props) {
 1
   };
   isOnline();*/
+
   // tile layers
   useEffect(() => {
     const mapStyles = {
@@ -89,13 +91,7 @@ export default function MyMap(props) {
       ),
       Streets2: L.tileLayer(
           `https://api.mapbox.com/styles/v1/saicode/cl3vm2qoz003114o2hcvm46nw/tiles/${tileSize}/{z}/{x}/{y}${scale}?access_token=${apiKeyMapbox}`,
-      ), /*
-      TODO Unused map layers, replaced with mapbox
-
-      Satellite2: L.tileLayer(
-        `https://api.maptiler.com/maps/hybrid/${tileSize}/{z}/{x}/{y}${scale}.jpg?key=${apiKeyMaptiler}`,
       ),
-      */
     };
 
     // if dark mode is enabled replace the map tiles with the dark mode tiles
@@ -108,13 +104,13 @@ export default function MyMap(props) {
       });
     }
 
-    if (window.navigator.onLine == false) {
+    if (window.navigator.onLine === false) {
       mapStyles.Streets = L.tileLayer(
           '/img/Offline-tile.png',
       );
     }
 
-    // TODO add comment
+    // reload the map if the user changes appearance
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       console.log('Darkmode changed to ' + e.matches);
       if (e.matches) {
@@ -186,7 +182,6 @@ export default function MyMap(props) {
           }
         }
 
-        // TODO discuss if this is needed
         // center the view to the current location
         if (followLocation) {
           map.flyTo(currentCoords, 18);
@@ -258,7 +253,6 @@ export default function MyMap(props) {
     function showResetButton() {
       const slideContainer = document.getElementsByClassName('reset-button-field')[0];
 
-      // TODO add comment
       slideContainer.classList.add('slide-in');
       slideContainer.classList.remove('slide-out');
 
