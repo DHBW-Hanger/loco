@@ -40,7 +40,7 @@ class ModalPopup extends Component {
         show={this.props.showModalPopup}
       >
         <img type="button" className="close" onClick={() => this.isShowModal(true)} src="/icons/close.svg"
-          alt="close"/>
+             alt="close"/>
         <Modal.Header>
           <Modal.Title className="modal-title">
             loco help page
@@ -50,11 +50,11 @@ class ModalPopup extends Component {
           <HelpSection
             even={false}
             image="logo"
-            textDe="Loco ist eine Location-based Progressive Web App (PWA), welche dich bei deinen Reisen mit Routing Services und grundlegenden
-                    Daten zu deinem Ziel unterstützt. Loco bietet dir diese Dienste auch offline an, wenn du es vor der Offline-Nutzung auf Ihrem
+            textDe="loco ist eine Location-based Progressive Web App (PWA), welche dich bei deinen Reisen mit Routing Services und grundlegenden
+                    Daten zu deinem Ziel unterstützt. loco bietet dir diese Dienste auch offline an, wenn du es vor der Offline-Nutzung auf Ihrem
                     Gerät installieren."
-            textEn="Loco is a location-based progressive web app (PWA), which supports you in finding and providing basic information for your
-                    destination. Loco also provides you this services offline, if you install it on your device before your offline usage."
+            textEn="loco is a location-based progressive web app (PWA), which supports you in finding and providing basic information for your
+                    destination. loco also provides you this services offline, if you install it on your device before your offline usage."
           />
           <HelpSection
             even={true}
@@ -98,8 +98,19 @@ class ModalPopup extends Component {
                       daraufhin werden die auf Wikipedia gefundenen Daten angezeigt."
             textEn="When searching for a location in the searchbar and pressing enter, the matching wikipedia data will be displayed. "
           />
+          <div className="help-section">
+            <div className="help-text">
+              <p>{'Über das Icon wirst du zur Beta-Version der App weitergeleitet. Dabei handelt es sich um eine Version mit 3D-Maps von Deck.gl.'}</p>
+              <p>{"Via the icon you will be redirected to the beta version of the app. It's a version with 3D-Maps from Deck.gl."}</p>
+            </div>
+            <img className="beta" src={'/icons/beta.svg'} alt="logo" onClick={
+              () => {
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+              }
+            }/>
+          </div>
           <HelpSection
-            even={true}
+            even={false}
             image="contact"
             textDe="Kontakt: Thomas Schmitz E-Mail: thomasschmitz814@gmail.com"
             textEn="Contact: Thomas Schmitz E-mail: thomasschmitz814@gmail.com"

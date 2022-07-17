@@ -104,7 +104,7 @@ class App extends Component {
       <Page name='home'>
 
         <Navbar>
-          <img className="logo" src="/icons/logo.svg" alt="Loco"/>
+          <img className="logo" src="/icons/logo.svg" alt="loco"/>
           <div className="logo-text sliding">loco</div>
           <Button className={'submit-button'} fill sheetOpen=".demo-sheet-swipe-to-step"> </Button>
           <NavRight>
