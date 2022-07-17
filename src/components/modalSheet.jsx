@@ -66,7 +66,7 @@ class ModalSheet extends Component {
           <div className="drag-line"/>
           <div className="sheet-header display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
-              alt="city image" className="wiki-pic"/>
+                 alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div className="city-text">
                 <b className="sheet-text-main">{this.props.townName}</b>
@@ -96,7 +96,8 @@ class ModalSheet extends Component {
                 detail: {
                   lat: this.props.targetMarkerLocation.lat,
                   lng: this.props.targetMarkerLocation.lng,
-                }});
+                }
+              });
               window.dispatchEvent(event);
             }}>
               <div style={{fontSize: '24px', paddingTop: 4, paddingRight: 4}}>
@@ -110,13 +111,17 @@ class ModalSheet extends Component {
             </div>
           </div>
         </div>
-
+        <div className="sheet-text-tertiary-bold">
+          {(this.props.completeAddress) ?
+            <div>
+              {this.props.completeAddress}
+            </div> : ''}
+        </div>
         <BlockTitle medium className="margin-top sheet-text-main">
           Information:
         </BlockTitle>
 
         <List noHairlines className="sheet-container">
-          <ModalListElement title="Adresse" data={this.props.completeAddress}/>
           <ModalListElement title="Land" data={this.props.countryName}/>
           <ModalListElement title="Bundesland" data={this.props.federalState}/>
           <ModalListElement title="Postleitzahlen" data={this.props.postCode}/>
