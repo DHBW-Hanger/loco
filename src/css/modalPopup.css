@@ -75,6 +75,10 @@
   .modal-popup .close {
     right: 25px;
   }
+
+  .leaflet-routing-container {
+    display: none;
+  }
 }
 
 .help-section img {
