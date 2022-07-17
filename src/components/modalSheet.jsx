@@ -66,7 +66,7 @@ class ModalSheet extends Component {
           <div className="drag-line"/>
           <div className="sheet-header display-flex padding justify-content-left align-items-center">
             <img src={this.props.townImage}
-                 alt="city image" className="wiki-pic"/>
+              alt="city image" className="wiki-pic"/>
             <div className="display-flex align-items-center">
               <div className="city-text">
                 <b className="sheet-text-main">{this.props.townName}</b>
@@ -96,7 +96,7 @@ class ModalSheet extends Component {
                 detail: {
                   lat: this.props.targetMarkerLocation.lat,
                   lng: this.props.targetMarkerLocation.lng,
-                }
+                },
               });
               window.dispatchEvent(event);
             }}>

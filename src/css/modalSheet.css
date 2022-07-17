@@ -101,6 +101,21 @@
   color: rgb(0 0 0);
 }
 
+.modal-footer {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.github {
+  height: 40px;
+}
+
+.github:hover {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   .sheet-text-main {
     color: rgb(255 255 255);

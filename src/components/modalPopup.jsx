@@ -104,7 +104,12 @@ class ModalPopup extends Component {
             textDe="Kontakt: Thomas Schmitz E-Mail: thomasschmitz814@gmail.com"
             textEn="Contact: Thomas Schmitz E-mail: thomasschmitz814@gmail.com"
           />
-          <img alt="github" src={'https://en.m.wikipedia.org/wiki/File:Octicons-mark-github.svg'}/>
+          <div className="modal-footer">
+            <p>GitHub</p>
+            <img className="github modal-footer" alt="github" src="/icons/GitHub-Mark.svg" onClick={
+              () => window.open('https://github.com/DHBW-Hanger/loco')
+            }/>
+          </div>
         </Modal.Body>
       </Modal>
     </div>);
