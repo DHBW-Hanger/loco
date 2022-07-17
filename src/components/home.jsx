@@ -25,7 +25,7 @@ class App extends Component {
    * @param {object} props - properties
    *
    */
-  constructor(props) {
+   constructor(props) {
     super(props);
     this.state = {
       showModalPopup: false,
@@ -34,14 +34,17 @@ class App extends Component {
       countryName: '',
       townName: '',
       townDescription: '',
+      townDescription2: '',
       townImage: '',
       federalState: '',
       postCode: 0,
       population: 0,
-      targetMarkerLocation: {lat: 47.66, lon: 9.49},
+      targetMarkerLocation: {lat: 47.6652, lon: 9.4902},
+      completeAddress: '',
     };
 
     this.helpHandler = this.helpHandler.bind(this);
+    this.markerClickHandler = this.markerClickHandler.bind(this);
   }
 
   /**
@@ -51,18 +54,47 @@ class App extends Component {
     this.setState({
       showModalPopup: true,
     });
-
-    const event = new CustomEvent('addMarker', {
-      detail: {
-        lat: 47.67,
-        lon: 9.50,
-      },
-    });
-    document.dispatchEvent(event);
   }
 
   isShowPopup = (status) => {
     this.setState({showModalPopup: status});
+  };
+
+  /**
+   * handle the marker click
+   * @param {object} location - location of the marker
+   */
+   markerClickHandler(location) {
+    this.triggerModalSheet('', location);
+  }
+
+  /**
+   * trigger the modal sheet and get the data from wikipedia
+   * @param {string} town - town name
+   * @param {object} location - location of the marker
+   */
+  triggerModalSheet = (town, location) => {
+    handleSearch(town, location).then((r) => {
+      this.setState({
+        countryName: r.country,
+        townName: r.city,
+        townDescription: r.townDescription,
+        townImage: r.image,
+        federalState: r.state,
+        postCode: r.postCode,
+        population: r.population,
+        completeAddress: r.markedAddress,
+        targetMarkerLocation: r.locationMarker,
+        townDescription2: r.townDescription2,
+      });
+
+
+      // if r is not empty and completeAddress excluded: open modal sheet
+      if (Object.keys(r).length > 1) {
+        const submitButton = document.getElementsByClassName('submit-button')[0];
+        submitButton.click();
+      }
+    });
   };
 
   /**
