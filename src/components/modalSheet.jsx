@@ -113,7 +113,7 @@ class ModalSheet extends Component {
         </div>
         <div className="sheet-text-tertiary-bold">
           {(this.props.completeAddress) ?
-            <div>
+            <div className="sheet-text-tertiary-bold">
               {this.props.completeAddress}
             </div> : ''}
         </div>
