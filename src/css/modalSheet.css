@@ -37,6 +37,7 @@
 
 /* Wikipedia picture */
 .wiki-pic {
+  object-fit: cover;
   vertical-align: middle;
   width: 200px;
   height: 200px;
