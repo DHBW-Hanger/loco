@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import MyMap from '../components/map';
-import ModalPopup from '../components/modalPopup';
-import ModalSheet from '../components/modalSheet';
+import MyMap from './map';
+import ModalPopup from './modalPopup';
+import ModalSheet from './modalSheet';
 import {handleSearch} from '../js/wikipediaCall';
 import '../css/index.css';
 
