@@ -115,6 +115,10 @@
     --f7-searchbar-input-text-color: #fff;
   }
 
+  body {
+    background-color: black;
+  }
+
   .navbar-inner {
     background-color: #222;
   }

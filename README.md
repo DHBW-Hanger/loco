@@ -1,4 +1,4 @@
-# Loco
+# loco
 
 [![ESLint](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/eslint.yml)
 [![StyleLint](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml/badge.svg)](https://github.com/DHBW-Hanger/loco/actions/workflows/stylelint.yml)
@@ -27,9 +27,13 @@ Our Jira Board:
 ## Used Frameworks and APIs
 
 [reactjs](https://reactjs.org/)
+
 [Framework7](https://leafletjs.com/)
+
 [leaflet](https://framework7.io/)
+
 [leaflet routing machine](https://www.liedman.net/leaflet-routing-machine/)
+
 [maptiler](https://www.maptiler.com/)
 
 
