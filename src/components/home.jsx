@@ -87,8 +87,6 @@ class App extends Component {
         targetMarkerLocation: r.locationMarker,
         townDescription2: r.townDescription2,
       });
-
-
       // if r is not empty and completeAddress excluded: open modal sheet
       if (Object.keys(r).length > 1) {
         const submitButton = document.getElementsByClassName('submit-button')[0];
