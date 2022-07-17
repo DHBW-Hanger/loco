@@ -1,52 +1,70 @@
-:root {
-  --f7-sheet-height: auto;
-}
-
-.ios {
-  --f7-sheet-bg-color: #cfd5da;
-  --f7-sheet-border-color: #929499;
-}
-
-.ios .theme-dark,
-.ios.theme-dark {
-  --f7-sheet-bg-color: #171717;
-  --f7-sheet-border-color: var(--f7-bars-border-color);
-}
-
 .md {
   --f7-sheet-bg-color: #fff;
   --f7-sheet-border-color: transparent;
 }
-
 .md .theme-dark,
 .md.theme-dark {
   --f7-sheet-bg-color: #202020;
   --f7-sheet-border-color: transparent;
 }
-
 .aurora {
   --f7-sheet-bg-color: #fff;
   --f7-sheet-border-color: transparent;
 }
-
 .aurora .theme-dark,
 .aurora.theme-dark {
   --f7-sheet-bg-color: #202020;
   --f7-sheet-border-color: transparent;
 }
 
+/* Wikipedia picture */
+.wiki-pic {
+  vertical-align: middle;
+  width: 200px;
+  height: 200px;
+  border-radius: 20%;
+}
+
+.drag-line {
+  width: 80px;
+  height: 5px;
+  margin: 15px auto 0;
+  border-radius: 20px;
+  background-color: gray;
+}
+
+@media only screen and (max-width: 900px) {
+  .sheet-header {
+    flex-direction: column;
+  }
+
+  .wiki-pic {
+    width: 100px;
+    height: 100px;
+    padding-bottom: 10px;
+  }
+}
+
+.city-text {
+  padding-left: 20px;
+  text-align: left;
+}
+
+.sheet-container {
+  list-style-type: none;
+}
+
 .sheet-text-main {
   font-size: 24px;
   opacity: 0.9;
-  padding-left: 15px;
   color: rgb(0 0 0);
 }
 
 .sheet-text-secondary {
   font-size: 16px;
   opacity: 0.75;
-  padding-left: 15px;
   color: rgb(0 0 0);
+  overflow-y: scroll;
 }
 
 .sheet-text-tertiary {
@@ -55,7 +73,6 @@
   padding-left: 15px;
   color: rgb(0 0 0);
 }
-
 .sheet-text-tertiary-bold {
   font-size: 16px;
   font-weight: 500;
@@ -63,34 +80,27 @@
   padding-left: 15px;
   color: rgb(0 0 0);
 }
-
 @media (prefers-color-scheme: dark) {
   .sheet-text-main {
     color: rgb(255 255 255);
   }
-
   .sheet-text-secondary {
     color: rgb(255 255 255);
   }
-
   .sheet-text-tertiary {
     color: rgb(255 255 255);
   }
-
   .sheet-text-tertiary-bold {
     color: rgb(255 255 255);
   }
-
   .aurora {
     --f7-sheet-bg-color: rgb(27 27 27);
     --f7-sheet-border-color: transparent;
   }
-
   .ios {
     --f7-sheet-bg-color: #171717;
     --f7-sheet-border-color: var(--f7-bars-border-color);
   }
-
   .md {
     --f7-sheet-bg-color: #202020;
     --f7-sheet-border-color: transparent;
