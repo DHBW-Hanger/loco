@@ -7,6 +7,9 @@
 This project is made for WebEngineering2 (DHBW).
 The goal is to create a location based PWA.
 
+![image](https://github.com/user-attachments/assets/59904570-077b-4023-a539-9404555a2146)
+
+
 ## Links
 Hosted PWA:
 
